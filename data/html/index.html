@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        window.resizeTo(800, 1000)
+    </script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>Graveyard Keeper Savefile Editor | Edit Savefile</title>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div class="con">
+            <div class="loadingconwrap">
+                <div class="loadingcon">
+                    <div class="row">
+                        <div>Loading the save file</div>
+                    </div>
+                    <div class="row">
+                        <div class="progress">
+                            <div class="indeterminate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer></footer>
+    <script>
+        //There is no intended right click behaviour, so let's disable it
+        $(document).contextmenu(function(e){
+            e.preventDefault()
+        })
+
+        //Setup global variables
+        let gamedata = {}
+        let autocompletenames = {}
+        let autocompleteperks = {}
+        let data = {};
+        let error = false;
+
+        //Load the data depending on the save file type
+        async function getSaveFile(info) {
+            if (info[0] == "slot") {
+                data = await eel.getsavefile(info[2], info[1])();
+            } else if (info[0] == "importjson") {
+                data = await eel.getjsonsavefile(info[1])();
+            } else if (info[0] == "importdat") {
+                data = await eel.getcustomsavefile(info[1])();
+            }
+            
+            //Display an error, should there be one
+            if (data.hasOwnProperty("Error")) {
+                $(".con").html(`<div class="intro error"><h3>The following error occured: ` + data["Error"] + `</h3></div>`)
+            }else{
+                console.log(data)
+
+
+                //When closing the save file editor, free memory
+                window.addEventListener("beforeunload", function (e) {
+                    eel.unloadsave(window.location.hash.split("#")[1].split("|")[1]);            
+                });
+
+                //Load the data about items, so we know which ids are items, which are perks and so on
+                fetch('/items.json')
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (json) {
+                        gamedata = json;
+                        //Generate the dictionaries used for the autocomplete
+                        gamedata.items.forEach(i => {
+                            autocompletenames[data["locals"][i] + " (" + i + ")"] = null
+                        })
+                        gamedata.perks.forEach(i => {
+                            autocompleteperks[data["locals"][i] + " (" + i + ")"] = null
+                        })
+                    });
+
+                applyData()
+                generateEvents()
+            }
+
+
+        }
+
+
+        async function applyData() {
+            //The base HTML of the form
+            d =
+                `
+<div class="intro lesspadding">Generic:</div>
+<div class="row">
+    <form class="s10 col offset-s1 editsavedata">
+        <div class="row colorpoints">
+            <div class="input-field col s4">
+                <div class="gameicon i-red pre">
+                    <img src="/rsc/Red_Tech_Symbol.png">
+                </div>
+                <input id="red" value="${data["r"]["cur"]}">
+            </div>
+            <div class="input-field col s4">
+                <div class="gameicon i-green pre">
+                    <img src="/rsc/Green_Tech_Symbol.png">
+                </div>
+                <input id="green" value="${data["g"]["cur"]}">
+            </div>
+            <div class="input-field col s4">
+                <div class="gameicon i-blue pre">
+                    <img src="/rsc/Blue_Tech_Symbol.png">
+                </div>
+                <input id="blue" value="${data["b"]["cur"]}">
+            </div>
+        </div>
+        <div class="row money">
+            <div class="input-field col s4">
+                <div class="gameicon i-gold pre">
+                    <img src="/rsc/Gold_Coin_Symbol.png">
+                </div>
+                <input id="gold" max="99" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] % 10000 / 100)}">
+                <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
+            </div>
+            <div class="input-field col s4">
+                <div class="gameicon i-silver pre">
+                    <img src="/rsc/Silver_Coin_Symbol.png">
+                </div>
+                <input id="silver" max="99" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] % 100)}">
+                <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
+            </div>
+            <div class="input-field col s4">
+                <div class="gameicon i-copper pre">
+                    <img src="/rsc/Copper_Coin_Symbol.png">
+                </div>
+                <input id="copper" max="99" min="0" type="number" class="validate valid" value="${Math.round(data["money"]%1*100)}">
+                <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
+            </div>
+        </div>
+        <div class="row hpenergy">
+            <div class="col s12">
+                HP:
+                <div class="input-field inline s8">
+                    <input id="hp" type="number" class="validate valid" min="0" value="${data["hp"]}">
+                    <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+                </div>
+            </div>
+
+
+            <div class="col s12 energy">Energy:
+                <div class="input-field inline s8">
+                    <input id="energy" type="number" class="validate valid" min="0" value="${data["energy"]["cur"]}">
+                    <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="intro lesspadding">Inventory:</div>
+<div class="row">
+    <form class="s10 col offset-s1 editsavedata">
+        <div class="row">
+            <div class="col s12">Inventorysize:
+                <div class="input-field inline s8">
+                    <input id="invsize" type="number" class="validate valid" min="0" value="${data["inventory_size"]["cur"]}">
+                    <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+                </div>
+            </div>
+        </div>
+        <div class="items">
+        </div>
+        <p>Add Item:</p>
+        <div class="item add">
+            <div class="itemimage">
+                <img src="/rsc/unknown_item.png">
+            </div>
+            <div class="iteminfo">
+                <div class="itemname autocomplete">
+                    <div class="input-field col s12">
+                        <input type="text" class="autocomplete itemn">
+                    </div>
+                </div>
+                <div class="itemmisc">
+                    <div class="amount">
+                        <div>Amount:</div>
+                        <input type="number" value="1">
+                    </div>
+                    <div class="btncon">
+                        <div class="btn repairbtn">Add</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="intro lesspadding">Perks:<br><div class="note">[Note: After testing it seems this doesn't work, probably because you have to modify the underlying technologies, but I will leave it in, because it is already in anyways]</div></div>
+<div class="row">
+    <form class="s10 col offset-s1 editsavedata">
+        <div class="perks">
+        </div>
+        <p>Add perk:</p>
+        <div class="item add perk">
+            <div class="itemimage">
+                <img src="/rsc/unknown_item.png">
+            </div>
+            <div class="iteminfo">
+                <div class="itemname autocomplete">
+                    <div class="input-field col s12">
+                        <input type="text" class="autocomplete perkn">
+                    </div>
+                </div>
+                <div class="itemmisc">
+                    <div class="amount">
+                    </div>
+                    <div class="btncon">
+                        <div class="btn repairbtn">Add</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="intro lesspadding">Save or Export:</div>
+<div class="row savingcon">
+    <div class="col s12"><div class="btn" id="overwrite">Save to saveslot (creates a backup)</div></div>
+    <div class="col s12"><div class="btn" id="exportjson">Export to a .json file</div></div>
+    <div class="col s12"><div class="btn" id="exportdat">Export to a .dat file</div></div>
+</div>`
+            //Replace the loading bar with our currently loaded data
+            $(".con").html(d)
+
+            //Add the items in the inventory to the form
+            for (let i = 0; i < data["inventory"].length; i++) {
+                let it = data["inventory"][i];
+                await addItem(it["id"], it["amount"], it["durability"]);
+            }
+
+            //Add the current perks to the form
+            for (let i = 0; i < data["perks"].length; i++) {
+                await addPerk(data["perks"][i]["v"]);
+            }
+
+
+        }
+
+        //Function to add a single item
+        async function addItem(id, amount, durability) {
+            //Check if we have a icon for the id, if not use default icon
+            let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
+            console.log(url)
+            let t = await fetch(url)
+            if (t.status == 404) {
+                url = "/rsc/unknown_item.png"
+            }
+            //If the item can be repaired, add a button to do that
+            let button = ""
+            if (durability != 1) {
+                button = '<div class="btn repairbtn">Repair (' + Math.round(durability * 100) + '% left)</div>'
+            }
+            //HTML of a single item
+            let item =
+                `
+<div class="item justadded">
+    <div class="itemimage">
+        <img src="${url}">
+    </div>
+    <div class="iteminfo">
+        <div class="itemname">${data["locals"][id]} <div class="itemid">(${id})</div></div>
+        <div class="itemmisc">
+            <div class="amount">
+                <div>Amount:</div>
+                <input type="number" value="${amount}">
+            </div>
+            <div class="btncon">
+                ${button}
+            </div>
+        </div>
+    </div>
+    <div class="valign-wrapper">
+        <div class="itemremove">x</div>
+    </div>
+</div>`
+            $(".items").append(item);
+        }
+
+        async function addPerk(id) {
+            //Check if we have a icon for the id, if not use default icon
+            let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
+            console.log(url)
+            let t = await fetch(url)
+            if (t.status == 404) {
+                url = "/rsc/unknown_item.png"
+            }
+            //If our localisation has it, add a description to the perk
+            let description = (data["locals"].hasOwnProperty(id + "_d")) ? data["locals"][id + "_d"] : "";
+            //HTML of a single perk
+            let item =
+                `
+<div class="item justadded">
+    <div class="itemimage">
+        <img src="${url}">
+    </div>
+    <div class="iteminfo">
+        <div class="itemname">${data["locals"][id]} <div class="itemid">(${id})</div></div>
+        <div class="itemmisc">
+            <div class="amount">
+                <div>${description}</div>
+            </div>
+        </div>
+    </div>
+    <div class="valign-wrapper">
+        <div class="itemremove">x</div>
+    </div>
+</div>`
+            $(".perks").append(item)
+        }
+
+        //Bind events to the DOM after (most) content loaded
+        function generateEvents() {
+
+            //If we are not loading from a savefile, remove the save to saveslot button
+            if (window.location.hash.split("#")[1].split("|").length < 3) {
+                $("#overwrite").remove();
+            }
+
+            //Setup autocomplete for add item
+            $('.add input.autocomplete.itemn').autocomplete({
+                data: autocompletenames,
+                minLength: 0,
+                onAutocomplete: updateAddItemPreview
+            });
+            //Setup autocomplete for add perk
+            $('.add input.autocomplete.perkn').autocomplete({
+                data: autocompleteperks,
+                minLength: 0,
+                onAutocomplete: updateAddPerkPreview
+            });
+
+            //Bind functions to the add buttons
+            $(".add.perk .btn.repairbtn").click(addPerkButton);
+            $(".add:not(.perk) .btn.repairbtn").click(addItemButton);
+
+            //Remove a perk on click
+            $(".perks").on("click", ".itemremove", function () {
+                let e = $(this);
+                let id = e.parent().parent().find(".itemid").text().split("");
+                id.shift();
+                id.pop();
+                id = id.join("");
+
+                e.parent().parent().addClass("toremove");
+                setTimeout(() => {
+                    e.parent().parent().remove()
+                }, 520);
+                //Update the data in our array, so we don't have to check for it on save
+                for (let i = 0; i < data["perks"].length; i++) {
+                    if (data["perks"][i]["v"] == id) {
+                        data["perks"].splice(i, 1);
+                        break;
+                    }
+                }
+            });
+
+            //Remove an item on click
+            $(".items").on("click", ".itemremove", function () {
+                let e = $(this);
+                let id = e.parent().parent().find(".itemid").text().split("");
+                id.shift();
+                id.pop();
+                id = id.join("");
+                e.parent().parent().addClass("toremove");
+                setTimeout(() => {
+                    let index = e.parent().parent().index();
+                    e.parent().parent().remove();
+                    //Update the data in our array, so the relative positions of items stay the same
+                    data["inventory"].splice(index, 1)
+                }, 520);
+            });
+
+            //Handle changing an item
+            $(".items").on("click", ".itemname:not('.curactive')", function () {
+                let e = $(this).parent();
+                $(this).addClass("curactive")
+                $(this).html(
+                    `
+                <div class="input-field col s12 currentlyediting">
+                    <input type="text" class="autocomplete itemn">
+                </div>
+                `
+                )
+                let x;
+
+                //The function changing the data, when an autocomplete is selected
+                let d = async function () {
+                    let val = $(e).find("input").val();
+                    console.log(val);
+                    if (val.split("(").length > 1) {
+                        let id = val.split("(")[1].split(")")[0];
+                        let url = "/rsc/" + id.replace(/:/g, "__") + ".png";
+                        data["inventory"][$(e).parent().index()]["id"] = id;
+                        t = await fetch(url);
+                        if (t.status == 404) {
+                            url = "/rsc/unknown_item.png";
+                        }
+                        M.Autocomplete.getInstance($(e).find(".itemname input")).destroy();
+                        $(e).parent().find("img").attr("src", url);
+                        $(e).find(".itemname").html(data["locals"][id] + ' <div class="itemid">(' + id +
+                            ')</div>');
+                        $(e).find(".itemname").removeClass("curactive");
+                    }
+
+                };
+                //The logic for the autocomplete
+                $(this).find("input").autocomplete({
+                    data: autocompletenames,
+                    minLength: 0,
+                    onAutocomplete: d
+                });
+            });
+
+            //Repair logic --> set the durability to 1 on a broken item
+            $(".items").on("click", ".repairbtn", function () {
+                let e = $($(this).parents()[3]);
+                data["inventory"][e.index()]["durability"] = 1;
+                e.find(".repairbtn").remove();
+
+            });
+
+            //Create the side menu with the sections for quicker navigation
+            $("main").append('<div class="sidemenu"></div>');
+            let sections = $(".intro.lesspadding");
+            for (let i = 0; i < sections.length; i++) {
+                let s = $(sections[i]);
+                let str = s.text().slice(0, -1);
+                $(".sidemenu").append("<div title=" + str + ">" + str[0].toUpperCase() + "</div>");
+            }
+
+            //Bind the event to scroll on click, we have to consider the zoom property, meaning we have to multiply by it, otherwise the offsets are wrong
+            $(".sidemenu div").click(function () {
+                $("html, body").animate({
+                    scrollTop: $($(".intro.lesspadding")[$(this).index()])[0].offsetTop * parseFloat(
+                        window.getComputedStyle(document.body).getPropertyValue("zoom"))
+                }, 1000);
+            })
+
+            $("#overwrite").click(function(){
+                startSaving("slot");
+            })
+
+            $("#exportjson").click(function(){
+                startSaving("json");
+            })
+
+            $("#exportdat").click(function(){
+                startSaving("dat");
+            })
+
+        }
+
+
+        //Handle the different save types
+        async function startSaving(type){
+
+            let t = canContinue();
+            if (t === true){
+                collectData();
+                let hashdata = window.location.hash.split("#")[1].split("|");
+                let b;
+                if (type == "slot"){
+                    b = await eel.saveslot(data, hashdata[1], hashdata[2])();
+                } else if (type == "dat"){
+                    b = await eel.savecustomsavefile(data, hashdata[1])();
+                } else if (type == "json"){
+                    b = await eel.savejsonsavefile(data, hashdata[1])();
+                }
+
+                if (b.hasOwnProperty("Error")){
+                    M.toast({ html: "The following Error occured: " + b["Error"] });
+                } else {
+                    M.toast({ html: "The operation succeeded"});
+                } 
+            }else {
+                M.toast({
+                            html: t
+                });
+            }
+
+        }
+
+        //Handle the click on the Add Item Button
+        function addItemButton() {
+            let val = $(".item.add:not(.perk) input").val();
+            if (val.split("(").length > 1) {
+                let id = val.split("(")[1].split(")")[0];
+                if (gamedata["items"].indexOf(id) !== -1) {
+                    amount = parseInt($($(".item.add:not(.perk) input")[1]).val());
+                    //Check if the items don't exceed the inventory size
+                    if (data["inventory"].length < parseInt($("#invsize").val())) {
+                        addItem(id, amount, 1);
+                    } else {
+                        M.toast({
+                            html: "Your inventory only has " + $("#invsize").val() + " spaces!"
+                        });
+                        return
+                    }
+                    //Add the new item to the inventory variable
+                    data["inventory"].push({
+                        "amount": amount,
+                        "id": id,
+                        "durability": 1
+                    })
+                    return
+                }
+            }
+            M.toast({
+                html: "The given item does not exist!"
+            });
+        }
+
+        //Handle the click on the Add Perk Button
+        function addPerkButton() {
+            let val = $(".item.add.perk input").val();
+            if (val.split("(").length > 1) {
+                let id = val.split("(")[1].split(")")[0];
+                if (gamedata["perks"].indexOf(id) !== -1) {
+                    for (let i = 0; i < data["perks"].length; i++) {
+                        if (data["perks"][i]["v"] == id) {
+                            M.toast({
+                                html: "You already have that perk!"
+                            });
+                            return
+                        }
+                    }
+                    addPerk(id);
+                    //Add the new perk to the perks variable
+                    data["perks"].push({
+                        "s": -1,
+                        "v": id
+                    })
+                    return
+                }
+            }
+            M.toast({
+                html: "The given Perk does not exist!"
+            });
+        }
+
+        async function updateAddItemPreview() {
+            let val = $(".item.add:not(.perk) input").val();
+            console.log(val);
+            if (val.split("(").length > 1) {
+                let id = val.split("(")[1].split(")")[0];
+                let url = "/rsc/" + id.replace(/:/g, "__") + ".png";
+                t = await fetch(url);
+                if (t.status == 404) {
+                    url = "/rsc/unknown_item.png";
+                }
+                $(".item.add:not(.perk) img").attr("src", url);
+            }
+        }
+
+        async function updateAddPerkPreview() {
+            let val = $(".item.add.perk input").val()
+            console.log(val)
+            if (val.split("(").length > 1) {
+                let id = val.split("(")[1].split(")")[0];
+                let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
+                t = await fetch(url)
+                if (t.status == 404) {
+                    url = "/rsc/unknown_item.png"
+                }
+                $(".item.add.perk img").attr("src", url)
+                if (data["locals"].hasOwnProperty(id + "_d")) $(".item.add.perk .amount").text(data["locals"][id + "_d"])
+                else $(".item.add.perk .amount").text("")
+            }
+        }
+
+        //Update the data in our data object, which wasn't updated when the user was editing the values
+        function collectData(){
+            data["r"]["cur"] = parseInt($("#red").val());
+            data["g"]["cur"] = parseInt($("#green").val());
+            data["b"]["cur"] = parseInt($("#blue").val());
+            data["money"] = parseInt($("#gold").val()) * 100 + parseInt($("#silver").val()) + parseInt($("#copper").val()) / 100;
+            data["hp"] = parseInt($("#hp").val());
+            data["energy"]["cur"] = parseInt($("#energy").val());
+            data["inventory_size"]["cur"] = parseInt($("#invsize").val());
+            let items = $(".items .item");
+            for(let i = 0; i < items.length; i++){
+                data["inventory"][i]["amount"] = parseInt($(items[i]).find("input").val());
+            }
+        }
+
+        //Check if a item didn't autocomplete, so that the user doesn't save old ID's
+        function canContinue(){
+            if ($(".currentlyediting").length > 0) return "Please autocomplete all Items before saving";
+
+            return true;
+        }
+
+        //Get the information of the save hash, save file type and possibly slot
+        $(document).ready(function () {
+            let info = window.location.hash.split("#")[1].split("|")
+            getSaveFile(info);
+        });
+
+    </script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+
+</html>

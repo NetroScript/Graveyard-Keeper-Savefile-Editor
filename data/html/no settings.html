@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        window.resizeTo(800, 1000)
+    </script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>Graveyard Keeper Savefile Editor | Welcome</title>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div class="con">
+            <div 1 class="intro">
+                <h3>Hey, seems like you are using this Application for the first time, meaning you now have the chance to set
+                    some options.</h3>
+            </div>
+            <div class="settingsform">
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="Save folder (Commonly in Appdata-LocalLow-Lazy Bear Games-Graveyard Keeper)" id="path" type="text" class="validate">
+                                <label for="path">Folder Path</label>
+                                <a class="waves-effect waves-light btn col s2 offset-s5" id="requestfile">Open</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="preswitch">Check for Updates on application start</div>
+                            <div class="switch">
+                                <label>
+                                    Disabled
+                                    <input type="checkbox" id="updatesc">
+                                    <span class="lever"></span>
+                                    Enabled
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <a class="waves-effect waves-light btn col s4 offset-s4" id="donebtn">Done</a>
+            </div>
+
+        </div>
+
+    </main>
+    <footer></footer>
+    <script>
+        $(document).contextmenu(function(e){
+            e.preventDefault()
+        })
+
+        async function getFolder() {
+            f = await eel.get_folder()();
+            console.log(f);
+            $("#path").val(f);
+        }
+        async function saveSettings() {
+            await eel.set_settings($("#path").val(), ($("#updatesc").val()) == "on" ? true : false)();
+            window.location = "/loadsavefile.html";
+        }
+
+        $("#requestfile").click(function (e) {
+            console.log("Loading Folder");
+            e.preventDefault();
+            getFolder();
+        })
+
+        $("#donebtn").click(function (e) {
+            console.log("Saving Savedata");
+            saveSettings();
+        })
+    </script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+
+</html>

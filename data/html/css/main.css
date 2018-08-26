@@ -1,0 +1,426 @@
+body {
+    background-color: #212121;
+    zoom: 1.5;
+}
+
+.intro {
+    padding: 20px;
+    text-align: center;
+    background-color: #151515;
+    margin: 40px 0px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5);
+}
+
+.con {
+    color: #e4e4e4;
+    font-size: 200%;
+}
+
+.settingsform {
+    margin: 10px 50px;
+    background-color: #292929;
+    padding: 20px;
+}
+
+
+main .intro h3 {
+    font-size: 20px !important;
+}
+
+.preswitch {
+    color: #e4e4e4;
+    font-size: 18px;
+    text-align: center;
+}
+
+.settingsform .switch {
+    text-align: center;
+}
+
+#donebtn {
+    margin-top:25px;
+}
+
+.settingsform input[type="text"] {
+    color: #e4e4e4;
+}
+
+.loadingsave {
+    margin: 80px auto;
+    zoom: 200%;
+    width: 80px;
+}
+
+.gameicon {
+    display: inline-block;
+    image-rendering: pixelated;
+    zoom: 1.5;
+    transform: translateY(2px);
+    height: fit-content;
+}
+
+.consaves {
+    font-size: 75%;
+}
+
+.gameicon.i-church {
+    zoom: 1.2;
+    margin-top: 6px;
+    transform: translateY(4px);
+}
+
+.saveslot {
+    margin: 20px;
+    background-color: #1b1b1b;
+    box-shadow: 0px 0px 4px 1px black;
+    display: flex;
+    transition: all 0.5s;
+}
+
+.saveslot:hover {
+    box-shadow: 0px 0px 4px 1px #11d2c0;
+    cursor: pointer;
+}
+
+.slotnum {
+    flex: 1;
+    max-width: 25%;
+    min-height: 100%;
+}
+
+.slotnum div {
+    background-color: #353535;
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px;
+    margin: auto;
+    text-align: center;
+    line-height: 80px;
+    text-shadow: 0px 0px 4px black;
+    font-size: 300%;
+}
+
+.slotcontent {
+    flex: 1;
+    padding: 10px;
+    border-left: 2px dotted white;
+}
+
+.col.slotgraveyard {
+    margin-top: -10px;
+}
+
+.col.slotchurch {
+    margin-top: -10px;
+}
+
+.row:nth-child(2) {
+    margin-bottom: 0px;
+}
+
+.col.slotversion {
+    text-align: right;
+}
+
+.col.slotversion::before {
+    content: "v";
+}
+
+.loadingcon {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+}
+
+.loadingcon .row {
+    text-align: center;
+    margin: 20px;
+}
+
+.loadingconwrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 80%;
+    transform: translate(-50%, -50%);
+}
+
+.loadingcon .progress {
+    background-color: #171717;
+}
+
+.saveslot.extra {
+    padding: 20px;
+    text-align: center;
+}
+
+.extra div {
+    text-align: center;
+    width: 100%;
+}
+
+.gameicon.pre {
+    position: absolute;
+    transform: translate(-20px, -3px);
+}
+
+.colorpoints .input-field.col,
+.money .input-field.col {
+    margin: 0px 20px;
+    flex: 1;
+    text-align: center;
+}
+
+.row.colorpoints,
+.row.money {
+    display: flex;
+}
+
+.colorpoints input,
+.money input {
+    transform: translateX(10px);
+}
+
+.editsavedata input {
+    text-align: center;
+    color: inherit;
+}
+
+.editsavedata {
+    font-size: 80%
+}
+
+form.s10.col.offset-s1.editsavedata {
+    color: #e4e4e4 !important;
+    margin-top: 20px;
+}
+
+.row.hpenergy {
+    text-align: center;
+}
+
+.editsavedata .helper-text {
+    color: gray;
+}
+
+.energy {
+    transform: translateX(-15px);
+}
+
+.row.money {
+    max-height: 50px;
+}
+
+.intro.lesspadding {
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+.item {
+    width: 100%;
+    display: flex;
+    font-size: 70%;
+    margin: 10px 0px;
+    background-color: #131313;
+    max-height: 500px;
+    transition: all 0.5s;
+}
+
+.itemimage {
+    max-width: 80px;
+    max-height: 80px;
+    flex: 1;
+}
+
+.iteminfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    line-height: 30px;
+}
+
+.itemname {
+    flex: 1;
+    text-shadow: 1px 1px #5a5a5a;
+    cursor:pointer;
+}
+
+.itemmisc {
+    display: flex;
+    transform: translateY(3px);
+    font-size: 80%;
+}
+
+.amount {
+    flex: 1;
+}
+
+.btncon {
+    flex: 1;
+}
+
+.btn.repairbtn {
+    text-transform: none;
+    padding: 15px 5px;
+    line-height: 4px;
+}
+
+.amount div {
+    display: inline-block;
+}
+
+.amount input[type="number"] {
+    display: inline-block;
+    width: 80px;
+    margin-left: 10px;
+}
+
+.itemimage img {
+    image-rendering: pixelated;
+    height: 90%;
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(10%, 10%);
+}
+
+.itemid {
+    display:inline-block;
+    color:gray;
+    text-shadow:none;
+}
+
+.item.add .itemname{
+    text-shadow: none;
+}
+
+.itemremove {
+    width: 25px;
+    height: 25px;
+    margin: 4px;
+    background-color: #cc5454;
+    box-shadow: #750a0a 0px 1px 0px 2px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+    line-height: 15px;
+    text-align: center;
+    user-select: none;
+}
+
+.item .valign-wrapper {
+    margin-right: 5px;
+}
+
+.add.perk .btncon {
+    flex: 0;
+}
+
+.toremove {
+    max-height: 0px;
+    overflow: hidden;
+    transform: rotateX(90deg);
+    transition: all 0.5s;
+}
+
+.justadded {
+    animation: add 0.5s;
+}
+
+@keyframes add {
+    from {
+        max-height:0px;
+        transform: rotateX(90deg);
+    }
+    to {
+        max-height:500px;
+        transform: rotateX(0deg);
+    }
+}
+
+.currentlyediting {
+    border: 1px white dotted;
+    animation: edit 4s infinite;
+}
+
+@keyframes edit {
+    0% {
+        border: 1px white dotted;
+    }
+    50% {
+        border: 1px rgba(255, 255, 255, 0.05) dotted;
+    }
+}
+
+.itemname.curactive {
+    text-shadow: none;
+}
+
+.perks .itemname{
+    cursor: default;
+}
+
+.savingcon .col {
+    margin: 10px auto;
+    text-align: center;
+}
+
+.sidemenu {
+    position: fixed;
+    z-index: 50;
+    width: 40px;
+    background-color: #006280;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 0px 20px 20px 0px;
+    cursor: pointer;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    overflow: hidden;
+}
+
+.sidemenu div {
+    height: 40px;
+    line-height: 40px;
+    transition: background-color 0.5s;
+    border-bottom: 1px rgba(255, 255, 255, 0.4) dotted;
+}
+
+.sidemenu div:hover {
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+.sidemenu div:last-child {
+    border-bottom: none;
+}
+.intro.error {
+    background-color: #562424;
+}
+
+.thankscon ul {
+    list-style-type: disc;
+    padding-left: 40px;
+    padding-right: 15px;
+}
+
+.thankscon li {
+    list-style-type: disc !important;
+    margin: 10px 0px;
+}
+
+.thankscon {
+    font-size: 18px;
+}
+
+.note {
+    font-size: 50%;
+    color: gray;
+}
+.intro.newv {
+    background-color: #193133;
+}

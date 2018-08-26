@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        window.resizeTo(800, 1000)
+    </script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>Graveyard Keeper Savefile Editor | Save games</title>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div class="con">
+            <div 1 class="intro">
+                <h3>Following save files are available:</h3>
+            </div>
+            <div class="consaves">
+                <div class="loadingsave">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div 1 class="intro">
+                <h3>My thanks for the following stuff:</h3>
+            </div>
+            <div class="thankscon">
+                <ul>
+                    <li>
+                        <a href="http://lazybeargames.com/" target="_blank">Lazy Bear Games</a> for marking such a great game.
+                    </li>
+                    <li>
+                        <a href="http://www.tinybuild.com/" target="_blank">tinyBuild</a> for publishing it.
+                    </li>
+                    <li>
+                        <a href="https://graveyardkeeper.gamepedia.com/Graveyard_Keeper_Wiki" target="_blank">Graveyard Keeper Wiki</a> for having such great resources which I could use to check my code and
+                        already extracting the game icons + naming them, so I didn't have to try to extract the sprite atlas
+                        information.
+                    </li>
+                    <li>
+                        <a href="https://github.com/ChrisKnott/Eel" target="_blank">Eel</a> for making it easy for me to create a HTML GUI in a python script.
+                    </li>
+                    <li>
+                        <a href="https://jquery.com/" target="_blank">JQuery</a> and
+                        <a href="https://materializecss.com/" target="_blank">Materialize</a> for making it easier to create the HTML content.
+                    </li>
+                </ul>
+            </div>
+            <div 1 class="intro">
+                <h3>Notes:</h3>
+            </div>
+            <div class="thankscon">
+                <ul>
+                    <li>
+                        Every loaded save file is kept in memory, meaning you can expect almost up to 200 MB per save file which you load right.
+                    </li>
+                    <li>
+                        No sprites / images used, were created by me, they are from
+                        <a href="http://lazybeargames.com/" target="_blank">Lazy Bear Games</a> (and most of them were extracted from the Wiki)
+                    </li>
+                    <li>
+                        Additionally the localisation file is also more or less extracted from
+                        <a href="http://lazybeargames.com/" target="_blank">Lazy Bear Games</a> but I want to add that they are not complete for all ID's and might contain mistakes
+                        (like the ID's and translations shifted by 1)
+                    </li>
+                    <li>
+                        You are able change all the values in the editor, but especially values like items can't be perfectly recreated and there
+                        might be bugs with them if you add new items (Because I can't reproduce the specific item types
+                        which may contain specific values, the script uses the last item in your inventory, duplicates it and replace it's item ID, amount
+                        and durability). Additionally like the Wiki mentions in the article about save file editing, it might be that some of your changes don't 
+                        work because you didn't fulfill previous requirements.
+                    </li>
+                    <li>
+                        If you change the energy or your hp to a value above 100, your maximal hp / energy is set to the same value, if you want to reset it again,
+                        just set your hp or energy again to 100.
+                    </li>
+                    <li>
+                        If you find bugs or have feature requests (like an idea to add a functionality) feel free to report them on the 
+                        <a href="https://github.com/NetroScript/raveyard-Keeper-Savefile-Editor" target="_blank">Github Page</a>.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    </main>
+    <footer></footer>
+    <script>
+        $(document).contextmenu(function (e) {
+            e.preventDefault()
+        })
+
+        // Source: https://github.com/darkskyapp/string-hash/blob/master/index.js
+        function hash(str) {
+            var hash = 5381,
+                i = str.length;
+            while (i) {
+                hash = (hash * 33) ^ str.charCodeAt(--i);
+            }
+            return hash >>> 0;
+        }
+
+        function buildSaveSlot(data) {
+            for (k in data) {
+                data[k] = String(data[k])
+            };
+            slot =
+                `<div class="saveslot" id="slot${data["num"]}">
+    <div class="slotnum valign-wrapper"><div>${data["num"]}</div></div>
+    <div class="slotcontent">
+        <div class="row s12">
+            <div class="col s7 slottime">
+                ${data["savetime"]}
+            </div>
+            <div class="col s5 slotversion">
+                ${data["version"]}
+            </div>
+            </div>
+        <div class="row s12">
+            <div class="col s6 slotdays">Day: ${data["days"]}</div>
+            <div class="col s3 slotgraveyard">
+                <div class="gameicon i-graveyard">
+                    <img src="/rsc/Icon_skull_wreath_green.png">
+                </div>
+                ${data["graveyard"]}
+            </div>
+            <div class="col s3 slotchurch">
+            <div class="gameicon i-church">
+                    <img src="/rsc/Church_Rating_Symbol.png">
+                </div>
+                ${data["church"]}
+            </div>
+        </div>
+    </div>
+</div>`
+
+            $(".consaves").append(slot);
+        }
+
+
+        eel.expose(checkVersion);
+        function checkVersion(oldv, newv){
+            if(getVersionNum(oldv) < getVersionNum(newv))
+            {
+ $(".con").prepend(`
+<div 1="" class="intro newv">
+    <h3>A new Version (`+newv+`) is available! Get it on
+        <a href="https://github.com/NetroScript/raveyard-Keeper-Savefile-Editor"  target="_blank">Github</a>.</h3>
+</div>`)
+            }
+        }
+
+        function getVersionNum(v) {
+            let p = v.split(".");
+            let l = p.length;
+            let out = 0;
+            for(let i = 0; i < l; i++){
+                out += Math.pow(10, 5 * (l - (i+1))) * parseFloat(p[i])
+            }
+            return out;
+        }
+
+        $(document).ready(function () {
+            eel.siteloaded()()
+            getSaveFiles();
+        });
+
+        $(".consaves").on("click", ".saveslot", function (e) {
+            let el = $(e.currentTarget)
+            let id = el.attr("id")
+            if (id == "importjson") {
+                window.open("/index.html#importjson|" + hash(String(Math.random())), '_blank',
+                    'location=yes,height=1000,width=800,scrollbars=yes,status=yes,dependant=true');
+            } else if (id == "importdat") {
+                window.open("/index.html#importdat|" + hash(String(Math.random())), '_blank',
+                    'location=yes,height=1000,width=800,scrollbars=yes,status=yes,dependant=true');
+            } else if (id.startsWith("slot")) {
+                slotnum = id.split("slot")[1];
+                window.open("/index.html#slot|" + hash($("#slot" + slotnum).text()) + "|" + slotnum, '_blank',
+                    'location=yes,height=1000,width=800,scrollbars=yes,status=yes,dependant=true');
+            }
+
+        })
+
+        async function getSaveFiles() {
+            data = await eel.getsavefiles()()
+            console.log(data)
+            $(".consaves").html("");
+            data.forEach(slot => {
+                buildSaveSlot(slot);
+            });
+            $(".consaves").append(
+                `<div class="saveslot extra" id="importjson">
+<div>Import a generated .json file</div>
+</div>
+<div class="saveslot extra" id="importdat">
+    <div>Open a custom .dat file</div>
+</div>`
+            );
+        }
+    </script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+
+</html>
