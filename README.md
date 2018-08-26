@@ -30,6 +30,8 @@ Download a compiled release for windows.
 
 Considering the application has a GUI it should be self explanatory.  
 If a name autocompletes to undefined, it might be that this item is not available in the game yet, or my localisation files are missing translations.
+If you know a item exists, but it doesn't appear in the autocompletion box, leave me a message, this means I forgot some items in my list with items.
+Same if an item doesn't have a preview image - if that happens please leave me a message with the internal id (written in parentheses) and a screenshot of the item in game (so I know which item in the spritesheet is the id)
 
 
 If you want to manually edit save files, when you change values, watch out if you change the type of the variable. F.e. if you would change a value from 0 to 1, the type would change and you would need to manually change the type to the correct one.  
