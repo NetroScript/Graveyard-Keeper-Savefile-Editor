@@ -424,3 +424,27 @@ form.s10.col.offset-s1.editsavedata {
 .intro.newv {
     background-color: #193133;
 }
+
+.itemquality {
+    z-index: 50;
+    position:absolute;
+    width:25px;
+    height:25px;
+    background-image: url("/rsc/Empty_Star.png");
+    image-rendering: pixelated;
+    background-size:cover;
+    transform: translate(50px, 50px);
+    cursor: pointer;
+}
+
+.gold .itemquality{
+    background-image: url("/rsc/Gold_Star.png");
+}
+
+.silver .itemquality {
+    background-image: url("/rsc/Silver_Star.png");
+}
+
+.copper .itemquality {
+    background-image: url("/rsc/Copper_Star.png");
+}

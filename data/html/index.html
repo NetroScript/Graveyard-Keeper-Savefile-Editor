@@ -179,6 +179,7 @@
         <p>Add Item:</p>
         <div class="item add">
             <div class="itemimage">
+                <div class="itemquality"></div>
                 <img src="/rsc/unknown_item.png">
             </div>
             <div class="iteminfo">
@@ -250,15 +251,58 @@
 
         }
 
+        function getLocalisation(id){
+            if(data["locals"].hasOwnProperty(id)){
+                return data["locals"][id];
+            } else if (/:\d$/.test(id)){
+                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ""))) return data["locals"][id.replace(/:\d$/, "")];
+                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ":1"))) return data["locals"][id.replace(/:\d$/, ":1")];
+                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ":2"))) return data["locals"][id.replace(/:\d$/, ":2")];
+                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ":3"))) return data["locals"][id.replace(/:\d$/, ":3")];
+            } else{
+                if(data["locals"].hasOwnProperty(id + ":1")) return data["locals"][id + ":1"];
+                if(data["locals"].hasOwnProperty(id + ":2")) return data["locals"][id + ":2"];
+                if(data["locals"].hasOwnProperty(id + ":3")) return data["locals"][id + ":3"];
+            }
+            return undefined;
+        }
+
+        async function getItemUrl(id){
+            let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
+            let t = await fetch(url)
+            if (t.status == 404) {
+                if (/:\d$/.test(id)){
+                    let t2 = await fetch(url.replace(/__\d/, ""))
+                        if (t2.status == 404) {
+                            url = "/rsc/unknown_item.png"
+                        }else {
+                            url = url.replace(/__\d/, "");
+                        }
+                }else {
+                    url = "/rsc/unknown_item.png"
+                }
+            }
+            return url;
+        }
+
         //Function to add a single item
         async function addItem(id, amount, durability) {
             //Check if we have a icon for the id, if not use default icon
-            let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
+            url = await getItemUrl(id);
             console.log(url)
-            let t = await fetch(url)
-            if (t.status == 404) {
-                url = "/rsc/unknown_item.png"
+            let spl = id.split(":");
+            let quality = "";
+            if(spl.length > 1){
+                let q = spl.slice(-1)[0];
+                if (q == "1"){
+                    quality = " copper";
+                } else if (q == "2"){
+                    quality = " silver";
+                } else if (q == "3"){
+                    quality = " gold";
+                }
             }
+
             //If the item can be repaired, add a button to do that
             let button = ""
             if (durability != 1) {
@@ -267,12 +311,13 @@
             //HTML of a single item
             let item =
                 `
-<div class="item justadded">
+<div class="item justadded${quality}">
     <div class="itemimage">
+        <div class="itemquality"></div>
         <img src="${url}">
     </div>
     <div class="iteminfo">
-        <div class="itemname">${data["locals"][id]} <div class="itemid">(${id})</div></div>
+        <div class="itemname">${getLocalisation(id)} <div class="itemid">(${id})</div></div>
         <div class="itemmisc">
             <div class="amount">
                 <div>Amount:</div>
@@ -308,7 +353,7 @@
         <img src="${url}">
     </div>
     <div class="iteminfo">
-        <div class="itemname">${data["locals"][id]} <div class="itemid">(${id})</div></div>
+        <div class="itemname">${getLocalisation(id)} <div class="itemid">(${id})</div></div>
         <div class="itemmisc">
             <div class="amount">
                 <div>${description}</div>
@@ -384,6 +429,49 @@
                 }, 520);
             });
 
+            //Make item quality toggleable by keeping to click the icon
+            $(".items, .item.add").on("click", ".itemquality", function () {
+                let e = $(this);
+                let item = e.parent().parent()
+                let id;
+                if (item.hasClass("add")){
+                    id= item.find(".itemname input").val().split("(")[1].split(")")[0];
+                } else {
+                    id = item.find(".itemid").text().split("");
+                    id.shift();
+                    id.pop();
+                    id = id.join("");
+                }
+                let newid;
+                if(item.hasClass("copper")){
+                    newid = id.replace(/:\d$/, ":2");
+                    item.removeClass("copper");
+                    item.addClass("silver");
+                } else if(item.hasClass("silver")){
+                    newid = id.replace(/:\d$/, ":3");
+                    item.removeClass("silver");
+                    item.addClass("gold");
+                } else if(item.hasClass("gold")){
+                    newid = id.replace(/:\d$/, "");
+                    item.removeClass("gold");
+                } else {
+                    newid = id + ":1";
+                    item.addClass("copper");
+                }
+
+                if (item.hasClass("add")){
+                    console.log(id)
+                    console.log(newid)
+                    item.find(".itemname input").val(item.find(".itemname input").val().replace(id, newid));
+                } else {
+                    item.find(".itemid").text("("+newid+")");
+                }
+                
+
+
+            });
+
+
             //Handle changing an item
             $(".items").on("click", ".itemname:not('.curactive')", function () {
                 let e = $(this).parent();
@@ -403,15 +491,10 @@
                     console.log(val);
                     if (val.split("(").length > 1) {
                         let id = val.split("(")[1].split(")")[0];
-                        let url = "/rsc/" + id.replace(/:/g, "__") + ".png";
-                        data["inventory"][$(e).parent().index()]["id"] = id;
-                        t = await fetch(url);
-                        if (t.status == 404) {
-                            url = "/rsc/unknown_item.png";
-                        }
+                        let url = await getItemUrl(id);
                         M.Autocomplete.getInstance($(e).find(".itemname input")).destroy();
                         $(e).parent().find("img").attr("src", url);
-                        $(e).find(".itemname").html(data["locals"][id] + ' <div class="itemid">(' + id +
+                        $(e).find(".itemname").html(getLocalisation(id) + ' <div class="itemid">(' + id +
                             ')</div>');
                         $(e).find(".itemname").removeClass("curactive");
                     }
@@ -499,7 +582,7 @@
             let val = $(".item.add:not(.perk) input").val();
             if (val.split("(").length > 1) {
                 let id = val.split("(")[1].split(")")[0];
-                if (gamedata["items"].indexOf(id) !== -1) {
+                if (gamedata["items"].indexOf(id) !== -1 && gamedata["items"].indexOf(id.replace(/:\d$/, ""))) {
                     amount = parseInt($($(".item.add:not(.perk) input")[1]).val());
                     //Check if the items don't exceed the inventory size
                     if (data["inventory"].length < parseInt($("#invsize").val())) {
@@ -557,11 +640,7 @@
             console.log(val);
             if (val.split("(").length > 1) {
                 let id = val.split("(")[1].split(")")[0];
-                let url = "/rsc/" + id.replace(/:/g, "__") + ".png";
-                t = await fetch(url);
-                if (t.status == 404) {
-                    url = "/rsc/unknown_item.png";
-                }
+                let url = await getItemUrl(id);
                 $(".item.add:not(.perk) img").attr("src", url);
             }
         }
@@ -571,11 +650,7 @@
             console.log(val)
             if (val.split("(").length > 1) {
                 let id = val.split("(")[1].split(")")[0];
-                let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
-                t = await fetch(url)
-                if (t.status == 404) {
-                    url = "/rsc/unknown_item.png"
-                }
+                let url = await getItemUrl(id);
                 $(".item.add.perk img").attr("src", url)
                 if (data["locals"].hasOwnProperty(id + "_d")) $(".item.add.perk .amount").text(data["locals"][id + "_d"])
                 else $(".item.add.perk .amount").text("")
@@ -594,6 +669,7 @@
             let items = $(".items .item");
             for(let i = 0; i < items.length; i++){
                 data["inventory"][i]["amount"] = parseInt($(items[i]).find("input").val());
+                data["inventory"][i]["id"] = $(items[i]).find(".itemid").text().replace(/\(|\)/g, "");
             }
         }
 
