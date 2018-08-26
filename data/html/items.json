@@ -531,7 +531,8 @@
 		"pumpkin_crop",
 		"pumpkin_crop:2",
 		"pumpkin_seed",
-		"pumpkin_seed:2"
+		"pumpkin_seed:2",
+		"rightful_citizen_paper"
 	],
 	"perks": 
 	[
@@ -572,8 +573,7 @@
 		"p_wine_master2",
 		"p_woodworker",
 		"p_writer",
-		"p_writer_thief",
-		"rightful_citizen_paper"
+		"p_writer_thief"
 	],
 	"relationships": {
 		"_rel_npc_blacksmith,": {
