@@ -572,7 +572,8 @@
 		"p_wine_master2",
 		"p_woodworker",
 		"p_writer",
-		"p_writer_thief"
+		"p_writer_thief",
+		"rightful_citizen_paper"
 	],
 	"relationships": {
 		"_rel_npc_blacksmith,": {

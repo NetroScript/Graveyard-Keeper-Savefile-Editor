@@ -448,3 +448,8 @@ form.s10.col.offset-s1.editsavedata {
 .copper .itemquality {
     background-image: url("/rsc/Copper_Star.png");
 }
+
+.slotgraveyard,
+.slotchurch {
+    padding: 0px !important;
+}
