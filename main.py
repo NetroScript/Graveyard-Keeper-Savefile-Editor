@@ -43,8 +43,8 @@ def getsavefiles():
                     "version": round(data["version"], 3),
                     "savetime": data["real_time"],
                     "days": int(data["game_time"]),
-                    "church": data["stats"].split("ll)")[1].split("(cr")[0].strip(),
-                    "graveyard": data["stats"].split("ss)")[1].strip(),
+                    "church": data["stats"].split("ss)")[1].strip(),
+                    "graveyard": data["stats"].split("ll)")[1].split("(cr")[0].strip(),
                     "id": file.split(".info")[0],
                     "num": i
                 })
@@ -169,7 +169,7 @@ def modifysave(data, shash):
     for key in mods:
         if data[key]["s"] == -1:
             savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"].append({"v": key, "type": 10})
-            savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"].append({"v": key, "type": 10})
+            savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"].append({"v": key, "type": 5})
             data[key]["s"] = len(savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"])-1
             if key not in savefiles[shash]["serializer"]:
                 savefiles[shash]["serializer"].append(key)
@@ -303,7 +303,9 @@ def editablevalues(shash):
     obj["technologies1"] = []
     obj["relationships"] = []
     obj["inventory"] = []
+    obj["bugs"] = {}
     mod = ["r", "g", "b", "inventory_size", "energy"]
+
     i = 0
     for k in data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"]:
         key = k["v"]
@@ -315,7 +317,7 @@ def editablevalues(shash):
             obj["technologies1"].append({"v": key, "s": i})
         elif key in mod:
             obj[key] = {"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]}
-        i+=1
+        i += 1
 
     for k in mod:
         if k not in obj:
