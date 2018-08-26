@@ -8,7 +8,8 @@ It can load and save *.dat files.
 Additionally you can export the loaded save to a .json file, which has a similar structure to the original .json save files.  
 (The difference is, that information about types of variables is saved in the file, meaning every value is wrapped in an object).  
 
-The Application uses your Browser (preferably Chrome) as a GUI.  
+The Application uses your Chrome installation as a GUI.  
+**Meaning if you don't have Chrome (or Chromium) installed this application won't work.**
 
 ## Screenshot
 
@@ -37,6 +38,12 @@ Same if an item doesn't have a preview image - if that happens please leave me a
 If you want to manually edit save files, when you change values, watch out if you change the type of the variable. F.e. if you would change a value from 0 to 1, the type would change and you would need to manually change the type to the correct one.  
 For information about the possible types, check types.py in the data folder.  
 
+## The application is not working?
+
+Supply me a screenshot with the console output (or the copied text).  
+If you are using the compiled windows version and a black window appears and then disappears it means the application crashes because of some error.  
+To view the error code to be able to send it to me:  
+In the folder where you have the .exe file, Shift + Rightclick in a free space and in the context menu there should be an option like "Open Command Prompt here" or "Open Powershell here", click that, begin writing "Graveyard" and then press tab to autocomplete and enter to execute - now you should start the application using that console window. This time the window won't close after execution, meaning you have time to make a screenshot of the error.
 
 ## Notice
 
