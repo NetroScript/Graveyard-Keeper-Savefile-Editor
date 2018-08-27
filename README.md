@@ -38,6 +38,12 @@ Same if an item doesn't have a preview image - if that happens please leave me a
 If you want to manually edit save files, when you change values, watch out if you change the type of the variable. F.e. if you would change a value from 0 to 1, the type would change and you would need to manually change the type to the correct one.  
 For information about the possible types, check types.py in the data folder.  
 
+
+## Changelog
+
+Check it [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/changelog.md)
+
+
 ## The application is not working?
 
 Supply me a screenshot with the console output (or the copied text).  
