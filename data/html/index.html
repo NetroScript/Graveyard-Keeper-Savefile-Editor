@@ -37,7 +37,7 @@
     <footer></footer>
     <script>
         //There is no intended right click behaviour, so let's disable it
-        $(document).contextmenu(function(e){
+        $(document).contextmenu(function (e) {
             e.preventDefault()
         })
 
@@ -57,17 +57,18 @@
             } else if (info[0] == "importdat") {
                 data = await eel.getcustomsavefile(info[1])();
             }
-            
+
             //Display an error, should there be one
             if (data.hasOwnProperty("Error")) {
-                $(".con").html(`<div class="intro error"><h3>The following error occured: ` + data["Error"] + `</h3></div>`)
-            }else{
+                $(".con").html(`<div class="intro error"><h3>The following error occured: ` + data["Error"] +
+                    `</h3></div>`)
+            } else {
                 console.log(data)
 
 
                 //When closing the save file editor, free memory
                 window.addEventListener("beforeunload", function (e) {
-                    eel.unloadsave(window.location.hash.split("#")[1].split("|")[1]);            
+                    eel.unloadsave(window.location.hash.split("#")[1].split("|")[1]);
                 });
 
                 //Load the data about items, so we know which ids are items, which are perks and so on
@@ -86,7 +87,7 @@
                         })
                     });
 
-                applyData()
+                await applyData()
                 generateEvents()
             }
 
@@ -169,7 +170,7 @@
         <div class="row">
             <div class="col s12">Inventorysize:
                 <div class="input-field inline s8">
-                    <input id="invsize" type="number" class="validate valid" min="0" value="${data["inventory_size"]["cur"]}">
+                    <input id="invsize" type="number" class="validate valid invsize" min="0" value="${data["inventory_size"]["cur"]}">
                     <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
                 </div>
             </div>
@@ -198,6 +199,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </form>
+</div>
+<div class="intro lesspadding">Additional Storages</div>
+<div class="row">
+    <form class="s10 col offset-s1 editsavedata">
+        <div class="additionalitems">
         </div>
     </form>
 </div>
@@ -240,7 +248,12 @@
             //Add the items in the inventory to the form
             for (let i = 0; i < data["inventory"].length; i++) {
                 let it = data["inventory"][i];
-                await addItem(it["id"], it["amount"], it["durability"]);
+                $(".items").append(await addItem(it["id"], it["amount"], it["durability"]));
+            }
+
+            //Add additional inventories
+            for (let i = 0; i < data["additionalstorage"].length; i++) {
+                await addInventory(data["additionalstorage"][i], i);
             }
 
             //Add the current perks to the form
@@ -251,34 +264,114 @@
 
         }
 
-        function getLocalisation(id){
-            if(data["locals"].hasOwnProperty(id)){
+        function createInventoryMiniPreview(index) {
+            $("#inv" + index).parent().find(".inventoryminipreview").html("");
+            $("#inv" + index).parent().find(".items img").clone().appendTo($("#inv" + index).parent().find(
+                ".inventoryminipreview"));
+        }
+
+        async function addInventory(inventory, index) {
+
+            let types = {
+                "mf_box_stuff": "(Trunk)",
+                "chest": "(Chest)",
+                "rack_alchemy": "(Alchemy Rack)",
+                "obj_church_scroll_cabinet": "(Scrollshelf)",
+                "obj_church_bookcase": "(Bookshelf)",
+                "rack_organs": "(Mortuary rack)",
+            }
+            let type = "";
+            if (types.hasOwnProperty(inventory["type"])) type = types[inventory["type"]];
+            let inv =
+                `
+<div class="inventorycon">
+<div class="invtinfo" id="inv${index}">Storage ${index+1} <div class="itemid">${type}</div></div>
+<div class="inventoryminipreview"></div>
+<div class="invt">
+<!--After trying it seems inventory size for the storage units is hard coded, thats why we hide it--!>
+<div class="row hide">
+    <div class="col s12">Inventorysize:
+        <div class="input-field inline s8">
+            <input type="number" class="validate valid invsize" min="0" value="${inventory["size"]}">
+            <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+        </div>
+    </div>
+</div>
+<div class="items">
+</div>
+<p>Add Item:</p>
+<div class="item add">
+    <div class="itemimage">
+        <div class="itemquality"></div>
+        <img src="/rsc/unknown_item.png">
+    </div>
+    <div class="iteminfo">
+        <div class="itemname autocomplete">
+            <div class="input-field col s12">
+                <input type="text" class="autocomplete itemn">
+            </div>
+        </div>
+        <div class="itemmisc">
+            <div class="amount">
+                <div>Amount:</div>
+                <input type="number" value="1">
+            </div>
+            <div class="btncon">
+                <div class="btn repairbtn">Add</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>`
+            $(".additionalitems").append(inv);
+
+            for (let i = 0; i < inventory["items"].length; i++) {
+                $("#inv" + index).parent().find(".items").append(await addItem(inventory["items"][i]["id"], inventory[
+                    "items"][i]["amount"], inventory["items"][i]["durability"]));
+            }
+
+            createInventoryMiniPreview(index);
+        }
+
+        function getLocalisation(id) {
+            if (data["locals"].hasOwnProperty(id)) {
                 return data["locals"][id];
-            } else if (/:\d$/.test(id)){
-                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ""))) return data["locals"][id.replace(/:\d$/, "")];
-                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ":1"))) return data["locals"][id.replace(/:\d$/, ":1")];
-                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ":2"))) return data["locals"][id.replace(/:\d$/, ":2")];
-                if(data["locals"].hasOwnProperty(id.replace(/:\d$/, ":3"))) return data["locals"][id.replace(/:\d$/, ":3")];
-            } else{
-                if(data["locals"].hasOwnProperty(id + ":1")) return data["locals"][id + ":1"];
-                if(data["locals"].hasOwnProperty(id + ":2")) return data["locals"][id + ":2"];
-                if(data["locals"].hasOwnProperty(id + ":3")) return data["locals"][id + ":3"];
+            } else if (/:\d$/.test(id)) {
+                if (data["locals"].hasOwnProperty(id.replace(/:\d$/, ""))) return data["locals"][id.replace(/:\d$/, "")];
+                if (data["locals"].hasOwnProperty(id.replace(/:\d$/, ":1"))) return data["locals"][id.replace(/:\d$/,
+                    ":1")];
+                if (data["locals"].hasOwnProperty(id.replace(/:\d$/, ":2"))) return data["locals"][id.replace(/:\d$/,
+                    ":2")];
+                if (data["locals"].hasOwnProperty(id.replace(/:\d$/, ":3"))) return data["locals"][id.replace(/:\d$/,
+                    ":3")];
+            } else {
+                if (data["locals"].hasOwnProperty(id + ":1")) return data["locals"][id + ":1"];
+                if (data["locals"].hasOwnProperty(id + ":2")) return data["locals"][id + ":2"];
+                if (data["locals"].hasOwnProperty(id + ":3")) return data["locals"][id + ":3"];
             }
             return undefined;
         }
 
-        async function getItemUrl(id){
+        async function getItemUrl(id) {
             let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
             let t = await fetch(url)
             if (t.status == 404) {
-                if (/:\d$/.test(id)){
+                if (/:\d$/.test(id)) {
                     let t2 = await fetch(url.replace(/__\d/, ""))
-                        if (t2.status == 404) {
-                            url = "/rsc/unknown_item.png"
-                        }else {
-                            url = url.replace(/__\d/, "");
-                        }
-                }else {
+                    if (t2.status == 404) {
+                        url = "/rsc/unknown_item.png"
+                    } else {
+                        url = url.replace(/__\d/, "");
+                    }
+                } else if (/_-?\d_-?\d/.test(id)) {
+                    let t2 = await fetch(url.replace(/_-?\d_-?\d/, ""))
+                    if (t2.status == 404) {
+                        url = "/rsc/unknown_item.png"
+                    } else {
+                        url = url.replace(/_-?\d_-?\d/, "");
+                    }
+                } else {
                     url = "/rsc/unknown_item.png"
                 }
             }
@@ -292,13 +385,13 @@
             console.log(url)
             let spl = id.split(":");
             let quality = "";
-            if(spl.length > 1){
+            if (spl.length > 1) {
                 let q = spl.slice(-1)[0];
-                if (q == "1"){
+                if (q == "1") {
                     quality = " copper";
-                } else if (q == "2"){
+                } else if (q == "2") {
                     quality = " silver";
-                } else if (q == "3"){
+                } else if (q == "3") {
                     quality = " gold";
                 }
             }
@@ -332,7 +425,7 @@
         <div class="itemremove">x</div>
     </div>
 </div>`
-            $(".items").append(item);
+            return item;
         }
 
         async function addPerk(id) {
@@ -388,6 +481,10 @@
                 onAutocomplete: updateAddPerkPreview
             });
 
+            $(".invtinfo").click(function () {
+                $(this).parent().toggleClass("active");
+            });
+
             //Bind functions to the add buttons
             $(".add.perk .btn.repairbtn").click(addPerkButton);
             $(".add:not(.perk) .btn.repairbtn").click(addItemButton);
@@ -423,9 +520,15 @@
                 e.parent().parent().addClass("toremove");
                 setTimeout(() => {
                     let index = e.parent().parent().index();
-                    e.parent().parent().remove();
                     //Update the data in our array, so the relative positions of items stay the same
-                    data["inventory"].splice(index, 1)
+                    if (e.parents(".additionalitems").length > 0) {
+                        let invindex = parseInt($(e).parents(".inventorycon").find(".invtinfo").attr("id").split(
+                            "inv")[1])
+                        data["additionalstorage"][invindex]["items"].splice(index, 1);
+                        setTimeout(function(){createInventoryMiniPreview(invindex)}, 100);
+
+                    } else data["inventory"].splice(index, 1)
+                    e.parent().parent().remove();
                 }, 520);
             });
 
@@ -434,8 +537,8 @@
                 let e = $(this);
                 let item = e.parent().parent()
                 let id;
-                if (item.hasClass("add")){
-                    id= item.find(".itemname input").val().split("(")[1].split(")")[0];
+                if (item.hasClass("add")) {
+                    id = item.find(".itemname input").val().split("(")[1].split(")")[0];
                 } else {
                     id = item.find(".itemid").text().split("");
                     id.shift();
@@ -443,15 +546,15 @@
                     id = id.join("");
                 }
                 let newid;
-                if(item.hasClass("copper")){
+                if (item.hasClass("copper")) {
                     newid = id.replace(/:\d$/, ":2");
                     item.removeClass("copper");
                     item.addClass("silver");
-                } else if(item.hasClass("silver")){
+                } else if (item.hasClass("silver")) {
                     newid = id.replace(/:\d$/, ":3");
                     item.removeClass("silver");
                     item.addClass("gold");
-                } else if(item.hasClass("gold")){
+                } else if (item.hasClass("gold")) {
                     newid = id.replace(/:\d$/, "");
                     item.removeClass("gold");
                 } else {
@@ -459,14 +562,14 @@
                     item.addClass("copper");
                 }
 
-                if (item.hasClass("add")){
+                if (item.hasClass("add")) {
                     console.log(id)
                     console.log(newid)
                     item.find(".itemname input").val(item.find(".itemname input").val().replace(id, newid));
                 } else {
-                    item.find(".itemid").text("("+newid+")");
+                    item.find(".itemid").text("(" + newid + ")");
                 }
-                
+
 
 
             });
@@ -511,7 +614,11 @@
             //Repair logic --> set the durability to 1 on a broken item
             $(".items").on("click", ".repairbtn", function () {
                 let e = $($(this).parents()[3]);
-                data["inventory"][e.index()]["durability"] = 1;
+                if (e.parents(".additionalitems").length > 0) {
+                    let invindex = parseInt($(this).parents(".inventorycon").find(".invtinfo").attr("id").split(
+                        "inv")[1])
+                    data["additionalstorage"][invindex]["items"][e.index()]["durability"] = 1;
+                } else data["inventory"][e.index()]["durability"] = 1;
                 e.find(".repairbtn").remove();
 
             });
@@ -533,15 +640,15 @@
                 }, 1000);
             })
 
-            $("#overwrite").click(function(){
+            $("#overwrite").click(function () {
                 startSaving("slot");
             })
 
-            $("#exportjson").click(function(){
+            $("#exportjson").click(function () {
                 startSaving("json");
             })
 
-            $("#exportdat").click(function(){
+            $("#exportdat").click(function () {
                 startSaving("dat");
             })
 
@@ -549,56 +656,91 @@
 
 
         //Handle the different save types
-        async function startSaving(type){
+        async function startSaving(type) {
 
             let t = canContinue();
-            if (t === true){
+            if (t === true) {
                 collectData();
                 let hashdata = window.location.hash.split("#")[1].split("|");
                 let b;
-                if (type == "slot"){
+                if (type == "slot") {
                     b = await eel.saveslot(data, hashdata[1], hashdata[2])();
-                } else if (type == "dat"){
+                } else if (type == "dat") {
                     b = await eel.savecustomsavefile(data, hashdata[1])();
-                } else if (type == "json"){
+                } else if (type == "json") {
                     b = await eel.savejsonsavefile(data, hashdata[1])();
                 }
 
-                if (b.hasOwnProperty("Error")){
-                    M.toast({ html: "The following Error occured: " + b["Error"] });
+                if (b.hasOwnProperty("Error")) {
+                    M.toast({
+                        html: "The following Error occured: " + b["Error"]
+                    });
                 } else {
-                    M.toast({ html: "The operation succeeded"});
-                } 
-            }else {
+                    M.toast({
+                        html: "The operation succeeded"
+                    });
+                }
+            } else {
                 M.toast({
-                            html: t
+                    html: t
                 });
             }
 
         }
 
+
         //Handle the click on the Add Item Button
-        function addItemButton() {
-            let val = $(".item.add:not(.perk) input").val();
+        async function addItemButton() {
+            let container = $(this).parent().parent().parent().parent();
+            let val = container.find("input").val();
             if (val.split("(").length > 1) {
                 let id = val.split("(")[1].split(")")[0];
                 if (gamedata["items"].indexOf(id) !== -1 && gamedata["items"].indexOf(id.replace(/:\d$/, ""))) {
-                    amount = parseInt($($(".item.add:not(.perk) input")[1]).val());
-                    //Check if the items don't exceed the inventory size
-                    if (data["inventory"].length < parseInt($("#invsize").val())) {
-                        addItem(id, amount, 1);
-                    } else {
-                        M.toast({
-                            html: "Your inventory only has " + $("#invsize").val() + " spaces!"
+                    amount = parseInt($(container.find("input")[1]).val());
+
+                    //Check if own inventory or storage inventory
+                    if ($(this).parents(".additionalitems").length > 0) {
+                        let invindex = parseInt($(this).parents(".inventorycon").find(".invtinfo").attr("id").split(
+                            "inv")[1])
+                        //Check if the items don't exceed the inventory size
+                        if (data["additionalstorage"][invindex]["items"].length < parseInt(container.parent().find(
+                                ".invsize").val())) {
+                            $("#inv" + invindex).parent().find(".items").append(await addItem(id, amount, 1));
+                        } else {
+                            M.toast({
+                                html: "This storage unit only has " + container.parent().find(".invsize").val() +
+                                    " spaces!"
+                            });
+                            return
+                        }
+
+                        data["additionalstorage"][invindex]["items"].push({
+                            "amount": amount,
+                            "id": id,
+                            "durability": 1
                         });
-                        return
+
+                        createInventoryMiniPreview(invindex);
+                    } else {
+                        //Check if the items don't exceed the inventory size
+                        if (data["inventory"].length < parseInt(container.parent().find(".invsize").val())) {
+                            $("form>.items").append(await addItem(id, amount, 1));
+                        } else {
+                            M.toast({
+                                html: "Your inventory only has " + container.parent().find(".invsize").val() +
+                                    " spaces!"
+                            });
+                            return
+                        }
+
+                        //Add the new item to the inventory variable
+                        data["inventory"].push({
+                            "amount": amount,
+                            "id": id,
+                            "durability": 1
+                        })
                     }
-                    //Add the new item to the inventory variable
-                    data["inventory"].push({
-                        "amount": amount,
-                        "id": id,
-                        "durability": 1
-                    })
+
                     return
                 }
             }
@@ -636,12 +778,13 @@
         }
 
         async function updateAddItemPreview() {
-            let val = $(".item.add:not(.perk) input").val();
+            console.log($(this.el))
+            let val = $(this.el).val();
             console.log(val);
             if (val.split("(").length > 1) {
                 let id = val.split("(")[1].split(")")[0];
                 let url = await getItemUrl(id);
-                $(".item.add:not(.perk) img").attr("src", url);
+                $(this.el).parents(".item").find("img").attr("src", url);
             }
         }
 
@@ -658,23 +801,33 @@
         }
 
         //Update the data in our data object, which wasn't updated when the user was editing the values
-        function collectData(){
+        function collectData() {
             data["r"]["cur"] = parseInt($("#red").val());
             data["g"]["cur"] = parseInt($("#green").val());
             data["b"]["cur"] = parseInt($("#blue").val());
-            data["money"] = parseInt($("#gold").val()) * 100 + parseInt($("#silver").val()) + parseInt($("#copper").val()) / 100;
+            data["money"] = parseInt($("#gold").val()) * 100 + parseInt($("#silver").val()) + parseInt($("#copper").val()) /
+                100;
             data["hp"] = parseInt($("#hp").val());
             data["energy"]["cur"] = parseInt($("#energy").val());
             data["inventory_size"]["cur"] = parseInt($("#invsize").val());
-            let items = $(".items .item");
-            for(let i = 0; i < items.length; i++){
+            let items = $("form>.items .item");
+            for (let i = 0; i < items.length; i++) {
                 data["inventory"][i]["amount"] = parseInt($(items[i]).find("input").val());
                 data["inventory"][i]["id"] = $(items[i]).find(".itemid").text().replace(/\(|\)/g, "");
+            }
+
+            for (let i = 0; i < data["additionalstorage"].length; i++){
+                data["additionalstorage"]["size"] = parseInt($("#inv"+i).parent().find(".invsize").val());
+                items =  $("#inv" + i).parent().find(".items .item");
+                for (let i2 = 0; i2 < items.length; i2++) {
+                    data["additionalstorage"][i]["items"][i2]["amount"] = parseInt($(items[i2]).find("input").val());
+                    data["additionalstorage"][i]["items"][i2]["id"] = $(items[i2]).find(".itemid").text().replace(/\(|\)/g, "");
+                }
             }
         }
 
         //Check if a item didn't autocomplete, so that the user doesn't save old ID's
-        function canContinue(){
+        function canContinue() {
             if ($(".currentlyediting").length > 0) return "Please autocomplete all Items before saving";
 
             return true;
@@ -685,7 +838,6 @@
             let info = window.location.hash.split("#")[1].split("|")
             getSaveFile(info);
         });
-
     </script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>

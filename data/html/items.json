@@ -122,8 +122,6 @@
 		"carrot_crop",
 		"carrot_seed",
 		"carved_wood",
-		"carved_wood:1",
-		"carved_wood:3",
 		"ceramic_1",
 		"ceramic_2",
 		"ceramic_3",
@@ -138,6 +136,7 @@
 		"chisel:chisel_1",
 		"chisel:chisel_2:3",
 		"clay",
+		"water",
 		"coal",
 		"coins",
 		"communion_cookies",
@@ -155,11 +154,8 @@
 		"dessert:pie",
 		"dessert:pie_1",
 		"dessert:pie_2",
-		"destroy_wd_fence",
-		"detail_1_2",
-		"detail_1_3",
+		"detail_1",
 		"detail_2",
-		"detail_2_2",
 		"detail_3",
 		"detail_trash",
 		"dough",
@@ -186,7 +182,6 @@
 		"fishing_rod_1",
 		"fishing_rod_2",
 		"fish_anchovy",
-		"fish_anchovy_fillet",
 		"fish_bream",
 		"fish_crucian_gold",
 		"fish_crucian_gold_fillet",
@@ -195,15 +190,12 @@
 		"fish_eel_fillet",
 		"fish_frog_green",
 		"fish_goldfish",
-		"fish_goldfish_fillet",
 		"fish_gudgeon",
-		"fish_gudgeon_fillet",
 		"fish_perch",
 		"fish_pike",
 		"fish_salmon",
 		"fish_sardine",
 		"fish_sturgeon",
-		"fish_sturgeon_fillet",
 		"fish_tilapia",
 		"fish_tuna",
 		"flask_green_l_plus",
@@ -494,7 +486,6 @@
 		"whetstone",
 		"white_paint",
 		"wood1",
-		"wood1_firewood",
 		"wood_balk_1",
 		"wood_constr_1",
 		"wood_fitch",
@@ -504,7 +495,6 @@
 		"book:book_hard",
 		"book:book_hard:2",
 		"book:book_hard:3",
-		"carved_wood:2",
 		"chapter:2",
 		"chisel:chisel_2",
 		"chisel:chisel_2:1",
@@ -532,7 +522,8 @@
 		"pumpkin_crop:2",
 		"pumpkin_seed",
 		"pumpkin_seed:2",
-		"rightful_citizen_paper"
+		"rightful_citizen_paper",
+		"restoration_instrument"
 	],
 	"perks": 
 	[
@@ -678,5 +669,14 @@
 	"Comment2": "Same as above",
 	"crafts": {
 
-	}
+	},
+	"Comment3": "There also seems to exist storage_1 as storage, but no idea what kind of game object that is",
+	"storage": [
+		"mf_box_stuff",
+		"chest",
+		"rack_alchemy",
+		"obj_church_scroll_cabinet",
+		"obj_church_bookcase",
+		"rack_organs"
+	]
 }

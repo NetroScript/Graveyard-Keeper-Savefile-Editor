@@ -23,6 +23,7 @@ with open("./data/version") as f:
     currentversion = f.read()
     newversion = currentversion
 
+
 def loadsettings():
     with open("./data/settings") as f:
         global options, newversion
@@ -30,11 +31,12 @@ def loadsettings():
         if options["checkforupdate"]:
             newversion = urlopen("https://raw.githubusercontent.com/NetroScript/Graveyard-Keeper-Savefile-Editor/master/data/version").read().decode()
 
+
 @eel.expose
 def getsavefiles():
     i = 1
     out = []
-
+    print("Looking for save files in the folder: " + options["path"])
     for file in os.listdir(options["path"]):
         if file.endswith(".info"):
             with open(os.path.join(options["path"], file)) as f:
@@ -225,6 +227,36 @@ def modifysave(data, shash):
         d["value"] = modifyvaluetype(shash, d["value"], data["inventory"][i]["amount"])
         i += 1
 
+    i2 = 0
+    i = 0
+    for _ in savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"]:
+        it = savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]
+
+        if it["obj_id"]["v"] in gamedata["storage"]:
+
+            difference = len(data["additionalstorage"][i2]["items"]) - len(it["-1126421579"]["v"]["15320842"]["v"])
+
+            if difference > 0:
+                while difference != 0:
+                    it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(it["-1126421579"]["v"]["15320842"]["v"][-1]))
+                    difference -= 1
+            if difference < 0:
+                while difference != 0:
+                    del it["-1126421579"]["v"]["15320842"]["v"][-1]
+                    difference += 1
+
+            it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0] = modifyvaluetype(shash, it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0], data["additionalstorage"][i2]["size"])
+
+            i3 = 0
+            for _ in it["-1126421579"]["v"]["15320842"]["v"]:
+                d = it["-1126421579"]["v"]["15320842"]["v"][i3]["v"]
+                d["id"] = modifyvaluetype(shash, d["id"], data["additionalstorage"][i2]["items"][i3]["id"])
+                d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["additionalstorage"][i2]["items"][i3]["durability"])
+                d["value"] = modifyvaluetype(shash, d["value"], data["additionalstorage"][i2]["items"][i3]["amount"])
+                i3 += 1
+            i2 += 1
+        i += 1
+
 
 # Made for the basic types, not made for Vector2, Vector3, ...
 # For those just process the original value (The encoder itself checks if Vector2_00 changed to f.e. Vector2_11
@@ -273,6 +305,7 @@ def modifyvaluetype(shash, value, newvalue):
     else:
         return newvalue
 
+
 @eel.expose
 def unloadsave(shash):
     shash = str(shash)
@@ -291,6 +324,7 @@ def unloadsave(shash):
             print("Unloading Save File")
         del savefiles[shash]
 
+
 def editablevalues(shash):
     data = savefiles[shash]
     obj = dict()
@@ -304,6 +338,7 @@ def editablevalues(shash):
     obj["relationships"] = []
     obj["inventory"] = []
     obj["bugs"] = {}
+    obj["additionalstorage"] = []
     mod = ["r", "g", "b", "inventory_size", "energy"]
 
     i = 0
@@ -324,15 +359,34 @@ def editablevalues(shash):
             obj[k] = {"v": k, "s": -1, "cur": 0}
 
     i = 0
-    for key in data["savedata"]["_inventory"]["v"]["15320842"]["v"]:
-        item = {}
-        d = data["savedata"]["_inventory"]["v"]["15320842"]["v"][i]["v"]
-        item["id"] = d["id"]["v"]
-        item["durability"] = d["_params"]["v"]["_durability"]["v"]
-        item["amount"] = d["value"]["v"]
-        obj["inventory"].append(item)
-        i+=1
+    # in the world game object with the id "storage_builddesk" your fame is stored - do we want to add an option to modify it?
+    for _ in data["savedata"]["map"]["v"]["_wgos"]["v"]:
+        it = data["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]
+
+        if it["obj_id"]["v"] in gamedata["storage"]:
+            inv = dict()
+            inv["type"] = it["obj_id"]["v"]
+            inv["items"] = getinventory(it["-1126421579"]["v"]["15320842"]["v"])
+            inv["size"] = it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0]["v"]
+            obj["additionalstorage"].append(inv)
+        i += 1
+
+    obj["inventory"] = getinventory(data["savedata"]["_inventory"]["v"]["15320842"]["v"])
+
     return obj
+
+
+def getinventory(inv):
+    i = 0
+    out = []
+    for _ in inv:
+        item = dict()
+        item["id"] = inv[i]["v"]["id"]["v"]
+        item["durability"] = inv[i]["v"]["_params"]["v"]["_durability"]["v"]
+        item["amount"] = inv[i]["v"]["value"]["v"]
+        out.append(item)
+        i += 1
+    return out
 
 
 @eel.expose
@@ -355,7 +409,6 @@ root.withdraw()
 
 @eel.expose
 def get_folder():
-    print("Test")
     options["path"] = filedialog.askdirectory(title="Select the savegame folder of Graveyard Keeper")
     return options["path"]
 

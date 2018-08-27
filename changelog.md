@@ -1,5 +1,19 @@
+0.1.2
+=====
+
+Added:
+ * You can now edit and view every storage unit (like trunks, chests, ...)
+ * The information about a new update available now also displays the changes
+ 
+
+Fixed:
+ * Some HTML formatting
+ * Some items names / icons, including but not limited to restoration tools, coal, clay, jointing, water, simple iron parts, complex iron parts, ...
+
+
+
 0.1.1
-================================
+=====
 
 Added:
  * Support for item qualities
@@ -10,4 +24,4 @@ Fixed:
  * Added some item id's
  * Fixed a typo in the Github URL leading to 404
  * The church quality and graveyard quality being swapped
- * Error whic happens when using the application on an early savegame
+ * Error which happens when using the application on an early savegame

@@ -453,3 +453,69 @@ form.s10.col.offset-s1.editsavedata {
 .slotchurch {
     padding: 0px !important;
 }
+
+.inventorycon {
+    background-color: #1b1b1b;
+    margin: 20px 0px;
+}
+
+.invtinfo {
+    text-align: center;
+    padding: 20px;
+    background-color: #131313;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.invtinfo::after {
+    content: "^";
+    font-weight: 800;
+    font-size: 180%;
+    position: absolute;
+    transition: all 0.5s;
+    right: calc(8.33333% + 30px);
+    transform: translateY(-15px) rotateZ(180deg)
+}
+
+.active .invtinfo::after {
+    content: "^";
+    transform: translateY(-5px) rotateZ(0deg)
+}
+
+.invt {
+    padding: 10px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.5s;
+}
+
+.active .invt {
+    max-height: 5000px;
+}
+
+.additionalitems .itemquality {
+    position: relative;
+}
+
+.additionalitems .active .itemquality {
+    position: absolute;
+}
+
+.inventoryminipreview img {
+    image-rendering: pixelated;
+    height: 24px;
+}
+
+.inventoryminipreview {
+    padding: 5px;
+}
+
+.changes {
+    background-color: #142729;
+    text-align: left;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 5px;
+    word-break: break-word;
+    white-space: pre-wrap;
+}

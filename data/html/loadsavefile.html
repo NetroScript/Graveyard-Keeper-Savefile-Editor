@@ -83,17 +83,18 @@
                     </li>
                     <li>
                         You are able change all the values in the editor, but especially values like items can't be perfectly recreated and there
-                        might be bugs with them if you add new items (Because I can't reproduce the specific item types
-                        which may contain specific values, the script uses the last item in your inventory, duplicates it and replace it's item ID, amount
-                        and durability). Additionally like the Wiki mentions in the article about save file editing, it might be that some of your changes don't 
-                        work because you didn't fulfill previous requirements.
+                        might be bugs with them if you add new items (Because I can't reproduce the specific item types which
+                        may contain specific values, the script uses the last item in your inventory, duplicates it and replace
+                        it's item ID, amount and durability). Additionally like the Wiki mentions in the article about save
+                        file editing, it might be that some of your changes don't work because you didn't fulfill previous
+                        requirements.
                     </li>
                     <li>
-                        If you change the energy or your hp to a value above 100, your maximal hp / energy is set to the same value, if you want to reset it again,
-                        just set your hp or energy again to 100.
+                        If you change the energy or your hp to a value above 100, your maximal hp / energy is set to the same value, if you want
+                        to reset it again, just set your hp or energy again to 100.
                     </li>
                     <li>
-                        If you find bugs or have feature requests (like an idea to add a functionality) feel free to report them on the 
+                        If you find bugs or have feature requests (like an idea to add a functionality) feel free to report them on the
                         <a href="https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor" target="_blank">Github Page</a>.
                     </li>
                 </ul>
@@ -156,15 +157,26 @@
         }
 
 
-        eel.expose(checkVersion);
-        function checkVersion(oldv, newv){
-            if(getVersionNum(oldv) < getVersionNum(newv))
-            {
- $(".con").prepend(`
+
+
+        async function setUpdateInformation(oldv, newv){
+            let t; 
+            await fetch( "https://raw.githubusercontent.com/NetroScript/Graveyard-Keeper-Savefile-Editor/master/changelog.md"
+            ).then(response => { response.text().then((txt) => { t = txt }) }) 
+            let changes = t.split(oldv)[0]; 
+            $(".con").prepend(`
 <div 1="" class="intro newv">
-    <h3>A new Version (`+newv+`) is available! Get it on
-        <a href="https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor"  target="_blank">Github</a>.</h3>
-</div>`)
+    <h3>A new Version (` + newv + `) is available! Get it on
+        <a href="https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor" target="_blank">Github</a>. There were the following changes since your version:</h3>
+    <div class="changes">${changes}</div>
+</div>` 
+            )
+        }
+
+        eel.expose(checkVersion);
+        function checkVersion(oldv, newv) {
+            if (getVersionNum(oldv) < getVersionNum(newv)) {
+                setUpdateInformation(oldv, newv);
             }
         }
 
@@ -172,8 +184,8 @@
             let p = v.split(".");
             let l = p.length;
             let out = 0;
-            for(let i = 0; i < l; i++){
-                out += Math.pow(10, 5 * (l - (i+1))) * parseFloat(p[i])
+            for (let i = 0; i < l; i++) {
+                out += Math.pow(10, 5 * (l - (i + 1))) * parseFloat(p[i])
             }
             return out;
         }
