@@ -39,7 +39,7 @@ In a future version maybe support for technologies is added.
 
 **OR**
 
-Download a compiled release for windows.
+Download a [compiled release](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/releases) for windows.
 
 ## Usage
 
