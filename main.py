@@ -187,11 +187,15 @@ def modifysave(data, shash):
     if data["energy"]["cur"] >= 100:
         savefiles[shash]["savedata"]["max_energy"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["max_energy"], data["energy"]["cur"])
 
+    for rel in data["relationships"]:
+        savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]], rel["cur"])
+
+
     perks = {}
     i = 0
     for _ in data["perks"]:
         perks[data["perks"][i]["v"]] = False
-        i +=1
+        i += 1
 
     for i in range(len(savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"])-1, -1, -1):
         if savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"][i-1]["v"] in gamedata["perks"]:
@@ -333,7 +337,7 @@ def editablevalues(shash):
     obj["hp"] = data["savedata"]["_inventory"]["v"]["_params"]["v"]["_hp"]["v"]
     obj["locals"] = id_to_name
     obj["perks"] = []
-    # The following 2 are currently just placeholders, but could be added in the future
+    # The following is currently just a placeholder, but could be added in the future
     obj["technologies1"] = []
     obj["relationships"] = []
     obj["inventory"] = []
@@ -346,7 +350,7 @@ def editablevalues(shash):
         key = k["v"]
         if key in gamedata["perks"]:
             obj["perks"].append({"v": key, "s": i})
-        elif key in gamedata["relationships"]:
+        elif key.startswith("_rel_npc_"):
             obj["relationships"].append({"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]})
         elif key in gamedata["technologies1"]:
             obj["technologies1"].append({"v": key, "s": i})

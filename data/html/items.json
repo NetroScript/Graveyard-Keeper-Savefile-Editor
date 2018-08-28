@@ -567,79 +567,79 @@
 		"p_writer_thief"
 	],
 	"relationships": {
-		"_rel_npc_blacksmith,": {
+		"_rel_npc_blacksmith": {
 			"name": "Blacksmith"
 		},
-		"_rel_npc_inquisitor,": {
+		"_rel_npc_inquisitor": {
 			"name": "Inquisitor"
 		},
-		"_rel_npc_tavern owner,": {
+		"_rel_npc_tavern owner": {
 			"name": "Horadric"
 		},
-		"_rel_npc_bishop,": {
+		"_rel_npc_bishop": {
 			"name": "Bishop"
 		},
-		"_rel_npc_royal_box,": {
+		"_rel_npc_royal_box": {
 			"name": "Royal Box"
 		},
-		"_rel_npc_astrologer,": {
+		"_rel_npc_astrologer": {
 			"name": "Astrologer"
 		},
-		"rel_npc_shepherd,": {
+		"rel_npc_shepherd": {
 			"name": "Shepard"
 		},
-		"_rel_npc_carpenter,": {
+		"_rel_npc_carpenter": {
 			"name": "Cory"
 		},
-		"_rel_npc_dig,": {
+		"_rel_npc_dig": {
 			"name": "Dig"
 		},
-		"_rel_npc_farmers son,": {
+		"_rel_npc_farmers son": {
 			"name": "Farmer's Son"
 		},
-		"_rel_npc_mrs chain,": {
+		"_rel_npc_mrs chain": {
 			"name": "Mrs. Chain"
 		},
-		"_rel_npc_actor,": {
+		"_rel_npc_actor": {
 			"name": "Actor"
 		},
-		"_rel_wood_cutter,": {
+		"_rel_wood_cutter": {
 			"name": "Wood Cutter"
 		},
-		"_rel_npc_engineer,": {
+		"_rel_npc_engineer": {
 			"name": "Tress"
 		},
-		"_rel_npc_miller,": {
+		"_rel_npc_miller": {
 			"name": "Miller"
 		},
-		"_rel_npc_captain,": {
+		"_rel_npc_captain": {
 			"name": "Captain"
 		},
-		"_rel_npc_farmers_daughter,": {
+		"_rel_npc_farmers_daughter": {
 			"name": "Farmers Daughter"
 		},
-		"_rel_npc_potter,": {
+		"_rel_npc_potter": {
 			"name": "Potter"
 		},
-		"_rel_npc_merchant,": {
+		"_rel_npc_merchant": {
 			"name": "Merchant"
 		},
-		"_rel_npc_cultist,": {
+		"_rel_npc_cultist": {
 			"name": "Cultist"
 		},
-		"_rel_npc_light_keeper,": {
+		"_rel_npc_light_keeper": {
 			"name": "Lighthouse Keeper"
 		},
-		"_rel_npc_actress,": {
+		"_rel_npc_actress": {
 			"name": "Actress"
 		},
-		"_rel_npc_shepherds_wife,": {
+		"_rel_npc_shepherds_wife": {
 			"name": "Rosa"
 		},
-		"_rel_npc_farmer,": {
+		"_rel_npc_farmer": {
 			"name": "Farmer"
 		},
-		"_rel_npc_witch,": {
+		"_rel_npc_witch": {
 			"name": "Witch"
 		}
 	},

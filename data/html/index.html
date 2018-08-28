@@ -209,6 +209,16 @@
         </div>
     </form>
 </div>
+<div class="intro lesspadding">Relationships:
+    <br>
+    <div class="note">[Note: This may not work in some cases, because it does not modify the underlying quest values. I could also assume, that it gets reset after you do a specific quest.]</div>
+</div>
+<div class="row">
+    <form class="s10 col offset-s1 editsavedata">
+        <div class="relationships">
+        </div>
+    </form>
+</div>
 <div class="intro lesspadding">Perks:<br><div class="note">[Note: After testing it seems this doesn't work, probably because you have to modify the underlying technologies, but I will leave it in, because it is already in anyways]</div></div>
 <div class="row">
     <form class="s10 col offset-s1 editsavedata">
@@ -254,6 +264,13 @@
             //Add additional inventories
             for (let i = 0; i < data["additionalstorage"].length; i++) {
                 await addInventory(data["additionalstorage"][i], i);
+            }
+
+            //Add relationships
+            for (let i = 0; i < data["relationships"].length; i++) {
+                await addRelationShip(data["relationships"][i]["v"].replace("_rel_", ""), data["relationships"][i][
+                    "cur"
+                ]);
             }
 
             //Add the current perks to the form
@@ -430,12 +447,7 @@
 
         async function addPerk(id) {
             //Check if we have a icon for the id, if not use default icon
-            let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
-            console.log(url)
-            let t = await fetch(url)
-            if (t.status == 404) {
-                url = "/rsc/unknown_item.png"
-            }
+            let url = await getItemUrl(id);
             //If our localisation has it, add a description to the perk
             let description = (data["locals"].hasOwnProperty(id + "_d")) ? data["locals"][id + "_d"] : "";
             //HTML of a single perk
@@ -458,6 +470,34 @@
     </div>
 </div>`
             $(".perks").append(item)
+        }
+
+        async function addRelationShip(id, amount) {
+
+            let url = await getItemUrl(id);
+            let relationship =
+                `
+<div class="item justadded">
+    <div class="npcimage">
+        <img src="${url}">
+    </div>
+    <div class="iteminfo">
+        <div class="itemname">${getLocalisation(id)}
+            <div class="itemid">(${id})</div>
+        </div>
+        <div class="itemmisc">
+            <div class="amount">
+                <div class="gameicon i-friendship">
+                    <img src="/rsc/Happiness_or_Friendship_Symbol.png">
+                </div>
+                <input type="number" class="validate valid" value="${amount}" max="100" min="0">
+                <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
+            </div>
+        </div>
+    </div>
+</div>`
+
+            $(".relationships").append(relationship)
         }
 
         //Bind events to the DOM after (most) content loaded
@@ -522,10 +562,13 @@
                     let index = e.parent().parent().index();
                     //Update the data in our array, so the relative positions of items stay the same
                     if (e.parents(".additionalitems").length > 0) {
-                        let invindex = parseInt($(e).parents(".inventorycon").find(".invtinfo").attr("id").split(
+                        let invindex = parseInt($(e).parents(".inventorycon").find(".invtinfo").attr(
+                            "id").split(
                             "inv")[1])
                         data["additionalstorage"][invindex]["items"].splice(index, 1);
-                        setTimeout(function(){createInventoryMiniPreview(invindex)}, 100);
+                        setTimeout(function () {
+                            createInventoryMiniPreview(invindex)
+                        }, 100);
 
                     } else data["inventory"].splice(index, 1)
                     e.parent().parent().remove();
@@ -628,7 +671,7 @@
             let sections = $(".intro.lesspadding");
             for (let i = 0; i < sections.length; i++) {
                 let s = $(sections[i]);
-                let str = s.text().slice(0, -1);
+                let str = s.text().split(":")[0];
                 $(".sidemenu").append("<div title=" + str + ">" + str[0].toUpperCase() + "</div>");
             }
 
@@ -816,12 +859,18 @@
                 data["inventory"][i]["id"] = $(items[i]).find(".itemid").text().replace(/\(|\)/g, "");
             }
 
-            for (let i = 0; i < data["additionalstorage"].length; i++){
-                data["additionalstorage"]["size"] = parseInt($("#inv"+i).parent().find(".invsize").val());
-                items =  $("#inv" + i).parent().find(".items .item");
+            let relationships = $(".relationships input")
+            for (let i = 0; i < relationships.length; i++) {
+                data["relationships"][i]["cur"] = parseInt($(relationships[i]).val());
+            }
+
+            for (let i = 0; i < data["additionalstorage"].length; i++) {
+                data["additionalstorage"]["size"] = parseInt($("#inv" + i).parent().find(".invsize").val());
+                items = $("#inv" + i).parent().find(".items .item");
                 for (let i2 = 0; i2 < items.length; i2++) {
                     data["additionalstorage"][i]["items"][i2]["amount"] = parseInt($(items[i2]).find("input").val());
-                    data["additionalstorage"][i]["items"][i2]["id"] = $(items[i2]).find(".itemid").text().replace(/\(|\)/g, "");
+                    data["additionalstorage"][i]["items"][i2]["id"] = $(items[i2]).find(".itemid").text().replace(
+                        /\(|\)/g, "");
                 }
             }
         }

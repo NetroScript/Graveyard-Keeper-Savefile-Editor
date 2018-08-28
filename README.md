@@ -11,6 +11,20 @@ Additionally you can export the loaded save to a .json file, which has a similar
 The Application uses your Chrome installation as a GUI.  
 **Meaning if you don't have Chrome (or Chromium) installed this application won't work.**
 
+## Currently Editable
+
+* Money
+* Red, green, blue technology points
+* HP
+* Energy
+* Your inventory size
+* Your inventory items
+* Inventories of all (or at least most) storage units
+* Your relationships with NPC's (only if you interacted with them before and have more than 0)
+
+Additionally you can edit your perks in theory, but it seems you also have to modify the underlying technologies for it, so your edits won't have effects.  
+In a future version maybe support for technologies is added.  
+
 ## Screenshot
 
 ![Preview](https://i.imgur.com/r6dZJbA.png)

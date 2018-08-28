@@ -519,3 +519,16 @@ form.s10.col.offset-s1.editsavedata {
     word-break: break-word;
     white-space: pre-wrap;
 }
+
+.npcimage img {
+    width: 100px;
+    image-rendering: pixelated;
+}
+
+.relationships .itemmisc {
+    flex: 1;
+}
+
+.relationships .itemname {
+    flex: none;
+}

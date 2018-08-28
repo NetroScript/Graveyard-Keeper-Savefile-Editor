@@ -1,3 +1,10 @@
+0.1.4
+=====
+
+Added:
+ * Support for modifying NPC Relationship values
+
+
 0.1.3
 =====
 
