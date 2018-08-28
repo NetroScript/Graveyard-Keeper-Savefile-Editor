@@ -1,3 +1,10 @@
+0.1.3
+=====
+
+Fixed:
+ * Bug causing some strings to be saved again in the wrong way. It is strongly advised to update because otherwise you will lose f.e. Comfort of Faith technology after every modification
+
+
 0.1.2
 =====
 
@@ -9,7 +16,6 @@ Added:
 Fixed:
  * Some HTML formatting
  * Some items names / icons, including but not limited to restoration tools, coal, clay, jointing, water, simple iron parts, complex iron parts, ...
-
 
 
 0.1.1

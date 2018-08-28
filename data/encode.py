@@ -77,8 +77,18 @@ class Encoder:
         elif curtype == Types.String_Empty:
             pass
         elif curtype == Types.String_Indexed:
-            #print(data)
-            stream.write("int32", serializer.index(data))
+
+            try:
+                indx = serializer.index(data)
+            except ValueError:
+                indx = 0
+                for i in range(len(serializer)):
+                    if type(serializer[i]) == dict:
+                        if data == serializer[i]["string"]:
+                            indx = i
+                            break
+
+            stream.write("int32", indx)
         elif curtype == Types.Int32_0:
             pass
         elif curtype == Types.Int32_1:
@@ -144,13 +154,18 @@ class Encoder:
         if string is None:
             stream.write("int32", -1)
             return
-        stream.write("int32", len(string))
-        for char in string:
-            n = ord(char)
-            if encrypt:
-                if n <= 255 and n != 0 and n != 109:
-                    n ^= 0x6D
-            stream.write("uint8", n)
+        if type(string) == dict:
+            stream.write("int32", string["length"])
+            for byte in string["buffer"]:
+                stream.write("int8", byte)
+        else:
+            stream.write("int32", len(string))
+            for char in string:
+                n = ord(char)
+                if encrypt:
+                    if n <= 255 and n != 0 and n != 109:
+                        n ^= 0x6D
+                stream.write("uint8", n)
     
     def insertserializer(self, stream, serializer):
         pos = stream.file.tell()

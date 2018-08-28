@@ -13,7 +13,7 @@ The Application uses your Chrome installation as a GUI.
 
 ## Screenshot
 
-![Preview](https://i.imgur.com/P5izmMi.png)
+![Preview](https://i.imgur.com/r6dZJbA.png)
 
 ## Installation
 
@@ -58,3 +58,23 @@ Notably all the image files in the /data/html/rsc folder. These are by [Lazy Bea
 Additionally [jQuery](https://jquery.com/) and [Materialize](https://materializecss.com/) are also used. Their original licenses are still included.
 This application uses extracted strings like f.e. localisation files. These are also by [Lazy Bear Games](http://lazybeargames.com/) and might be incorrect. (Because of my horrible way of extracting them)  
 If you find any bugs / mistakes, feel free to open issues, or if you know how to fix it yourself, feel free to create a pull request.
+
+## Building
+
+For those interested, here is the command I use to generate the folder which I then zip and upload as release:
+
+(I have this saved as build.bat in the same folder)
+
+```batch
+python -m eel main.py "./data/html" --onefile -n "Graveyard Keeper Savefile Editor" -i "./data/html/favicon.ico" --exclude PyQt5 --exclude win32com --exclude pydoc --exclude lib2to3 -y 
+
+mkdir distr
+copy "%cd%\dist\Graveyard Keeper Savefile Editor.exe" "%cd%\distr\Graveyard Keeper Savefile Editor.exe" /Y
+mkdir "./distr/data"
+mkdir "./distr/data/html"
+copy "%cd%\data\hashes" "%cd%\distr\data\hashes" /Y
+copy "%cd%\data\locals.json" "%cd%\distr\data\locals.json" /Y
+copy "%cd%\data\version" "%cd%\distr\data\version" /Y
+copy "%cd%\data\html\items.json" "%cd%\distr\data\html\items.json" /Y
+copy "%cd%\data\html\favicon.ico" "%cd%\distr\data\html\favicon.ico" /Y
+```

@@ -162,7 +162,9 @@ class Decoder:
             # buffer.append(int.from_bytes(stream.read("char"), byteorder="little"))
             buffer.append(stream.read("int8"))
         l = stream.file.tell() - beginning
-        prefix(buffer, stream, beginning, l)
+
+        # We now add buffers and the length of the read to a special object, so we can save the orignal buffer when encoding again
+        specialread = prefix(buffer, stream, beginning, l)
 
         # print(num4)
         if encrypt:
@@ -180,6 +182,10 @@ class Decoder:
             out += str(char)
        
         out = postfix(out, stream, buffer)
+
+        if type(specialread) == dict:
+            out = {"string": out, "length": specialread["length"], "buffer": specialread["buffer"]}
+
         #print(out)
 
         return out
