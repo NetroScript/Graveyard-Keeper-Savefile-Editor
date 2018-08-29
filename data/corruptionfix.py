@@ -11,12 +11,10 @@ def prefix(buffer, stream, beginning, num):
         buffer.append(stream.read("int8"))
         return {"length": length, "buffer": buffer[:]}
     if str(buffer).endswith("-47]"):
-        stream.file.seek(beginning + num+1)
-        return {"length": length, "buffer": buffer[:]}
+        return {"length": length, "buffer": buffer[:] + [stream.read("int8")]}
 
     if str(buffer).startswith("[45, -47, -127,") or str(buffer).startswith("[-47, -127, 1") or str(buffer).startswith("[0, -47, -127,"):
         buffer.append(stream.read("int8"))
-        stream.file.seek(beginning + num+1)
         return {"length": length, "buffer": buffer[:]}
 
     return False

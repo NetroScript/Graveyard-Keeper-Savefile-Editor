@@ -1,3 +1,11 @@
+0.1.5
+=====
+
+Fixed:
+
+* A mistake on my side which partly breaks your save file, which was introduced in 9c8be820dba71381a4e4fce4ed64813a39881400 - It is only a small change but an own release because it breaks save files. If your save file was broken by this bug, leave me a message because the fix is rather simple (it is just adding a byte at a specific location).
+
+ 
 0.1.4
 =====
 
