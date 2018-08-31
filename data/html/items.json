@@ -448,7 +448,6 @@
 		"stick",
 		"stone_plate_1",
 		"stone_plate_2",
-		"stone_plate_2_2",
 		"stone_plate_2_3",
 		"stone_plate_3",
 		"story",
@@ -517,6 +516,7 @@
 		"restoration_instrument",
 		"wooden_plank",
 		"quest_fake_coins"
+		"scroll_blue"
 	],
 	"perks": 
 	[
