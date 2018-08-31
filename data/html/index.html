@@ -164,7 +164,10 @@
         </div>
     </form>
 </div>
-<div class="intro lesspadding">Inventory:</div>
+<div class="intro lesspadding">Inventory:
+<br>
+<div class="note">[Note: Only use qualities on items which have them and don't set no quality on items which have qualities, otherwise that will cause issues within the game.]</div>
+</div>
 <div class="row">
     <form class="s10 col offset-s1 editsavedata">
         <div class="row">
@@ -636,7 +639,7 @@
                     let val = $(e).find("input").val();
                     console.log(val);
                     if (val.split("(").length > 1) {
-                        let id = val.split("(")[1].split(")")[0];
+                        let id = val.split("(").pop().split(")")[0];
                         let url = await getItemUrl(id);
                         M.Autocomplete.getInstance($(e).find(".itemname input")).destroy();
                         $(e).parent().find("img").attr("src", url);
@@ -737,7 +740,7 @@
             let container = $(this).parent().parent().parent().parent();
             let val = container.find("input").val();
             if (val.split("(").length > 1) {
-                let id = val.split("(")[1].split(")")[0];
+                let id = val.split("(").pop().split(")")[0];
                 if (gamedata["items"].indexOf(id) !== -1 && gamedata["items"].indexOf(id.replace(/:\d$/, ""))) {
                     amount = parseInt($(container.find("input")[1]).val());
 
@@ -796,7 +799,7 @@
         function addPerkButton() {
             let val = $(".item.add.perk input").val();
             if (val.split("(").length > 1) {
-                let id = val.split("(")[1].split(")")[0];
+                let id = val.split("(").pop().split(")")[0];
                 if (gamedata["perks"].indexOf(id) !== -1) {
                     for (let i = 0; i < data["perks"].length; i++) {
                         if (data["perks"][i]["v"] == id) {
@@ -825,7 +828,7 @@
             let val = $(this.el).val();
             console.log(val);
             if (val.split("(").length > 1) {
-                let id = val.split("(")[1].split(")")[0];
+                let id = val.split("(").pop().split(")")[0];
                 let url = await getItemUrl(id);
                 $(this.el).parents(".item").find("img").attr("src", url);
             }
@@ -835,7 +838,7 @@
             let val = $(".item.add.perk input").val()
             console.log(val)
             if (val.split("(").length > 1) {
-                let id = val.split("(")[1].split(")")[0];
+                let id = val.split("(").pop().split(")")[0];
                 let url = await getItemUrl(id);
                 $(".item.add.perk img").attr("src", url)
                 if (data["locals"].hasOwnProperty(id + "_d")) $(".item.add.perk .amount").text(data["locals"][id + "_d"])
