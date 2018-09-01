@@ -137,9 +137,6 @@
 		"coal",
 		"coins",
 		"communion_cookies",
-		"cover_1",
-		"cover:cover_1",
-		"cover:cover_hard",
 		"crop_waste",
 		"cup_beer",
 		"cup_mead",
@@ -505,7 +502,11 @@
 		"wooden_plank",
 		"quest_fake_coins",
 		"quest_instruction_snake",
-		"scroll_blue"
+		"scroll_blue",
+		"cover:cover_1"
+		"cover:cover_hard:1",
+		"cover:cover_hard:2",
+		"cover:cover_hard:3"
 		
 	],
 	"perks": 
