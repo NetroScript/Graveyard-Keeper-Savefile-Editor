@@ -2,7 +2,7 @@ Graveyard-Keeper-Savefile-Editor
 ================================
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a save editor for Graveyard Keeper.  
+This is a save editor for [Graveyard Keeper](https://store.steampowered.com/app/599140/Graveyard_Keeper/).  
 
 It can load and save *.dat files.  
 Additionally you can export the loaded save to a .json file, which has a similar structure to the original .json save files.  
@@ -71,7 +71,7 @@ In the folder where you have the .exe file, Shift + Rightclick in a free space a
 ## Notice
 
 This repository contains content which I do not own.  
-Notably all the image files in the /data/html/rsc folder. These are by [Lazy Bear Games](http://lazybeargames.com/). And were (to big parts) extracted from the [Wiki](https://graveyardkeeper.gamepedia.com/Graveyard_Keeper_Wiki) (for information on how I did it, check misc.py)  
+Notably all the image files in the /data/html/rsc folder. These are by [Lazy Bear Games](http://lazybeargames.com/). And were (to big parts) extracted from the [Wiki](https://graveyardkeeper.gamepedia.com/Graveyard_Keeper_Wiki) (for information on how I did it, check [misc.py](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/0.1.0/data/misc.py))  
 Additionally [jQuery](https://jquery.com/) and [Materialize](https://materializecss.com/) are also used. Their original licenses are still included.
 This application uses extracted strings like f.e. localisation files. These are also by [Lazy Bear Games](http://lazybeargames.com/) and might be incorrect. (Because of my horrible way of extracting them)  
 If you find any bugs / mistakes, feel free to open issues, or if you know how to fix it yourself, feel free to create a pull request.

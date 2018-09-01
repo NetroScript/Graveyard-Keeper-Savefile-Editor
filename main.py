@@ -1,4 +1,4 @@
-from data.types import id_to_name, gamedata, Types
+from data.types import id_to_name, gamedata, Types, fallback_item
 from tkinter import Tk
 from tkinter import filedialog
 import eel
@@ -216,7 +216,10 @@ def modifysave(data, shash):
 
     if difference > 0:
         while difference != 0:
-            savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"].append(deepcopy(savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"][-1]))
+            if len(savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"]) > 0:
+                savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"].append(deepcopy(savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"][-1]))
+            else:
+                savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"].append(deepcopy(fallback_item))
             difference -= 1
     if difference < 0:
         while difference != 0:
@@ -242,7 +245,10 @@ def modifysave(data, shash):
 
             if difference > 0:
                 while difference != 0:
-                    it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(it["-1126421579"]["v"]["15320842"]["v"][-1]))
+                    if len(it["-1126421579"]["v"]["15320842"]["v"]) > 0:
+                        it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(it["-1126421579"]["v"]["1532+0842"]["v"][-1]))
+                    else:
+                        it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(fallback_item))
                     difference -= 1
             if difference < 0:
                 while difference != 0:
