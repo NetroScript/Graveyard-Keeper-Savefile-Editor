@@ -394,7 +394,6 @@
 		"recipe_Pies",
 		"recipe_Sweet",
 		"recipe_Veg",
-		"red_wine",
 		"repair_mrb",
 		"repair_stn",
 		"repair_stn_d",
@@ -505,7 +504,11 @@
 		"wooden_plank",
 		"quest_fake_coins",
 		"quest_instruction_snake",
-		"scroll_blue"
+		"scroll_blue",
+		"bottle_red_vine:1",
+		"bottle_red_vine:2",
+		"bottle_red_vine:3"
+		
 	],
 	"perks": 
 	[
