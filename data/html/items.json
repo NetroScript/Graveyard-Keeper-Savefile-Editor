@@ -65,8 +65,9 @@
 		"booze_from_bottle_red_vine_3",
 		"bottle_apple_braga",
 		"bottle_booz_xxx",
-		"bottle_red_vine",
-		"bottle_red_vine_2",
+		"bottle_red_vine:1",
+		"bottle_red_vine:2",
+		"bottle_red_vine:3",
 		"bowl_lentil",
 		"bowl_pumpkin",
 		"brain_dark",
@@ -504,10 +505,7 @@
 		"wooden_plank",
 		"quest_fake_coins",
 		"quest_instruction_snake",
-		"scroll_blue",
-		"bottle_red_vine:1",
-		"bottle_red_vine:2",
-		"bottle_red_vine:3"
+		"scroll_blue"
 		
 	],
 	"perks": 
