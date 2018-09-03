@@ -584,7 +584,7 @@
                 let item = e.parent().parent()
                 let id;
                 if (item.hasClass("add")) {
-                    id = item.find(".itemname input").val().split("(")[1].split(")")[0];
+                    id = item.find(".itemname input").val().split("(").pop().split(")")[0];
                 } else {
                     id = item.find(".itemid").text().split("");
                     id.shift();
@@ -829,6 +829,19 @@
             console.log(val);
             if (val.split("(").length > 1) {
                 let id = val.split("(").pop().split(")")[0];
+                let spl = id.split(":");
+                if (spl.length > 1) {
+                    let q = spl.slice(-1)[0];
+                    if (q == "1") {
+                        $(this.el).parents(".item").attr("class", "item add copper");
+                    } else if (q == "2") {
+                        $(this.el).parents(".item").attr("class", "item add silver");
+                    } else if (q == "3") {
+                        $(this.el).parents(".item").attr("class", "item add gold");
+                    }
+                } else {
+                    $(this.el).parents(".item").attr("class", "item add");
+                }
                 let url = await getItemUrl(id);
                 $(this.el).parents(".item").find("img").attr("src", url);
             }

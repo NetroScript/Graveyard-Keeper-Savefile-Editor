@@ -1,3 +1,17 @@
+0.1.6
+=====
+
+Fixed:
+
+* Items which contain `(` in their names
+* Many items
+  * Removing / adding item names according to their qualities
+  * Deleting item images which are not really needed
+  * Adding new items to the editor autocomplete (Wooden planks, Fake coins, Instructions for the key, Cleric's Beginner's Guide)
+  * Adding some missing images (of items)
+  * Fixing some names of items
+* Save issues when the inventory was empty
+ 
 0.1.5
 =====
 

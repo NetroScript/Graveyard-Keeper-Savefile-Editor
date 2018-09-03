@@ -43,3 +43,137 @@ with open("./data/locals.json") as f:
 
 with open("./data/html/items.json") as f:
     gamedata = load(f)
+
+fallback_item = {
+    "type": 250,
+    "v": {
+        "value": {
+            "type": 3,
+            "v": 6
+        },
+        "linked_id": {
+            "type": 3,
+            "v": -1
+        },
+        "self_chance": {
+            "type": 250,
+            "v": {
+                "_simpified_float": {
+                    "type": 18,
+                    "v": 0
+                },
+                "_simplified": {
+                    "type": 2,
+                    "v": False
+                },
+                "_expression": {
+                    "type": 11,
+                    "v": ""
+                },
+                "default_value": {
+                    "type": 18,
+                    "v": 0
+                }
+            }
+        },
+        "15320842": {
+            "type": 100,
+            "v": []
+        },
+        "equipped_as": {
+            "type": 250,
+            "v": {
+                "1826761547": {
+                    "type": 16,
+                    "v": 0
+                }
+            }
+        },
+        "_params": {
+            "type": 250,
+            "v": {
+                "_hp": {
+                    "type": 18,
+                    "v": 0
+                },
+                "_progress": {
+                    "type": 18,
+                    "v": 0
+                },
+                "_durability": {
+                    "type": 19,
+                    "v": 1
+                },
+                "_res_v": {
+                    "type": 100,
+                    "v": []
+                },
+                "_money": {
+                    "type": 18,
+                    "v": 0
+                },
+                "_res_type": {
+                    "type": 100,
+                    "v": []
+                }
+            }
+        },
+        "chance_group": {
+            "type": 3,
+            "v": -1
+        },
+        "sub_name": {
+            "type": 11,
+            "v": ""
+        },
+        "is_unique": {
+            "type": 2,
+            "v": False
+        },
+        "max_value": {
+            "type": 0,
+            "v": None
+        },
+        "id": {
+            "type": 10,
+            "v": "wooden_plank"
+        },
+        "min_value": {
+            "type": 0,
+            "v": None
+        },
+        "common_chance": {
+            "type": 250,
+            "v": {
+                "_simpified_float": {
+                    "type": 18,
+                    "v": 0
+                },
+                "_simplified": {
+                    "type": 2,
+                    "v": False
+                },
+                "_expression": {
+                    "type": 11,
+                    "v": ""
+                },
+                "default_value": {
+                    "type": 18,
+                    "v": 0
+                }
+            }
+        },
+        "multiquality_items": {
+            "type": 100,
+            "v": []
+        },
+        "_serialize_depth": {
+            "type": 16,
+            "v": 0
+        },
+        "1068875674": {
+            "type": 11,
+            "v": ""
+        }
+    }
+}
