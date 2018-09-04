@@ -360,7 +360,7 @@ def editablevalues(shash):
             obj["relationships"].append({"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]})
         elif key in gamedata["technologies1"]:
             obj["technologies1"].append({"v": key, "s": i})
-        elif key in mod:
+        elif key in mod and key not in obj:
             obj[key] = {"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]}
         i += 1
 
