@@ -493,7 +493,7 @@
 		"quest_fake_coins",
 		"quest_instruction_snake",
 		"scroll_blue",
-		"cover:cover_1"
+		"cover:cover_1",
 		"cover:cover_hard:1",
 		"cover:cover_hard:2",
 		"cover:cover_hard:3",
@@ -503,7 +503,6 @@
 		"silver_elexir",
 		"spider_web",
 		"necronomicon"
-		
 	],
 	"perks": 
 	[

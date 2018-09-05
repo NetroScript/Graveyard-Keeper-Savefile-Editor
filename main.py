@@ -246,7 +246,7 @@ def modifysave(data, shash):
             if difference > 0:
                 while difference != 0:
                     if len(it["-1126421579"]["v"]["15320842"]["v"]) > 0:
-                        it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(it["-1126421579"]["v"]["1532+0842"]["v"][-1]))
+                        it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(it["-1126421579"]["v"]["15320842"]["v"][-1]))
                     else:
                         it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(fallback_item))
                     difference -= 1
@@ -360,7 +360,7 @@ def editablevalues(shash):
             obj["relationships"].append({"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]})
         elif key in gamedata["technologies1"]:
             obj["technologies1"].append({"v": key, "s": i})
-        elif key in mod:
+        elif key in mod and key not in obj:
             obj[key] = {"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]}
         i += 1
 
