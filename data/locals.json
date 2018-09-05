@@ -1519,6 +1519,7 @@
 	"npc_shepherds_wife": "Rosa",
 	"desc_npc_mrs chain": "Beloved wife of the tavern keeper.",
 	"jelly_slug_blue": "Blue jelly",
+	"jelly_slug_black": "Black Jelly",
 	"box_vegetables_silver": "Box of vegetables",
 	"skulls_on_column": "Skulls in a column",
 	"b_skull_d": "(Advertising) All deceased are welcome in your graveyard! ",
@@ -1938,5 +1939,6 @@
 	"fish_crucian_gold_fillet": "Blue fish fillet",
 	"hiccup_grass": "Hiccup-grass",
 	"Master of alchemy": "Master of Alchemy",
-	"necronomicon": "Necronomicon"
+	"necronomicon": "Necronomicon",
+	"recipe_pot_speed": "Recipe: Speed Potion"
 }
