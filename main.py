@@ -26,10 +26,13 @@ with open("./data/version") as f:
 
 def loadsettings():
     with open("./data/settings") as f:
-        global options, newversion
+        global options, newversion, web_app_options
         options = json.load(f)
         if options["checkforupdate"]:
             newversion = urlopen("https://raw.githubusercontent.com/NetroScript/Graveyard-Keeper-Savefile-Editor/master/data/version").read().decode()
+        if "port" not in options:
+            options["port"] = 0
+        web_app_options["port"] = options["port"]
 
 
 @eel.expose
@@ -407,7 +410,7 @@ def siteloaded():
 
 web_app_options = {
     'mode': "chrome-app",
-    'port': 8005,
+    'port': 0,
     'chromeFlags': ["--window-size=800,1000"]
 }
 
@@ -424,20 +427,33 @@ def get_folder():
 
 
 @eel.expose
-def set_settings(path, check):
+def set_settings(path, check, port):
     options["path"] = path
     options["checkforupdate"] = check
+    options["port"] = port;
     with open("./data/settings", "w") as f:
         json.dump(options, f)
     return True
 
 
-if __name__ == "__main__":
+@eel.expose
+def get_settings():
+    return options
 
-    eel.init("./data/html")
 
-    if os.path.isfile("./data/settings"):
-        loadsettings()
-        eel.start("loadsavefile.html", options=web_app_options)
-    else:
-        eel.start("no settings.html", options=web_app_options)
+try:
+
+    if __name__ == "__main__":
+
+        eel.init("./data/html")
+
+        if os.path.isfile("./data/settings"):
+            loadsettings()
+            eel.start("loadsavefile.html", options=web_app_options)
+        else:
+            eel.start("no settings.html", options=web_app_options)
+except Exception as e:
+    print("Following exception occured")
+    print(format_exc())
+    input("Press Enter to close the application")
+    exit()
