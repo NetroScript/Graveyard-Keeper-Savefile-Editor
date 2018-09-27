@@ -36,19 +36,19 @@
     </main>
     <footer></footer>
     <script>
-        //There is no intended right click behaviour, so let's disable it
+        // There is no intended right click behaviour, so let's disable it
         $(document).contextmenu(function (e) {
             e.preventDefault()
         })
 
-        //Setup global variables
+        // Setup global variables
         let gamedata = {}
         let autocompletenames = {}
         let autocompleteperks = {}
         let data = {};
         let error = false;
 
-        //Load the data depending on the save file type
+        // Load the data depending on the save file type
         async function getSaveFile(info) {
             if (info[0] == "slot") {
                 data = await eel.getsavefile(info[2], info[1])();
@@ -58,7 +58,7 @@
                 data = await eel.getcustomsavefile(info[1])();
             }
 
-            //Display an error, should there be one
+            // Display an error, should there be one
             if (data.hasOwnProperty("Error")) {
                 $(".con").html(`<div class="intro error"><h3>The following error occured: ` + data["Error"] +
                     `</h3></div>`)
@@ -66,19 +66,19 @@
                 console.log(data)
 
 
-                //When closing the save file editor, free memory
+                // When closing the save file editor, free memory
                 window.addEventListener("beforeunload", function (e) {
                     eel.unloadsave(window.location.hash.split("#")[1].split("|")[1]);
                 });
 
-                //Load the data about items, so we know which ids are items, which are perks and so on
+                // Load the data about items, so we know which ids are items, which are perks and so on
                 fetch('/items.json')
                     .then(function (response) {
                         return response.json();
                     })
                     .then(function (json) {
                         gamedata = json;
-                        //Generate the dictionaries used for the autocomplete
+                        // Generate the dictionaries used for the autocomplete
                         gamedata.items.forEach(i => {
                             autocompletenames[data["locals"][i] + " (" + i + ")"] = null
                         })
@@ -94,9 +94,9 @@
 
         }
 
-
+        // Create the HTML structure with the data we now have
         async function applyData() {
-            //The base HTML of the form
+            // The base HTML of the form (values which you can edit directly and are not in a list)
             d =
                 `
 <div class="intro lesspadding">Generic:</div>
@@ -255,28 +255,28 @@
     <div class="col s12"><div class="btn" id="exportjson">Export to a .json file</div></div>
     <div class="col s12"><div class="btn" id="exportdat">Export to a .dat file</div></div>
 </div>`
-            //Replace the loading bar with our currently loaded data
+            // Replace the loading bar with our currently loaded data
             $(".con").html(d)
 
-            //Add the items in the inventory to the form
+            // Add the items in the inventory to the form
             for (let i = 0; i < data["inventory"].length; i++) {
                 let it = data["inventory"][i];
                 $(".items").append(await addItem(it["id"], it["amount"], it["durability"]));
             }
 
-            //Add additional inventories
+            // Add additional inventories
             for (let i = 0; i < data["additionalstorage"].length; i++) {
                 await addInventory(data["additionalstorage"][i], i);
             }
 
-            //Add relationships
+            // Add relationships
             for (let i = 0; i < data["relationships"].length; i++) {
                 await addRelationShip(data["relationships"][i]["v"].replace("_rel_", ""), data["relationships"][i][
                     "cur"
                 ]);
             }
 
-            //Add the current perks to the form
+            // Add the current perks to the form
             for (let i = 0; i < data["perks"].length; i++) {
                 await addPerk(data["perks"][i]["v"]);
             }
@@ -284,14 +284,17 @@
 
         }
 
+        // For a specific inventory generate the preview images by copying every item icon and putting it as small version in a different container
         function createInventoryMiniPreview(index) {
             $("#inv" + index).parent().find(".inventoryminipreview").html("");
             $("#inv" + index).parent().find(".items img").clone().appendTo($("#inv" + index).parent().find(
                 ".inventoryminipreview"));
         }
 
+        // Add an additional storage to the list
         async function addInventory(inventory, index) {
 
+            // The names of the possible id's
             let types = {
                 "mf_box_stuff": "(Trunk)",
                 "chest": "(Chest)",
@@ -301,7 +304,9 @@
                 "rack_organs": "(Mortuary rack)",
             }
             let type = "";
+            // If we have a name for it, we add it
             if (types.hasOwnProperty(inventory["type"])) type = types[inventory["type"]];
+            // The base HTML for a single additional Inventory
             let inv =
                 `
 <div class="inventorycon">
@@ -344,16 +349,21 @@
 </div>
 </div>
 </div>`
+            // Append this HTML to our container for additional storage inventories
             $(".additionalitems").append(inv);
 
+            // Add every item to the inventory
             for (let i = 0; i < inventory["items"].length; i++) {
                 $("#inv" + index).parent().find(".items").append(await addItem(inventory["items"][i]["id"], inventory[
                     "items"][i]["amount"], inventory["items"][i]["durability"]));
             }
-
+            
+            // Create a preview for that inventory (so it uses less page space)
             createInventoryMiniPreview(index);
         }
 
+        // Turn a specific ID into a name
+        // Here we have additional checks for item qualities
         function getLocalisation(id) {
             if (data["locals"].hasOwnProperty(id)) {
                 return data["locals"][id];
@@ -373,19 +383,26 @@
             return undefined;
         }
 
+        // Get the url to the item icon by id
         async function getItemUrl(id) {
+            // File names can't contain ":" thats why the files have "__" instead of ":" 
             let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
             let t = await fetch(url)
             if (t.status == 404) {
+                // If the file does not exist first check if it an item with a quality and then replace the quality with nothing
                 if (/:\d$/.test(id)) {
                     let t2 = await fetch(url.replace(/__\d/, ""))
+                    //If the file still doesn't exist use the unknown placeholder as icon
                     if (t2.status == 404) {
                         url = "/rsc/unknown_item.png"
                     } else {
                         url = url.replace(/__\d/, "");
                     }
-                } else if (/_-?\d_-?\d/.test(id)) {
+                } 
+                // Check if the file is an organ and then try again with the base name
+                else if (/_-?\d_-?\d/.test(id)) {
                     let t2 = await fetch(url.replace(/_-?\d_-?\d/, ""))
+                    //If the file still doesn't exist use the unknown placeholder as icon
                     if (t2.status == 404) {
                         url = "/rsc/unknown_item.png"
                     } else {
@@ -403,6 +420,8 @@
             //Check if we have a icon for the id, if not use default icon
             url = await getItemUrl(id);
             console.log(url)
+
+            //Check for a quality of the item
             let spl = id.split(":");
             let quality = "";
             if (spl.length > 1) {
@@ -448,6 +467,7 @@
             return item;
         }
 
+        //Function to add a single Perk to the list
         async function addPerk(id) {
             //Check if we have a icon for the id, if not use default icon
             let url = await getItemUrl(id);
@@ -475,9 +495,13 @@
             $(".perks").append(item)
         }
 
+        // Function to add a single Relationship to the list
+        // Amount is the current friendliness
         async function addRelationShip(id, amount) {
 
+            // Get the URL of the NPC
             let url = await getItemUrl(id);
+            // HTML for a single Relationship
             let relationship =
                 `
 <div class="item justadded">
@@ -499,52 +523,58 @@
         </div>
     </div>
 </div>`
-
+            // Add the HTML to the page
             $(".relationships").append(relationship)
         }
 
-        //Bind events to the DOM after (most) content loaded
+        // Bind events to the DOM after (most) content loaded
         function generateEvents() {
 
-            //If we are not loading from a savefile, remove the save to saveslot button
+            // If we are not loading from a savefile, remove the save to saveslot button
             if (window.location.hash.split("#")[1].split("|").length < 3) {
                 $("#overwrite").remove();
             }
 
-            //Setup autocomplete for add item
+            // Setup autocomplete for add item
             $('.add input.autocomplete.itemn').autocomplete({
                 data: autocompletenames,
                 minLength: 0,
                 onAutocomplete: updateAddItemPreview
             });
-            //Setup autocomplete for add perk
+            // Setup autocomplete for add perk
             $('.add input.autocomplete.perkn').autocomplete({
                 data: autocompleteperks,
                 minLength: 0,
                 onAutocomplete: updateAddPerkPreview
             });
 
+            // Toggle the additional storage to either have the full view with the capability to edit or to just see the items as small icons
             $(".invtinfo").click(function () {
                 $(this).parent().toggleClass("active");
             });
 
-            //Bind functions to the add buttons
+            // Bind functions to the add buttons
             $(".add.perk .btn.repairbtn").click(addPerkButton);
             $(".add:not(.perk) .btn.repairbtn").click(addItemButton);
 
-            //Remove a perk on click
+            // Remove a perk on click
             $(".perks").on("click", ".itemremove", function () {
                 let e = $(this);
+
+                // extract the id
                 let id = e.parent().parent().find(".itemid").text().split("");
                 id.shift();
                 id.pop();
                 id = id.join("");
 
+                // Timed functions to have a CSS animation
                 e.parent().parent().addClass("toremove");
                 setTimeout(() => {
+                    // Remove the HTML from the DOM
                     e.parent().parent().remove()
                 }, 520);
-                //Update the data in our array, so we don't have to check for it on save
+
+                // Update the data in our array, so we don't have to check for it on save
                 for (let i = 0; i < data["perks"].length; i++) {
                     if (data["perks"][i]["v"] == id) {
                         data["perks"].splice(i, 1);
@@ -553,27 +583,37 @@
                 }
             });
 
-            //Remove an item on click
+            // Remove an item on click
             $(".items").on("click", ".itemremove", function () {
                 let e = $(this);
+
+                // extract the id
                 let id = e.parent().parent().find(".itemid").text().split("");
                 id.shift();
                 id.pop();
                 id = id.join("");
+
                 e.parent().parent().addClass("toremove");
+                // Timed functions to have a CSS animation
                 setTimeout(() => {
                     let index = e.parent().parent().index();
-                    //Update the data in our array, so the relative positions of items stay the same
+                    // Update the data in our array, so the relative positions of items stay the same
+                    // We have 2 functions depending on if it is in the main inventory or in the inventory of an additional storage
+                    // Additional storage
                     if (e.parents(".additionalitems").length > 0) {
-                        let invindex = parseInt($(e).parents(".inventorycon").find(".invtinfo").attr(
-                            "id").split(
-                            "inv")[1])
+                        let invindex = parseInt(
+                            $(e).parents(".inventorycon").find(".invtinfo").attr("id").split("inv")[1]
+                            )
                         data["additionalstorage"][invindex]["items"].splice(index, 1);
+                        // Because items were removed we need to update the mini items preview
                         setTimeout(function () {
                             createInventoryMiniPreview(invindex)
                         }, 100);
 
-                    } else data["inventory"].splice(index, 1)
+                    }
+                    // Own inventory
+                    else data["inventory"].splice(index, 1)
+                    // Remove the HTML from the DOM
                     e.parent().parent().remove();
                 }, 520);
             });
@@ -582,7 +622,10 @@
             $(".items, .item.add").on("click", ".itemquality", function () {
                 let e = $(this);
                 let item = e.parent().parent()
+
+                // extract the id 
                 let id;
+                // The first in in the case of the field to add an item, because there we don't have an extra div which contains the id
                 if (item.hasClass("add")) {
                     id = item.find(".itemname input").val().split("(").pop().split(")")[0];
                 } else {
@@ -591,6 +634,8 @@
                     id.pop();
                     id = id.join("");
                 }
+
+                // create the new id based on the old id (->copper->silver->gold->nothing->)
                 let newid;
                 if (item.hasClass("copper")) {
                     newid = id.replace(/:\d$/, ":2");
@@ -608,6 +653,7 @@
                     item.addClass("copper");
                 }
 
+                // Change the itemid (again depending on if normal item name or if currently a input field)
                 if (item.hasClass("add")) {
                     console.log(id)
                     console.log(newid)
@@ -634,14 +680,19 @@
                 )
                 let x;
 
-                //The function changing the data, when an autocomplete is selected
+                // The function changing the data, when an autocomplete is selected
                 let d = async function () {
                     let val = $(e).find("input").val();
                     console.log(val);
                     if (val.split("(").length > 1) {
+                        // Get the item ID and URL
                         let id = val.split("(").pop().split(")")[0];
                         let url = await getItemUrl(id);
+
+                        // Destroy the Autocomplete Object
                         M.Autocomplete.getInstance($(e).find(".itemname input")).destroy();
+
+                        // Create new HTML
                         $(e).parent().find("img").attr("src", url);
                         $(e).find(".itemname").html(getLocalisation(id) + ' <div class="itemid">(' + id +
                             ')</div>');
@@ -649,7 +700,7 @@
                     }
 
                 };
-                //The logic for the autocomplete
+                // The logic for the autocomplete
                 $(this).find("input").autocomplete({
                     data: autocompletenames,
                     minLength: 0,
@@ -657,7 +708,7 @@
                 });
             });
 
-            //Repair logic --> set the durability to 1 on a broken item
+            // Repair logic --> set the durability to 1 on a broken item
             $(".items").on("click", ".repairbtn", function () {
                 let e = $($(this).parents()[3]);
                 if (e.parents(".additionalitems").length > 0) {
@@ -669,8 +720,10 @@
 
             });
 
-            //Create the side menu with the sections for quicker navigation
+            // Create the side menu with the sections for quicker navigation
             $("main").append('<div class="sidemenu"></div>');
+
+            // Automatically extract the possible sections and the start letter and add the full name on hover
             let sections = $(".intro.lesspadding");
             for (let i = 0; i < sections.length; i++) {
                 let s = $(sections[i]);
@@ -678,7 +731,7 @@
                 $(".sidemenu").append("<div title=" + str + ">" + str[0].toUpperCase() + "</div>");
             }
 
-            //Bind the event to scroll on click, we have to consider the zoom property, meaning we have to multiply by it, otherwise the offsets are wrong
+            // Bind the event to scroll on click, we have to consider the zoom property, meaning we have to multiply by it, otherwise the offsets are wrong
             $(".sidemenu div").click(function () {
                 $("html, body").animate({
                     scrollTop: $($(".intro.lesspadding")[$(this).index()])[0].offsetTop * parseFloat(
@@ -686,6 +739,8 @@
                 }, 1000);
             })
 
+
+            // Functions to initiate the saving the clicking the corresponding buttons
             $("#overwrite").click(function () {
                 startSaving("slot");
             })
@@ -701,14 +756,17 @@
         }
 
 
-        //Handle the different save types
+        // Handle the different save types
         async function startSaving(type) {
 
+            // Check if the user filled all fields and isn't currently editing an item name
             let t = canContinue();
             if (t === true) {
+                // Update the data from the form which wasn't updated yet
                 collectData();
                 let hashdata = window.location.hash.split("#")[1].split("|");
                 let b;
+                // Call the different python save functions with the save hash
                 if (type == "slot") {
                     b = await eel.saveslot(data, hashdata[1], hashdata[2])();
                 } else if (type == "dat") {
@@ -716,7 +774,8 @@
                 } else if (type == "json") {
                     b = await eel.savejsonsavefile(data, hashdata[1])();
                 }
-
+                
+                // On error show error, else show success
                 if (b.hasOwnProperty("Error")) {
                     M.toast({
                         html: "The following Error occured: " + b["Error"]
@@ -727,6 +786,7 @@
                     });
                 }
             } else {
+                // Show message why the user can't continue
                 M.toast({
                     html: t
                 });
@@ -735,7 +795,7 @@
         }
 
 
-        //Handle the click on the Add Item Button
+        // Handle the click on the Add Item Button
         async function addItemButton() {
             let container = $(this).parent().parent().parent().parent();
             let val = container.find("input").val();
@@ -744,11 +804,11 @@
                 if (gamedata["items"].indexOf(id) !== -1 && gamedata["items"].indexOf(id.replace(/:\d$/, ""))) {
                     amount = parseInt($(container.find("input")[1]).val());
 
-                    //Check if own inventory or storage inventory
+                    // Check if own inventory or storage inventory
                     if ($(this).parents(".additionalitems").length > 0) {
                         let invindex = parseInt($(this).parents(".inventorycon").find(".invtinfo").attr("id").split(
                             "inv")[1])
-                        //Check if the items don't exceed the inventory size
+                        // Check if the items don't exceed the inventory size
                         if (data["additionalstorage"][invindex]["items"].length < parseInt(container.parent().find(
                                 ".invsize").val())) {
                             $("#inv" + invindex).parent().find(".items").append(await addItem(id, amount, 1));
@@ -759,16 +819,18 @@
                             });
                             return
                         }
-
+                        
+                        // Add item
                         data["additionalstorage"][invindex]["items"].push({
                             "amount": amount,
                             "id": id,
                             "durability": 1
                         });
-
+                        
+                        // Update the item preview
                         createInventoryMiniPreview(invindex);
                     } else {
-                        //Check if the items don't exceed the inventory size
+                        // Check if the items don't exceed the inventory size
                         if (data["inventory"].length < parseInt(container.parent().find(".invsize").val())) {
                             $("form>.items").append(await addItem(id, amount, 1));
                         } else {
@@ -801,6 +863,7 @@
             if (val.split("(").length > 1) {
                 let id = val.split("(").pop().split(")")[0];
                 if (gamedata["perks"].indexOf(id) !== -1) {
+                    // Check if the perk is already added
                     for (let i = 0; i < data["perks"].length; i++) {
                         if (data["perks"][i]["v"] == id) {
                             M.toast({
@@ -809,6 +872,7 @@
                             return
                         }
                     }
+                    // Add the HTML of the perk
                     addPerk(id);
                     //Add the new perk to the perks variable
                     data["perks"].push({
@@ -823,12 +887,15 @@
             });
         }
 
+        // Function to update the item preview after change
         async function updateAddItemPreview() {
             console.log($(this.el))
             let val = $(this.el).val();
             console.log(val);
             if (val.split("(").length > 1) {
                 let id = val.split("(").pop().split(")")[0];
+
+                // Check if the quality changed
                 let spl = id.split(":");
                 if (spl.length > 1) {
                     let q = spl.slice(-1)[0];
@@ -842,11 +909,14 @@
                 } else {
                     $(this.el).parents(".item").attr("class", "item add");
                 }
+
+                // Update item icon url
                 let url = await getItemUrl(id);
                 $(this.el).parents(".item").find("img").attr("src", url);
             }
         }
 
+        // Function to update the preview of a perk
         async function updateAddPerkPreview() {
             let val = $(".item.add.perk input").val()
             console.log(val)
@@ -859,8 +929,10 @@
             }
         }
 
-        //Update the data in our data object, which wasn't updated when the user was editing the values
+        // Update the data in our data object, which wasn't updated when the user was editing the values
         function collectData() {
+
+            // Values which have their own field
             data["r"]["cur"] = parseInt($("#red").val());
             data["g"]["cur"] = parseInt($("#green").val());
             data["b"]["cur"] = parseInt($("#blue").val());
@@ -869,17 +941,21 @@
             data["hp"] = parseInt($("#hp").val());
             data["energy"]["cur"] = parseInt($("#energy").val());
             data["inventory_size"]["cur"] = parseInt($("#invsize").val());
+
+            // Iterate the items of the own inventory
             let items = $("form>.items .item");
             for (let i = 0; i < items.length; i++) {
                 data["inventory"][i]["amount"] = parseInt($(items[i]).find("input").val());
                 data["inventory"][i]["id"] = $(items[i]).find(".itemid").text().replace(/\(|\)/g, "");
             }
 
+            // Iterate all relationships
             let relationships = $(".relationships input")
             for (let i = 0; i < relationships.length; i++) {
                 data["relationships"][i]["cur"] = parseInt($(relationships[i]).val());
             }
 
+            // Iterate all additional storages and their items
             for (let i = 0; i < data["additionalstorage"].length; i++) {
                 data["additionalstorage"]["size"] = parseInt($("#inv" + i).parent().find(".invsize").val());
                 items = $("#inv" + i).parent().find(".items .item");
@@ -891,14 +967,14 @@
             }
         }
 
-        //Check if a item didn't autocomplete, so that the user doesn't save old ID's
+        // Check if a item didn't autocomplete, so that the user doesn't save old ID's
         function canContinue() {
             if ($(".currentlyediting").length > 0) return "Please autocomplete all Items before saving";
 
             return true;
         }
 
-        //Get the information of the save hash, save file type and possibly slot
+        // Get the information of the save hash, save file type and possibly slot
         $(document).ready(function () {
             let info = window.location.hash.split("#")[1].split("|")
             getSaveFile(info);

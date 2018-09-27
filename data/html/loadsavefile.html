@@ -113,6 +113,7 @@
     </main>
     <footer></footer>
     <script>
+        // Contextmenu is not needed, for that reason it is disabled
         $(document).contextmenu(function (e) {
             e.preventDefault()
         })
@@ -127,10 +128,14 @@
             return hash >>> 0;
         }
 
+        // Create the HTML for a single saveslot
         function buildSaveSlot(data) {
+            // Convert all values into strings
             for (k in data) {
                 data[k] = String(data[k])
             };
+
+            // The HTML for a single slot
             slot =
                 `<div class="saveslot" id="slot${data["num"]}">
     <div class="slotnum valign-wrapper"><div>${data["num"]}</div></div>
@@ -161,17 +166,20 @@
     </div>
 </div>`
 
+            // Append the HTML to the container
             $(".consaves").append(slot);
         }
 
 
 
-
+        // If there is a new version get the information about the new version in the changelog and display it
         async function setUpdateInformation(oldv, newv){
             let t; 
             await fetch( "https://raw.githubusercontent.com/NetroScript/Graveyard-Keeper-Savefile-Editor/master/changelog.md"
-            ).then(response => { response.text().then((txt) => { t = txt }) }) 
+            ).then(response => { response.text().then((txt) => { t = txt }) })
+            // Get only the new features out of the changelog 
             let changes = t.split(oldv)[0]; 
+            // Add the HTML to the DOM
             $(".con").prepend(`
 <div 1="" class="intro newv">
     <h3>A new Version (` + newv + `) is available! Get it on
@@ -181,6 +189,7 @@
             )
         }
 
+        // Allow python to call the function to display the new version if there is a new version
         eel.expose(checkVersion);
         function checkVersion(oldv, newv) {
             if (getVersionNum(oldv) < getVersionNum(newv)) {
@@ -188,6 +197,7 @@
             }
         }
 
+        // Turn the string of a version into a comparable number
         function getVersionNum(v) {
             let p = v.split(".");
             let l = p.length;
@@ -198,21 +208,29 @@
             return out;
         }
 
+        // When the page is loaded "tell" that the python application and then load the possible save files
         $(document).ready(function () {
             eel.siteloaded()()
             getSaveFiles();
         });
 
+        // When clicking on a load option handle that click
         $(".consaves").on("click", ".saveslot", function (e) {
             let el = $(e.currentTarget)
             let id = el.attr("id")
+
+            // Import a JSON file
             if (id == "importjson") {
                 window.open("/index.html#importjson|" + hash(String(Math.random())), '_blank',
                     'location=yes,height=1000,width=800,scrollbars=yes,status=yes,dependant=true');
-            } else if (id == "importdat") {
+            } 
+            // Import a .dat file
+            else if (id == "importdat") {
                 window.open("/index.html#importdat|" + hash(String(Math.random())), '_blank',
                     'location=yes,height=1000,width=800,scrollbars=yes,status=yes,dependant=true');
-            } else if (id.startsWith("slot")) {
+            } 
+            // Load a specific slot
+            else if (id.startsWith("slot")) {
                 slotnum = id.split("slot")[1];
                 window.open("/index.html#slot|" + hash($("#slot" + slotnum).text()) + "|" + slotnum, '_blank',
                     'location=yes,height=1000,width=800,scrollbars=yes,status=yes,dependant=true');
@@ -220,13 +238,17 @@
 
         })
 
+        // Function to load the save files and add them to the DOM
         async function getSaveFiles() {
             data = await eel.getsavefiles()()
             console.log(data)
+            // Remove the loading circle
             $(".consaves").html("");
+            // Add every save slot
             data.forEach(slot => {
                 buildSaveSlot(slot);
             });
+            // Add additional possibilities to load save data
             $(".consaves").append(
                 `<div class="saveslot extra" id="importjson">
 <div>Import a generated .json file</div>

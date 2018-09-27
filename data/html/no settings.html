@@ -3,6 +3,7 @@
 
 <head>
     <script>
+        // The default size of the Editor
         window.resizeTo(800, 1000)
     </script>
     <script src="/js/jquery-3.2.1.min.js"></script>
@@ -64,10 +65,13 @@
     </main>
     <footer></footer>
     <script>
+        // Contextmenu is not needed, for that reason it is disabled
         $(document).contextmenu(function(e){
             e.preventDefault()
         });
 
+        // On page load check if this is the first usage of the program (because settings doesn't exist) or if the user is modifying the settings again
+        // In the case of him modifying it again we change the info, title and load the settings
         $(document).ready(function(){
             if(window.location.hash == "#WithinApplication"){
                 $("title").text("Graveyard Keeper Savefile Editor | Settings");
@@ -75,14 +79,19 @@
                 getSettings();
             }
         });
-
+        
+        // Function to call the python function to select a folder for the save file.
         async function getFolder() {
             f = await eel.get_folder()();
             console.log(f);
             $("#path").val(f);
         }
+
+        // Function to save the settings in the python application
         async function saveSettings() {
             await eel.set_settings($("#path").val(), $("#updatesc").prop("checked"), parseInt($("#port").val()))();
+
+            // If we are editing the settings for the first time we get to the page where you can load the save files, otherwise this window is closed
             if(window.location.hash == "#WithinApplication"){
                 window.close()
             } else {
@@ -90,6 +99,7 @@
             }  
         }
 
+        // Load the settings from the python application and prefill the form
         async function getSettings() {
             let b = await eel.get_settings()();
             $("#path").val(b["path"]);
@@ -97,14 +107,17 @@
             $("#updatesc").prop("checked", b["checkforupdate"])
             $("#port").val(b["port"]);
         }
-
+        
+        // Bind the click of the button to the getFolder function
         $("#requestfile").click(function (e) {
             console.log("Loading Folder");
             e.preventDefault();
             getFolder();
         });
 
+        // Bind clicking on the Done button to saving
         $("#donebtn").click(function (e) {
+            // Additionally prevent saving if the folder path is not at least 5 characters long
             if($("#path").val().length <= 5){
                 M.toast({
                         html: "Please fill in a path"
