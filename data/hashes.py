@@ -1,4 +1,6 @@
+# An object to manage the numerical hashes and their string equivalent
 class Hashlist:
+
     def __init__(self, file):
         self.hash_to_name = {}
         self.name_to_hash = {}
@@ -6,8 +8,8 @@ class Hashlist:
         self.file = file
         self.__loadhashes()
 
-
     def __loadhashes(self):
+        # Load the hashes from our text file and save them to the objects
         with open(self.file) as f:
             lines = f.readlines()
         lines = [x.strip() for x in lines]

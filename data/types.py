@@ -2,6 +2,7 @@ from enum import IntEnum
 from json import load
 
 
+# The possible serialisation types the game uses and their binary value (as int)
 class Types(IntEnum):
     NullValue = 0,
     Bool_True = 1,
@@ -41,9 +42,11 @@ class Types(IntEnum):
 with open("./data/locals.json") as f:
     id_to_name = load(f)
 
+# Generic game information
 with open("./data/html/items.json") as f:
     gamedata = load(f)
 
+# A example item in the case of the inventory being empty and people wanting to add items to it
 fallback_item = {
     "type": 250,
     "v": {

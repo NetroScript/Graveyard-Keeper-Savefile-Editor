@@ -1,5 +1,6 @@
 import struct
 
+# An array to convert the different data types to the struct character and their byte length
 structtypes = {
         'int8': ['b', 1],
         'uint8': ['B', 1],
@@ -14,6 +15,8 @@ structtypes = {
         'char': ['s', 1]
 }
 
+
+# Read Binary Data
 class BinaryReader:
 
     def __init__(self, file):
@@ -25,6 +28,7 @@ class BinaryReader:
         return struct.unpack(form, val)[0]
 
 
+# Write Binary Data
 class BinaryWriter:
 
     def __init__(self, file):
