@@ -4,6 +4,9 @@ Graveyard-Keeper-Savefile-Editor
 
 This is a save editor for [Graveyard Keeper](https://store.steampowered.com/app/599140/Graveyard_Keeper/).  
 
+The python version works on Windows, Linux and macOS.
+For Windows there is a .exe version available too.
+
 It can load and save *.dat files.  
 Additionally you can export the loaded save to a .json file, which has a similar structure to the original .json save files.  
 (The difference is, that information about types of variables is saved in the file, meaning every value is wrapped in an object).  

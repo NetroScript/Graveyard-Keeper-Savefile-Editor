@@ -34,6 +34,59 @@
         </div>
 
     </main>
+    <div class="loadingmask valign-wrapper" style="display: none;">
+        <div class="loading">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer></footer>
     <script>
         // There is no intended right click behaviour, so let's disable it
@@ -44,9 +97,9 @@
         // Setup global variables
         let gamedata = {}
         let autocompletenames = {}
-        let autocompleteperks = {}
         let data = {};
         let error = false;
+        let imageurls = {};
 
         // Load the data depending on the save file type
         async function getSaveFile(info) {
@@ -81,9 +134,6 @@
                         // Generate the dictionaries used for the autocomplete
                         gamedata.items.forEach(i => {
                             autocompletenames[data["locals"][i] + " (" + i + ")"] = null
-                        })
-                        gamedata.perks.forEach(i => {
-                            autocompleteperks[data["locals"][i] + " (" + i + ")"] = null
                         })
                     });
 
@@ -162,6 +212,9 @@
                 </div>
             </div>
         </div>
+        <div class="row miscbuttons">
+            <div class="btn deldrops col s6 offset-s3">Remove all Drops</div>
+        </div>
     </form>
 </div>
 <div class="intro lesspadding">Inventory:
@@ -222,30 +275,10 @@
         </div>
     </form>
 </div>
-<div class="intro lesspadding">Perks:<br><div class="note">[Note: After testing it seems this doesn't work, probably because you have to modify the underlying technologies, but I will leave it in, because it is already in anyways]</div></div>
+<div class="intro lesspadding">Perks:<br><div class="note">[Note: You can only view perks here. You get them through technologies so get yourself the red, green and blue points if you want to add more.]</div></div>
 <div class="row">
     <form class="s10 col offset-s1 editsavedata">
         <div class="perks">
-        </div>
-        <p>Add perk:</p>
-        <div class="item add perk">
-            <div class="itemimage">
-                <img src="/rsc/unknown_item.png">
-            </div>
-            <div class="iteminfo">
-                <div class="itemname autocomplete">
-                    <div class="input-field col s12">
-                        <input type="text" class="autocomplete perkn">
-                    </div>
-                </div>
-                <div class="itemmisc">
-                    <div class="amount">
-                    </div>
-                    <div class="btncon">
-                        <div class="btn repairbtn">Add</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </form>
 </div>
@@ -257,6 +290,12 @@
 </div>`
             // Replace the loading bar with our currently loaded data
             $(".con").html(d)
+
+            // Hide the remove drops button of there are none
+            if (data["drops"].length == 0) $(".deldrops").hide();
+
+            // Show a loader because no events are applied to the buttons yet so the user knows he still has to wait
+            $(".loadingmask").fadeIn(500);
 
             // Add the items in the inventory to the form
             for (let i = 0; i < data["inventory"].length; i++) {
@@ -385,6 +424,11 @@
 
         // Get the url to the item icon by id
         async function getItemUrl(id) {
+
+            if(imageurls.hasOwnProperty(id)){
+                return imageurls[id];
+            }
+
             // File names can't contain ":" thats why the files have "__" instead of ":" 
             let url = "/rsc/" + id.replace(/:/g, "__") + ".png"
             let t = await fetch(url)
@@ -397,6 +441,7 @@
                         url = "/rsc/unknown_item.png"
                     } else {
                         url = url.replace(/__\d/, "");
+                        imageurls[id] = url;
                     }
                 } 
                 // Check if the file is an organ and then try again with the base name
@@ -407,11 +452,13 @@
                         url = "/rsc/unknown_item.png"
                     } else {
                         url = url.replace(/_-?\d_-?\d/, "");
+                        imageurls[id] = url;
                     }
                 } else {
                     url = "/rsc/unknown_item.png"
                 }
             }
+            imageurls[id] = url;
             return url;
         }
 
@@ -488,9 +535,6 @@
             </div>
         </div>
     </div>
-    <div class="valign-wrapper">
-        <div class="itemremove">x</div>
-    </div>
 </div>`
             $(".perks").append(item)
         }
@@ -541,12 +585,6 @@
                 minLength: 0,
                 onAutocomplete: updateAddItemPreview
             });
-            // Setup autocomplete for add perk
-            $('.add input.autocomplete.perkn').autocomplete({
-                data: autocompleteperks,
-                minLength: 0,
-                onAutocomplete: updateAddPerkPreview
-            });
 
             // Toggle the additional storage to either have the full view with the capability to edit or to just see the items as small icons
             $(".invtinfo").click(function () {
@@ -554,34 +592,8 @@
             });
 
             // Bind functions to the add buttons
-            $(".add.perk .btn.repairbtn").click(addPerkButton);
             $(".add:not(.perk) .btn.repairbtn").click(addItemButton);
 
-            // Remove a perk on click
-            $(".perks").on("click", ".itemremove", function () {
-                let e = $(this);
-
-                // extract the id
-                let id = e.parent().parent().find(".itemid").text().split("");
-                id.shift();
-                id.pop();
-                id = id.join("");
-
-                // Timed functions to have a CSS animation
-                e.parent().parent().addClass("toremove");
-                setTimeout(() => {
-                    // Remove the HTML from the DOM
-                    e.parent().parent().remove()
-                }, 520);
-
-                // Update the data in our array, so we don't have to check for it on save
-                for (let i = 0; i < data["perks"].length; i++) {
-                    if (data["perks"][i]["v"] == id) {
-                        data["perks"].splice(i, 1);
-                        break;
-                    }
-                }
-            });
 
             // Remove an item on click
             $(".items").on("click", ".itemremove", function () {
@@ -752,6 +764,31 @@
             $("#exportdat").click(function () {
                 startSaving("dat");
             })
+
+            // Handle clicking the Delete Drops Button
+            $(".deldrops").click(function () {
+
+                // Generate an object with each item and the amount of them
+                // But that amount is only item objects - a single item can have f.e. a stack size of 12 already
+                let out = {};
+                data.drops.map(e => {e = getLocalisation(e);out.hasOwnProperty(e) ? out[e]++ : out[e] = 1});
+
+                // Display a warning
+                let m = M.toast({html: `<div><p>Warning - this will remove ${data.drops.length} item(s) / group(s) from your game including:</p> ${Object.keys(out).map(e => {return out[e]+"x " + e}).join(", ")}</div><div class="confirm">Click here to confirm</div>`, displayLength: 1000000})
+                $(m.el).find(".confirm").click(function() {
+                    m.dismiss();
+                    data.drops = [];
+
+                    M.toast({html: "Removed drops successfully"});     
+
+                    // Prevent the dialouge to fire again
+                    $(".deldrops").addClass("disabled");
+                    $(".deldrop").unbind("click");
+                })
+            })
+
+            // Remove the loading circle so the user now knows he can use all the features.
+            $(".loadingmask").fadeOut(500);
 
         }
 

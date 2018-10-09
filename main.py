@@ -215,7 +215,10 @@ def savejsonsavefile(data, shash):
     try:
         with open(file, "w") as f:
             print("Dumping JSON to " + file)
-            json.dump(savefiles[s], f)
+
+            # For more compatibility we replace pythons NaN with null because NaN is not valid JSON
+            jsonstring = json.dumps(savefiles[s]).replace(" NaN", " null")
+            f.write(jsonstring)
         return {}
     except Exception:
         print("Error:")
@@ -261,30 +264,6 @@ def modifysave(data, shash):
     # for every relationship set the value of the "friendliness" with the NPC
     for rel in data["relationships"]:
         savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]], rel["cur"])
-
-    perks = {}
-# Left over code from the perk modifying, but because those are based on the technology it has no effect
-#    i = 0
-#    for _ in data["perks"]:
-#        perks[data["perks"][i]["v"]] = False
-#        i += 1
-
-    # Left over code from the perk modifying, but because those are based on the technology it has no effect
-    # After further testing this will be probably removed, but I mean who has the time to test this
-    for i in range(len(savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"])-1, -1, -1):
-        if savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"][i-1]["v"] in gamedata["perks"]:
-            if savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"][i-1]["v"] not in perks:
-                del savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"][i-1]
-                del savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i-1]
-            else:
-                perks[savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"][i-1]["v"]] = True
-
-    for key in perks:
-        if not perks[key]:
-            savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"].append({"v": key, "type": 10})
-            savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"].append({"v": 1, "type": 19})
-            if key not in savefiles[shash]["serializer"]:
-                savefiles[shash]["serializer"].append(key)
 
     # Check the difference in size of the old inventory and the modified inventory
     difference = len(data["inventory"]) - len(savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"])
@@ -364,6 +343,10 @@ def modifysave(data, shash):
                 i3 += 1
             i2 += 1
         i += 1
+
+        # Clear the drop data when requested
+        if len(data["drops"]) < len(savefiles[shash]["savedata"]["drops"]["v"]):
+            savefiles[shash]["savedata"]["drops"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["drops"], [])
 
 
 # Made for the basic types, not made for Vector2, Vector3, ...
@@ -512,6 +495,11 @@ def editablevalues(shash):
 
     # We load the items in the inventory of the player
     obj["inventory"] = getinventory(data["savedata"]["_inventory"]["v"]["15320842"]["v"])
+
+    obj["drops"] = list()
+    # To display the objects which will get deleted when you clear the drops we extract them
+    for drop in data["savedata"]["drops"]["v"]:
+        obj["drops"].append(drop["v"]["res"]["v"]["id"]["v"])
 
     return obj
 

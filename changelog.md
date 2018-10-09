@@ -1,3 +1,24 @@
+0.1.7
+=====
+
+Fixed:
+
+* Items / Images (removed / renamed / added items, images)
+* Small bug considering the existance of multiple entries in a list, see more here https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/commit/8c0bd69a8df75e09202be00586afee39ed0b7e6f
+* Fixing wrong character in object leading to errors when adding items to external storage
+* Wrong usage of JQuery leading to the state of the checkbox being read incorrectly
+
+Added:
+* In the settings menu you can now choose your own port. Additionally you are now able to edit the settings again without deleting the settings file.
+* You can now remove item drops from the map. (Intended to reduce lag if you have tons of them somewhere)
+ 
+Improved:
+* Wait for input on exception so it is easier to report errors
+* Save NaN as null in the JSON so it can be parsed by strict parsers
+* More comments for the source code
+* Loading circle in the editor so the user knows when he can edit a specific save
+* Removed content which wasn't working (perks - now you can only look at them :v)
+
 0.1.6
 =====
 
