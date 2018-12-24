@@ -23,13 +23,15 @@ That is why you always should backup your save files. (Although the editor also 
 * Red, green, blue technology points
 * HP
 * Energy
+* Current Time
 * Your inventory size
 * Your inventory items
 * Inventories of all (or at least most) storage units
 * Your relationships with NPC's (only if you interacted with them before and have more than 0)
 
 Additionally you can edit your perks in theory, but it seems you also have to modify the underlying technologies for it, so your edits won't have effects.  
-In a future version maybe support for technologies is added.  
+In a future version maybe support for technologies is added. 
+Additionally if someone supplies me a save with a worker who has 40% efficiency, I can add a button to turn the efficiency of all workers to the highest possible value. 
 
 ## Screenshot
 
