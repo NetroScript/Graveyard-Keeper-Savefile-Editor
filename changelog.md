@@ -1,3 +1,18 @@
+0.1.8
+=====
+
+Fixed:
+
+* Items / Images (removed / renamed / added items, images)
+
+Added:
+* You can now edit the ingame time
+* You can now edit the "tool" inventory which was added
+ 
+Improved:
+* Added some hashes so looking at the generated .json is easier
+* Changed the displayed ingame days in the slot loader because for some strange reason the game subtracts 1.5 from the saved value (this editor now does that too)
+
 0.1.7
 =====
 

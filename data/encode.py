@@ -125,7 +125,10 @@ class Encoder:
         elif curtype == Types.Int64:
             stream.write("int64", data)
         elif curtype == Types.Single:
-            stream.write("float", float(data))
+            try:
+                stream.write("float", float(data))
+            except TypeError:
+                stream.write("float", float(0))
         elif curtype == Types.Single_0:
             pass
         elif curtype == Types.Single_1:

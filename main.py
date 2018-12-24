@@ -60,7 +60,7 @@ def getsavefiles():
                 out.append({
                     "version": round(data["version"], 3),
                     "savetime": data["real_time"],
-                    "days": int(data["game_time"]),
+                    "days": int(data["game_time"]-1.5),
                     "church": data["stats"].split("ss)")[1].strip(),
                     "graveyard": data["stats"].split("ll)")[1].split("(cr")[0].strip(),
                     "id": file.split(".info")[0],
@@ -261,12 +261,16 @@ def modifysave(data, shash):
     if data["energy"]["cur"] >= 100:
         savefiles[shash]["savedata"]["max_energy"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["max_energy"], data["energy"]["cur"])
 
+    # Change the day / time value
+    savefiles[shash]["savedata"]["day"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["day"], data["time"]["day"])
+    savefiles[shash]["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"], data["time"]["timeofday"])
+
     # for every relationship set the value of the "friendliness" with the NPC
     for rel in data["relationships"]:
         savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]], rel["cur"])
 
     # Check the difference in size of the old inventory and the modified inventory
-    difference = len(data["inventory"]) - len(savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"])
+    difference = len(data["inventory"]) - len(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"])
 
     # if more items were added in the editor we copy the last item in the inventory until the amount of items in the
     # old inventory and in the new is the same
@@ -274,26 +278,49 @@ def modifysave(data, shash):
     # inventory
     if difference > 0:
         while difference != 0:
-            if len(savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"]) > 0:
-                savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"].append(deepcopy(savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"][-1]))
+            if len(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"]) > 0:
+                savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"].append(deepcopy(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"][-1]))
             else:
-                savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"].append(deepcopy(fallback_item))
+                savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"].append(deepcopy(fallback_item))
             difference -= 1
     # If the new inventory has less items, we just delete the last n items
     if difference < 0:
         while difference != 0:
-            del savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"][-1]
+            del savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"][-1]
             difference += 1
 
     # Here the items in the inventory are modified, we set the new ID, durability (to "repair" an item) and the amount
     # of the item for each item in our Array
     i = 0
-    for _ in savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"]:
-        d = savefiles[shash]["savedata"]["_inventory"]["v"]["15320842"]["v"][i]["v"]
+    for _ in savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"]:
+        d = savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"][i]["v"]
         d["id"] = modifyvaluetype(shash, d["id"], data["inventory"][i]["id"])
         d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["inventory"][i]["durability"])
         d["value"] = modifyvaluetype(shash, d["value"], data["inventory"][i]["amount"])
         i += 1
+
+    # Here we check if the save is from an older version which doesn't have this variable yet
+    # If there is a second inventory (for tools) we update it
+    if "secondary_inventory" in savefiles[shash]["savedata"]["_inventory"]["v"]:
+
+        # Check the difference in size of the old inventory and the modified inventory
+        difference = len(data["subinventory"]) - len(savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"])
+
+        # if more items were added in the editor we ignore it because we don't allow adding to the secondary inventory
+        # If the new inventory has less items, we just delete the last n items
+        if difference < 0:
+            while difference != 0:
+                del savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"][-1]
+                difference += 1
+
+        # Here the items in the inventory are modified, we set the new ID, durability (to "repair" an item) and the amount
+        # of the item for each item in our Array
+        i = 0
+        for _ in savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"]:
+            d = savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"][i]["v"]
+            d["id"] = modifyvaluetype(shash, d["id"], data["subinventory"][i]["id"])
+            d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["subinventory"][i]["durability"])
+            i += 1
 
     # In the following block World Game Objects are iterated
     # For us specifically interesting are all storage units to modify the items in them
@@ -309,7 +336,7 @@ def modifysave(data, shash):
 
             # Like in the player inventory we have to create / remove items depending on the amount of items in the
             # inventory
-            difference = len(data["additionalstorage"][i2]["items"]) - len(it["-1126421579"]["v"]["15320842"]["v"])
+            difference = len(data["additionalstorage"][i2]["items"]) - len(it["-1126421579"]["v"]["inventory"]["v"])
 
             # if more items were added in the editor we copy the last item in the inventory until the amount of items
             # in the old inventory and in the new is the same
@@ -317,16 +344,16 @@ def modifysave(data, shash):
             # inventory
             if difference > 0:
                 while difference != 0:
-                    if len(it["-1126421579"]["v"]["15320842"]["v"]) > 0:
-                        it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(it["-1126421579"]["v"]["15320842"]["v"][-1]))
+                    if len(it["-1126421579"]["v"]["inventory"]["v"]) > 0:
+                        it["-1126421579"]["v"]["inventory"]["v"].append(deepcopy(it["-1126421579"]["v"]["inventory"]["v"][-1]))
                     else:
-                        it["-1126421579"]["v"]["15320842"]["v"].append(deepcopy(fallback_item))
+                        it["-1126421579"]["v"]["inventory"]["v"].append(deepcopy(fallback_item))
                     difference -= 1
 
             # If the new inventory has less items, we just delete the last n items
             if difference < 0:
                 while difference != 0:
-                    del it["-1126421579"]["v"]["15320842"]["v"][-1]
+                    del it["-1126421579"]["v"]["inventory"]["v"][-1]
                     difference += 1
 
             # Set the inventory size to the new value - the modification of this was removed in the ui because it seems
@@ -335,8 +362,8 @@ def modifysave(data, shash):
 
             # Iterate and modify the items in the specific storage unit
             i3 = 0  # Item index in Storage unit
-            for _ in it["-1126421579"]["v"]["15320842"]["v"]:
-                d = it["-1126421579"]["v"]["15320842"]["v"][i3]["v"]
+            for _ in it["-1126421579"]["v"]["inventory"]["v"]:
+                d = it["-1126421579"]["v"]["inventory"]["v"][i3]["v"]
                 d["id"] = modifyvaluetype(shash, d["id"], data["additionalstorage"][i2]["items"][i3]["id"])
                 d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["additionalstorage"][i2]["items"][i3]["durability"])
                 d["value"] = modifyvaluetype(shash, d["value"], data["additionalstorage"][i2]["items"][i3]["amount"])
@@ -438,6 +465,11 @@ def editablevalues(shash):
     # Extract the simple values from the save
     obj["money"] = data["savedata"]["_inventory"]["v"]["_params"]["v"]["_money"]["v"]
     obj["hp"] = data["savedata"]["_inventory"]["v"]["_params"]["v"]["_hp"]["v"]
+    obj["time"] = {
+        "day": data["savedata"]["day"]["v"],
+        "timeofday": data["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"]["v"]
+    }
+
 
     # Additionally add the localisation info to the save file, so the ui can easily access it
     obj["locals"] = id_to_name
@@ -448,6 +480,8 @@ def editablevalues(shash):
     obj["inventory"] = []
     obj["bugs"] = {}
     obj["additionalstorage"] = []
+    obj["subinventory"] = []
+
 
     # The values which are in the player inventory and can be iterated for easier extraction
     mod = ["r", "g", "b", "inventory_size", "energy"]
@@ -488,13 +522,17 @@ def editablevalues(shash):
         if it["obj_id"]["v"] in gamedata["storage"]:
             inv = dict()
             inv["type"] = it["obj_id"]["v"]
-            inv["items"] = getinventory(it["-1126421579"]["v"]["15320842"]["v"])
+            inv["items"] = getinventory(it["-1126421579"]["v"]["inventory"]["v"])
             inv["size"] = it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0]["v"]
             obj["additionalstorage"].append(inv)
         i += 1
 
     # We load the items in the inventory of the player
-    obj["inventory"] = getinventory(data["savedata"]["_inventory"]["v"]["15320842"]["v"])
+    obj["inventory"] = getinventory(data["savedata"]["_inventory"]["v"]["inventory"]["v"])
+    # Since the update were you can put tools in the tool slot, we have an additional secondary inventory
+    # We also add a check if the object even exists so that we don't cause errors in older save files / game versions
+    if "secondary_inventory" in data["savedata"]["_inventory"]["v"]:
+        obj["subinventory"] = getinventory(data["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"])
 
     obj["drops"] = list()
     # To display the objects which will get deleted when you clear the drops we extract them

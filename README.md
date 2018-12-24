@@ -33,7 +33,7 @@ In a future version maybe support for technologies is added.
 
 ## Screenshot
 
-![Preview](https://i.imgur.com/r6dZJbA.png)
+![Preview](https://i.imgur.com/XZdmo3Z.png)
 
 ## Installation
 
