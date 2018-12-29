@@ -492,6 +492,7 @@ form.s10.col.offset-s1.editsavedata {
 
 .active .invt {
     max-height: 5000px;
+    overflow: visible;
 }
 
 .additionalitems .itemquality {

@@ -10,6 +10,9 @@ from data.encode import Encoder
 from copy import deepcopy
 from traceback import format_exc
 from urllib.request import urlopen
+from io import BytesIO
+from zipfile import ZipFile
+import shutil
 
 # Set up global variables and the used classes
 options = {}
@@ -26,20 +29,75 @@ with open("./data/version") as f:
     newversion = currentversion
 
 
+# Load the information about the item version making it possible to fix bugs without having to make a new release (when no code was changed)
+with open("./data/itemversion") as f:
+    currentiversion = f.read()
+    newiversion = currentiversion
+
+
 # Load the settings of the settings file
 def loadsettings():
     with open("./data/settings") as f:
-        global options, newversion, web_app_options
+        global options, newversion, newiversion, web_app_options
         options = json.load(f)
 
         # If the user selected that the application checks for an update load the current version from the GitHub Repo
         if options["checkforupdate"]:
             newversion = urlopen("https://raw.githubusercontent.com/NetroScript/Graveyard-Keeper-Savefile-Editor/master/data/version").read().decode()
+            newiversion = urlopen("https://raw.githubusercontent.com/NetroScript/Graveyard-Keeper-Savefile-Editor/master/data/itemversion").read().decode()
         # If the user never set a manual port (in case he starts it after the update where ports were implemented)
         # choose 0 as default port
         if "port" not in options:
             options["port"] = 0
         web_app_options["port"] = options["port"]
+
+
+# Allow the web interface to call this function so that commonly changed files can be changed without needing releases
+# Now releases are only necessary when code is changed and at the same time users don't have a disadvantage
+@eel.expose
+def updateitemversion():
+    response = urlopen("https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/archive/master.zip")
+    # Load the downloaded in memory file as a zip file
+    zipfile = ZipFile(BytesIO(response.read()))
+    print("Deleting Old /rsc folder")
+    shutil.rmtree('./data/html/rsc', ignore_errors=True)
+    os.mkdir("./data/html/rsc")
+    print("Copying new rsc files")
+    # We iterate all files in the zip to be able to extract 1 whole specific folder
+    for zip_info in zipfile.infolist():
+        # We only want the rsc folder
+        if zip_info.filename.startswith("Graveyard-Keeper-Savefile-Editor-master/data/html/rsc/"):
+            # To prevent an error when there is no base name
+            if zip_info.filename[-1] == '/':
+                continue
+            # So we don't extract the whole folder structure we change the path in the zip info object
+            zip_info.filename = os.path.basename(zip_info.filename)
+            zipfile.extract(zip_info, "./data/html/rsc/")
+
+    # Same as above but for individual files
+    print("Deleting old items.json")
+    os.remove("./data/html/items.json")
+    print("Copying new items.json")
+    info = zipfile.getinfo("Graveyard-Keeper-Savefile-Editor-master/data/html/items.json")
+    info.filename = os.path.basename(info.filename)
+    zipfile.extract(info, "./data/html/")
+    print("Deleting old locals.json")
+    os.remove("./data/locals.json")
+    print("Copying new locals.json")
+    info = zipfile.getinfo("Graveyard-Keeper-Savefile-Editor-master/data/locals.json")
+    info.filename = os.path.basename(info.filename)
+    zipfile.extract(info, "./data/")
+    print("Deleting old itemversion")
+    os.remove("./data/itemversion")
+    print("Copying new itemversion")
+    info = zipfile.getinfo("Graveyard-Keeper-Savefile-Editor-master/data/itemversion")
+    info.filename = os.path.basename(info.filename)
+    zipfile.extract(info, "./data/")
+
+    print("Finished updating - now closing")
+
+    # Closing so the user starts again with the updated files
+    exit()
 
 
 # Allow the web interface to load information about all save files in the folder the user set as save directory
@@ -564,6 +622,9 @@ def siteloaded():
     # If there is an update we call the JavaScript Function to display information about the new update
     if newversion != currentversion:
         eel.checkVersion(currentversion, newversion)
+
+    elif newiversion != currentiversion:
+        eel.checkiVersion(currentiversion, newiversion)
 
 
 # Make it possible for the ui to open a folder select dialogue for the save files

@@ -1,3 +1,16 @@
+0.1.9
+=====
+
+Fixed:
+
+* Items / Images (removed / renamed / added items, images) (tool related items)
+
+Added:
+* The application can now notify you (and update itself) about item changes (previously you only had item changes on the windows version if a complete new version was releases - now track of a itemversion is kept and it will notify you about changes and you can update manually or automatically. Those changes include: wrong item names, missing / wrong item icon, missing / wrong item which you can add to inventories)
+ 
+Improved:
+* Some CSS
+
 0.1.8
 =====
 

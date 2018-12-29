@@ -133,7 +133,7 @@
                         gamedata = json;
                         // Generate the dictionaries used for the autocomplete
                         gamedata.items.forEach(i => {
-                            autocompletenames[data["locals"][i] + " (" + i + ")"] = null
+                            autocompletenames[(data["locals"][i] || data["locals"][i.replace(/:\d$/g, "")]) + " (" + i + ")"] = null
                         })
                     });
 

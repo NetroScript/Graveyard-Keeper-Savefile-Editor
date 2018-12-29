@@ -197,6 +197,24 @@
             }
         }
 
+        // Allow python to call the function to display that new item information is available
+        eel.expose(checkiVersion);
+        function checkiVersion(oldv, newv) {
+            if (oldv.split("\n").pop().split(" ")[0] < newv.split("\n").pop().split(" ")[0]) {
+                            $(".con").prepend(`
+<div 1="" class="intro newv">
+    <h3>A new Version for the items is available! Get it manually on
+        <a href="https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor" target="_blank">Github</a>. There were the following changes since your version (`+oldv.split("\n").pop().split(" ")[0]+`):</h3>
+    <div class="changes">`+ newv.split(new RegExp(oldv.split("\n").pop().split(" ")[0] + ".+")).slice(1).join("").trim() +`</div>
+    <h3>Alternatively you can click <a id="autoupdateitems" href="#">here</a> to let python update automatically - the application will close itself after finishing.</h3>
+</div>`);
+$("#autoupdateitems").click(function(){
+eel.updateitemversion();
+$("#autoupdateitems").off();
+})
+            }
+        }
+
         // Turn the string of a version into a comparable number
         function getVersionNum(v) {
             let p = v.split(".");
