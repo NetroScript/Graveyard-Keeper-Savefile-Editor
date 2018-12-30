@@ -10,6 +10,7 @@ Added:
  
 Improved:
 * Some CSS
+* Items which were previously undefined in the editor (now not a single item is shown as undefined)
 
 0.1.8
 =====
