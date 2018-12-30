@@ -88,15 +88,12 @@ For those interested, here is the command I use to generate the folder which I t
 (I have this saved as build.bat in the same folder)
 
 ```batch
-python -m eel main.py "./data/html" --onefile -n "Graveyard Keeper Savefile Editor" -i "./data/html/favicon.ico" --exclude PyQt5 --exclude win32com --exclude pydoc --exclude lib2to3 -y 
+python -m eel main.py "./data/html" -n "Graveyard Keeper Savefile Editor" -i "./data/html/favicon.ico" --exclude PyQt5 --exclude win32com --exclude pydoc --exclude lib2to3 -y 
 
-mkdir distr
-copy "%cd%\dist\Graveyard Keeper Savefile Editor.exe" "%cd%\distr\Graveyard Keeper Savefile Editor.exe" /Y
-mkdir "./distr/data"
-mkdir "./distr/data/html"
-copy "%cd%\data\hashes" "%cd%\distr\data\hashes" /Y
-copy "%cd%\data\locals.json" "%cd%\distr\data\locals.json" /Y
-copy "%cd%\data\version" "%cd%\distr\data\version" /Y
-copy "%cd%\data\html\items.json" "%cd%\distr\data\html\items.json" /Y
-copy "%cd%\data\html\favicon.ico" "%cd%\distr\data\html\favicon.ico" /Y
+copy "%cd%\data\hashes" "%cd%\dist\Graveyard Keeper Savefile Editor\data\hashes" /Y
+copy "%cd%\data\locals.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\locals.json" /Y
+copy "%cd%\data\version" "%cd%\dist\Graveyard Keeper Savefile Editor\data\version" /Y
+copy "%cd%\data\itemversion" "%cd%\dist\Graveyard Keeper Savefile Editor\data\itemversion" /Y
+
+pause
 ```
