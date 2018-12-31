@@ -197,6 +197,14 @@
             }
         }
 
+        //Allow python to close the window
+        eel.expose(closeWindow);
+        function closeWindow(){
+            window.open('','_parent','');
+            window.close();
+            $(document.body).html('<div onclick="window.close()" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; background-color: #292929; color: white; font-size: 20px; text-align: center; display: flex; justify-content: center; padding: 10px; align-items: center; cursor: pointer;">Please close this window manually - Browser does not allow automatic closing (because this window was not opened by javascript)</div>')
+        }
+
         // Allow python to call the function to display that new item information is available
         eel.expose(checkiVersion);
         function checkiVersion(oldv, newv) {
@@ -211,6 +219,7 @@
 $("#autoupdateitems").click(function(){
 eel.updateitemversion();
 $("#autoupdateitems").off();
+$(document.body).append("<div style='position:fixed;z-index:10000;width:100%;height:100%;left:0px;top:0px;background-color:rgba(0,0,0,0.8)'></div>")
 })
             }
         }

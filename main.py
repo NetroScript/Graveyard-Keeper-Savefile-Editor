@@ -13,6 +13,7 @@ from urllib.request import urlopen
 from io import BytesIO
 from zipfile import ZipFile
 import shutil
+import psutil
 
 # Set up global variables and the used classes
 options = {}
@@ -96,7 +97,15 @@ def updateitemversion():
 
     print("Finished updating - now closing")
 
-    # Closing so the user starts again with the updated files
+    # Using just exit() doesn't close the browser (GUI) window
+    # The JavaScript window.close() doesn't work on newer Chrome versions, if so a splash screen is shown
+    eel.closeWindow()()
+
+    # Because this process spawns the browser windows they should be sub processes
+    # Then it closes those (in case the window.close() didn't work)
+    app = psutil.Process(os.getpid())
+    for GUI in app.children(recursive=True):
+        GUI.kill()
     exit()
 
 
