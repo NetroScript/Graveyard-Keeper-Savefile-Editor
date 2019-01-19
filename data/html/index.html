@@ -177,8 +177,8 @@
                 <div class="gameicon i-gold pre">
                     <img src="/rsc/Gold_Coin_Symbol.png">
                 </div>
-                <input id="gold" max="99" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] % 10000 / 100)}">
-                <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
+                <input id="gold" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] / 100 << 0)}">
+                <span class="helper-text" data-error="Please input a number greater than 0" data-success="">Please input a number greater than 0</span>
             </div>
             <div class="input-field col s4">
                 <div class="gameicon i-silver pre">
