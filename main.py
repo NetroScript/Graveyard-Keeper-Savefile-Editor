@@ -16,26 +16,6 @@ from zipfile import ZipFile
 import shutil
 import psutil
 
-# Patching the eel open method, so should Chrome fail it opens the next best webbrowser
-# Normally eel already supports the default browser, but because chrome-app mode is used as default, it will fail if
-# Chrome is not installed (or if there is a problem with the Chrome installation) and this should fix it
-originalopen = eel.browsers.open
-
-
-# New Method
-def eelfix(start_pages, options):
-
-    # First run original version of the opener, if due to Chrome missing an error happens just call the function
-    # without chrome as mode
-    try:
-        originalopen(start_pages, options)
-    except Exception:
-        options["mode"] = ""
-        originalopen(start_pages, options)
-
-
-eel.browsers.open = eelfix
-
 
 # Set up global variables and the used classes
 options = {}
@@ -705,6 +685,17 @@ except Exception:
 # Hide the tkinter instance
 root.withdraw()
 
+def run():
+    global web_app_options
+
+    # Check if the application is run the first time - if so show the settings dialogue, if not start the normal
+    # application
+    if os.path.isfile("./data/settings"):
+        loadsettings()
+        eel.start("loadsavefile.html", options=web_app_options)
+    else:
+        eel.start("no settings.html", options=web_app_options)
+
 
 # A try except statement, so that the console window doesn't close on error so that it is easier for users to report
 # errors
@@ -715,13 +706,14 @@ try:
         # Our folder with the HTML data
         eel.init("./data/html")
 
-        # Check if the application is run the first time - if so show the settings dialogue, if not start the normal
-        # application
-        if os.path.isfile("./data/settings"):
-            loadsettings()
-            eel.start("loadsavefile.html", options=web_app_options)
-        else:
-            eel.start("no settings.html", options=web_app_options)
+        # First try running it normally using chrome
+        try:
+            run()
+        # if it doesn't work (f.e. chrome not installed) run using the default browser
+        except Exception:
+            web_app_options["mode"] = ""
+            run()
+
 
 except Exception as e:
     print("Following exception occured: ")
