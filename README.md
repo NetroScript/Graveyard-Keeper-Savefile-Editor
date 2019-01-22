@@ -11,8 +11,7 @@ It can load and save *.dat files.
 Additionally you can export the loaded save to a .json file, which has a similar structure to the original .json save files.
 (The difference is, that information about types of variables is saved in the file, meaning every value is wrapped in an object).
 
-The Application uses your Chrome installation as a GUI.
-**Meaning if you don't have Chrome (or Chromium) installed this application won't work.**
+The Application uses a webbrowser as a GUI (by default Chrome in App Mode).
 
 I want to add I am not responsible if you break your save file, I try to mantain this editor in a way, in which it can't break save files (or not by mistake) but it is still possible that this editor produces a bugged save file (if you f.e. add an item in a quality in which the item doesn't exist.)
 That is why you always should backup your save files. (Although the editor also creates 1 copy of the save slot it overwrites, but if you save again, this backup is overwritten again. So test your save file before saving again.)

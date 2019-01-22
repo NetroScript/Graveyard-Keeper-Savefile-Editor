@@ -1,3 +1,12 @@
+0.1.10
+=====
+
+Improved:
+* Browser automatically closes now when the application updated the items
+* If over 99 gold coins are set no red underline is shown anymore (and it now also loads higher amounts correclty)
+* Should there be no chrome installation or an error happens while opening chrome the default browser will be used now
+* Load a .png file as icon if the .ico file is failing (On some Linux distros)
+
 0.1.9
 =====
 

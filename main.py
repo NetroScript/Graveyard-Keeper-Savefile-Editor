@@ -1,6 +1,7 @@
 from data.types import id_to_name, gamedata, Types, fallback_item
 from tkinter import Tk
 from tkinter import filedialog
+from tkinter import PhotoImage
 import eel
 import os
 import json
@@ -14,6 +15,27 @@ from io import BytesIO
 from zipfile import ZipFile
 import shutil
 import psutil
+
+# Patching the eel open method, so should Chrome fail it opens the next best webbrowser
+# Normally eel already supports the default browser, but because chrome-app mode is used as default, it will fail if
+# Chrome is not installed (or if there is a problem with the Chrome installation) and this should fix it
+originalopen = eel.browsers.open
+
+
+# New Method
+def eelfix(start_pages, options):
+
+    # First run original version of the opener, if due to Chrome missing an error happens just call the function
+    # without chrome as mode
+    try:
+        originalopen(start_pages, options)
+    except Exception:
+        options["mode"] = ""
+        originalopen(start_pages, options)
+
+
+eel.browsers.open = eelfix
+
 
 # Set up global variables and the used classes
 options = {}
@@ -671,7 +693,15 @@ web_app_options = {
 
 # We use a tkinter instance for the file dialogues and also set our icon
 root = Tk()
-root.iconbitmap("./data/html/favicon.ico")
+
+# For some linux version which can't load it correctly
+try:
+    root.iconbitmap("./data/html/favicon.ico")
+except Exception:
+    try:
+        root.iconphoto(True, PhotoImage(file="./data/html/favicon.png"))
+    except Exception:
+        print("Unable to set icon, just skipping it")
 # Hide the tkinter instance
 root.withdraw()
 
