@@ -1,2 +1,3 @@
 1 - Added the item Version System - After updating manually don't forget to update the itemversion file too.
 2 - Changed wrong internal name for the item flyer, the first version of the prayer for imagination; Added icon for building_permission
+3 - Added endless notebook
