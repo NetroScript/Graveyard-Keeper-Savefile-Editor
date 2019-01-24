@@ -40,6 +40,7 @@ Additionally if someone supplies me a save with a worker who has 40% efficiency,
 
 * Download this as zip and extract it to the folder where you want it to be
 * Get Python (>=3.3)
+* If you are using a macOS/Linux system where `python` is by default python 2.x, replace `python` with `python3`. Also instead of creating a .bat file, create a .sh file.
 * Install dependencies using `python -m pip install -r requirements.txt`.
 * Execute the file with `python main.py` (in the console with the folder where main.py resides as working directory - to simplify this just create a `run.bat` in the directory with the same content)
 * Enjoy
