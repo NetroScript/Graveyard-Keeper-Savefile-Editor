@@ -63,7 +63,12 @@ For information about the possible types, check types.py in the data folder.
 
 ## Changelog
 
-Check it [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/changelog.md)
+Check it [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/changelog.md).
+
+
+## Misc
+
+If you want to know about some stuff which you could do if you export the savefile to json check this file [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/saves.md).
 
 
 ## The application is not working?
