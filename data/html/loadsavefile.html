@@ -239,6 +239,7 @@ $(document.body).append("<div style='position:fixed;z-index:10000;width:100%;hei
         $(document).ready(function () {
             eel.siteloaded()()
             getSaveFiles();
+            getSettings();
         });
 
         // When clicking on a load option handle that click
@@ -285,6 +286,13 @@ $(document.body).append("<div style='position:fixed;z-index:10000;width:100%;hei
 </div>`
             );
         }
+
+        
+        // Load the settings file
+        async function getSettings() {
+            settings = await eel.get_settings()();
+        }
+
     </script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>

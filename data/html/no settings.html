@@ -20,7 +20,7 @@
     <header></header>
     <main>
         <div class="con">
-            <div 1 class="intro">
+            <div class="intro">
                 <h3>Hey, seems like you are using this Application for the first time, meaning you now have the chance to set
                     some options.</h3>
             </div>
@@ -51,6 +51,22 @@
                                 <input placeholder="" value="0" id="port" type="number" class="validate valid" min="0" max="65535" step="1">
                                 <label for="port">Input a port (0 chooses a random available port) - only applied after application restart</label>
                                 <span class="helper-text" data-error="Please a correct port (0-65535)" data-success=""></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="preswitch">Enable "Expert" mode</div>
+                            <div class="switch">
+                                <label>
+                                    Disabled
+                                    <input type="checkbox" id="expert">
+                                    <span class="lever"></span>
+                                    Enabled
+                                </label>
+                            </div>
+                            <div class="note">This disables all the applications checks for invalid data, meaning the likelihood of you breaking
+                                your safe with a non existant item f.e. is increased. But if you know the internal id of an item and it doesn't
+                                exist, you can add it with this option. This option does not require an application restart, but it requires to
+                                reload the page (so that the settings are loaded again).
                             </div>
                         </div>
                     </form>
@@ -89,7 +105,13 @@
 
         // Function to save the settings in the python application
         async function saveSettings() {
-            await eel.set_settings($("#path").val(), $("#updatesc").prop("checked"), parseInt($("#port").val()))();
+            let settings = {
+                "path": $("#path").val() || "",
+                "checkforupdate": $("#updatesc").prop("checked") || true,
+                "port": parseInt($("#port").val()) || 0,
+                "expert": $("#expert").prop("checked") || false
+            }
+            await eel.set_settings(settings)();
 
             // If we are editing the settings for the first time we get to the page where you can load the save files, otherwise this window is closed
             if(window.location.hash == "#WithinApplication"){
@@ -104,7 +126,8 @@
             let b = await eel.get_settings()();
             $("#path").val(b["path"]);
             $("#path").removeClass("invalid");
-            $("#updatesc").prop("checked", b["checkforupdate"])
+            $("#updatesc").prop("checked", b["checkforupdate"]);
+            $("#expert").prop("checked", b["expert"]);
             $("#port").val(b["port"]);
         }
         

@@ -632,6 +632,7 @@ p.timeoutput {
 
 .day img {
     margin: 0 auto;
+    cursor: pointer;
 }
 
 .day.active {

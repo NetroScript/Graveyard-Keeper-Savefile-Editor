@@ -1,3 +1,13 @@
+0.1.11
+=====
+
+Improved:
+* BIG Item update - I now took the time to extract all possible item ids, their localisation in english and the item sprite (That doesn't mean you should use all new items, because now the editor also includes f.e. placeholder items which work in the inventory but you should only use items you really want)
+* You can now click on the icon of a day to switch to the day (instead of only being able to enter a number)
+
+Added:
+* Expert Mode, you can now disable all checks and warnings (although because of the item update at the same time, I doubt that you will need it anymore)
+
 0.1.10
 =====
 

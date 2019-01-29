@@ -39,7 +39,7 @@ class Types(IntEnum):
 # they are not complete, considering I mostly was in it for the items and perks and so on
 # But still they may contain spoilers considering quite a few dialogues and so on are in
 # them so read it at your own risk
-with open("./data/locals.json") as f:
+with open("./data/locals.json", encoding="utf8") as f:
     id_to_name = load(f)
 
 # Generic game information

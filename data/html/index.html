@@ -334,10 +334,11 @@
             $("#timeofday").val((data.time.timeofday + 1) * 12);
 
 
-
+            // When changing the time of the day, change the value in the save
             $('#timeofday').on("input", function () {
 
                 let t = parseFloat($("#timeofday").val());
+                // Display new time
                 $(".timeoutput").text(Math.floor(t) + ":" + Math.floor(t % 1 * 60));
                 if($(".timeoutput").text().split(":")[1].length == 1) $(".timeoutput").text($(".timeoutput").text()+"0")
 
@@ -345,13 +346,27 @@
             });
             $("#timeofday").trigger("input")
 
+            // When changing the day, change the active image and the data
             $("#day").on("input", function(){
                 $(".day").removeClass("active");
                 $($(".day")[(parseInt($("#day").val())-1) % 6]).addClass("active");
                 data["time"]["day"] = parseInt($("#day").val());
             })
 
+            // Set the correct image to active once
             $("#day").trigger("input");
+
+            // Enable clicking on a day of the week to set the day in the current week
+            $(".day").click( e => {
+                // Get the current day in the range of 1-6 (if % 6 produces 0, the || 6 will cause the value 6 to be returned)
+                let cur = parseInt($("#day").val()) % 6 || 6;
+                // Get the correct offset of the day in the current week
+                let difference = $(e.currentTarget).index()+1 - cur;
+                // Set the value in the form field
+                $("#day").val(parseInt($("#day").val()) + difference);
+                // Update the other values
+                $("#day").trigger("input");
+            })
 
             // Add the items in the inventory to the form
             for (let i = 0; i < data["inventory"].length; i++) {
@@ -748,36 +763,54 @@
             //Handle changing an item
             $(".items, .equipped-items").on("click", ".itemname:not('.curactive')", function () {
                 let e = $(this).parent();
+                let prevtxt = e.find(".itemname").text();
                 $(this).addClass("curactive")
                 $(this).html(
                     `
                 <div class="input-field col s12 currentlyediting">
                     <input type="text" class="autocomplete itemn">
                 </div>
-                `
+                ` + ((settings["expert"]) ? "Press enter to complete a custom item instead of the auto complete. (Don't forget the () )" : "")
                 )
                 let x;
 
+
+
                 // The function changing the data, when an autocomplete is selected
                 let d = async function () {
-                    let val = $(e).find("input").val();
-                    console.log(val);
-                    if (val.split("(").length > 1) {
-                        // Get the item ID and URL
-                        let id = val.split("(").pop().split(")")[0];
-                        let url = await getItemUrl(id);
+                    try {
+                        let val = $(e).find("input").val();
+                        console.log(val);
+                        if (val.split("(").length > 1) {
+                            // Get the item ID and URL
+                            let id = val.split("(").pop().split(")")[0];
+                            let url = await getItemUrl(id);
 
-                        // Destroy the Autocomplete Object
-                        M.Autocomplete.getInstance($(e).find(".itemname input")).destroy();
+                            // Destroy the Autocomplete Object
+                            M.Autocomplete.getInstance($(e).find(".itemname input")).destroy();
 
-                        // Create new HTML
-                        $(e).parent().find("img").attr("src", url);
-                        $(e).find(".itemname").html(getLocalisation(id) + ' <div class="itemid">(' + id +
-                            ')</div>');
-                        $(e).find(".itemname").removeClass("curactive");
+                            // Create new HTML
+                            $(e).parent().find("img").attr("src", url);
+                            $(e).find(".itemname").html(getLocalisation(id) + ' <div class="itemid">(' + id +
+                                ')</div>');
+                            $(e).find(".itemname").removeClass("curactive");
+                        }
                     }
-
+                    catch(e) {
+                        console.log(e);
+                    }
+            
                 };
+
+                if ( settings["expert"]){
+                    $(this).find(".autocomplete.itemn").val(prevtxt);
+                    $(this).find(".autocomplete.itemn").keyup( e => {
+                        if(e.which == 13)
+                            d();
+                    })
+                }
+
+
                 // The logic for the autocomplete
                 $(this).find("input").autocomplete({
                     data: autocompletenames,
@@ -907,8 +940,8 @@
             let val = container.find("input").val();
             if (val.split("(").length > 1) {
                 let id = val.split("(").pop().split(")")[0];
-                if (gamedata["items"].indexOf(id) !== -1 && gamedata["items"].indexOf(id.replace(/:\d$/, ""))) {
-                    amount = parseInt($(container.find("input")[1]).val());
+                if (gamedata["items"].indexOf(id) !== -1 || gamedata["items"].indexOf(id.replace(/:\d$/, "")) || settings["expert"]) {
+                    let amount = parseInt($(container.find("input")[1]).val());
 
                     // Check if own inventory or storage inventory
                     if ($(this).parents(".additionalitems").length > 0) {
@@ -958,9 +991,15 @@
                     return
                 }
             }
-            M.toast({
-                html: "The given item does not exist!"
-            });
+            if (!settings["expert"])
+                M.toast({
+                    html: "The given item does not exist!"
+                });
+            else 
+                M.toast({
+                html: "The following syntax is needed '([item id])' instead of only 1 text."
+                });
+            
         }
 
         //Handle the click on the Add Perk Button
@@ -968,10 +1007,10 @@
             let val = $(".item.add.perk input").val();
             if (val.split("(").length > 1) {
                 let id = val.split("(").pop().split(")")[0];
-                if (gamedata["perks"].indexOf(id) !== -1) {
+                if (gamedata["perks"].indexOf(id) !== -1  || settings["expert"]) {
                     // Check if the perk is already added
                     for (let i = 0; i < data["perks"].length; i++) {
-                        if (data["perks"][i]["v"] == id) {
+                        if (data["perks"][i]["v"] == id && !settings["expert"]) {
                             M.toast({
                                 html: "You already have that perk!"
                             });
@@ -988,9 +1027,14 @@
                     return
                 }
             }
-            M.toast({
-                html: "The given Perk does not exist!"
-            });
+            if (!settings["expert"])
+                M.toast({
+                    html: "The given Perk does not exist!"
+                });
+            else 
+                M.toast({
+                html: "The following syntax is needed '([perk id])' instead of only 1 text."
+                });
         }
 
         // Function to update the item preview after change
@@ -1088,10 +1132,19 @@
             return true;
         }
 
+        // Load the settings file
+        async function getSettings() {
+            settings = await eel.get_settings()();
+            if (settings["expert"] === undefined) {
+                settings["expert"] = false;
+            }
+        }
+
         // Get the information of the save hash, save file type and possibly slot
         $(document).ready(function () {
             let info = window.location.hash.split("#")[1].split("|")
             getSaveFile(info);
+            getSettings();
         });
     </script>
     <script type="text/javascript" src="js/materialize.min.js"></script>

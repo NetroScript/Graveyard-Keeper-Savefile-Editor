@@ -647,12 +647,11 @@ def get_folder():
 
 # Function exposed to the ui to save changed settings
 @eel.expose
-def set_settings(path, check, port):
-    options["path"] = path
-    options["checkforupdate"] = check
-    options["port"] = port;
+def set_settings(settings):
+    global options
+    options = settings
     with open("./data/settings", "w") as f:
-        json.dump(options, f)
+        json.dump(settings, f)
     return True
 
 
