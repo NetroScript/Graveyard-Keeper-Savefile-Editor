@@ -1,4 +1,4 @@
-from data.types import id_to_name, gamedata, Types, fallback_item
+from data.types import id_to_name, gamedata, Types, fallback_item, perfectbody
 from tkinter import Tk
 from tkinter import filedialog
 from tkinter import PhotoImage
@@ -392,10 +392,12 @@ def modifysave(data, shash):
             i += 1
 
     # In the following block World Game Objects are iterated
-    # For us specifically interesting are all storage units to modify the items in them
+    # For us specifically interesting are all storage units + workers and bodies to modify the items in them
     i2 = 0  # Index of the storage unit in our storage unit array
     i = 0  # Index of the WGO
     for _ in savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"]:
+
+        convertemptygrave = False
 
         # To have shorter variable names
         it = savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]
@@ -438,11 +440,51 @@ def modifysave(data, shash):
                 d["value"] = modifyvaluetype(shash, d["value"], data["additionalstorage"][i2]["items"][i3]["amount"])
                 i3 += 1
             i2 += 1
+
+        # If workers should be turned into perfect workers we replace their inventory (which is used to calculate the
+        # efficiency with a perfect inventory
+        if data["switches"]["workers"] and it["obj_id"]["v"] == "worker_zombie_1":
+            # We keep the last item of the old inventory, because that is the used backpack which still might contain
+            # items
+            it["-1126421579"]["v"]["inventory"]["v"] = perfectbody["inventory"]+[it["-1126421579"]["v"]["inventory"]["v"][-1]]
+
+        # If empty graves should be turned into perfect graves we first change the id to a normal grave and then
+        # use the code for perfect body and perfect decoration to also transform this grave into a perfect grave
+        if data["switches"]["emptygrave"] and it["obj_id"]["v"] == "grave_empty_place":
+            convertemptygrave = True
+            it["obj_id"]["v"] = "grave_ground"
+            it["-1126421579"]["v"]["id"]["v"] = "grave_ground"
+
+        # If bodies in graves should be turned into perfect bodies we replace their inventory
+        if (data["switches"]["gravebodies"] or convertemptygrave) and it["obj_id"]["v"] == "grave_ground":
+
+            # If the grave is empty we add a body to it
+            if len(it["-1126421579"]["v"]["inventory"]["v"]) == 0:
+                it["-1126421579"]["v"]["inventory"]["v"].append({"type": 250, "v": perfectbody["body"]})
+
+            # We iterate the items until we found the body and then change the inventory of the body
+            for item in it["-1126421579"]["v"]["inventory"]["v"]:
+                if item["v"]["id"]["v"] == "body":
+                    item["v"]["inventory"]["v"] = perfectbody["inventory"]
+                    item["v"]["_params"]["v"]["_durability"]["v"] = 1
+                    break
+
+        # If the graves should get perfect decorations we replace the current ones
+        if (data["switches"]["decorations"] or convertemptygrave) and it["obj_id"]["v"] == "grave_ground":
+
+            # We iterate the items to delete all but the body so we can add the new ones
+            it["-1126421579"]["v"]["inventory"]["v"][:] = [x for x in it["-1126421579"]["v"]["inventory"]["v"]
+                                                           if x["v"]["id"]["v"] == "body"]
+            it["-1126421579"]["v"]["inventory"]["v"].append(perfectbody["fence"])
+            it["-1126421579"]["v"]["inventory"]["v"].append(perfectbody["decoration"])
+            it["-1126421579"]["v"]["_params"]["v"]["_res_type"] = perfectbody["_res_type"]
+            it["-1126421579"]["v"]["_params"]["v"]["_res_v"] = perfectbody["_res_v"]
+
         i += 1
 
-        # Clear the drop data when requested
-        if len(data["drops"]) < len(savefiles[shash]["savedata"]["drops"]["v"]):
-            savefiles[shash]["savedata"]["drops"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["drops"], [])
+    # Clear the drop data when requested
+    if len(data["drops"]) < len(savefiles[shash]["savedata"]["drops"]["v"]):
+        savefiles[shash]["savedata"]["drops"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["drops"], [])
 
 
 # Made for the basic types, not made for Vector2, Vector3, ...
@@ -607,6 +649,14 @@ def editablevalues(shash):
     # To display the objects which will get deleted when you clear the drops we extract them
     for drop in data["savedata"]["drops"]["v"]:
         obj["drops"].append(drop["v"]["res"]["v"]["id"]["v"])
+
+    # Variables to determine if all bodies in the graves / all workers get turned into perfect bodies / workers
+    obj["switches"] = {
+        "workers": False,
+        "gravebodies": False,
+        "decorations": False,
+        "emptygrave": False
+    }
 
     return obj
 

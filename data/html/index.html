@@ -244,6 +244,10 @@
 
         <div class="row miscbuttons">
             <div class="btn deldrops col s6 offset-s3">Remove all Drops</div>
+            <p class="btn workereff col s12">Set all workers to 40% Efficiency</p>
+            <div class="btn perbody col s12">Replace all the bodies in graves with perfect bodies</div>
+            <p class="btn perdeco col s12">Set all grave decorations to the highest</p>
+            <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
         </div>
     </form>
 </div>
@@ -887,6 +891,31 @@
                     $(".deldrops").addClass("disabled");
                     $(".deldrop").unbind("click");
                 })
+            })
+
+            // Handle clicking the 40% Efficiency Button
+            $(".workereff").click(function () {
+                data.switches.workers = true;
+                $(".workereff").addClass("disabled");
+                $(".workereff").unbind("click");
+            })
+            // Handle clicking the replace bodies button
+            $(".perbody").click(function () {
+                data.switches.gravebodies = true;
+                $(".perbody").addClass("disabled");
+                $(".perbody").unbind("click");
+            })
+            // Handle clicking the grave decoration button
+            $(".perdeco").click(function () {
+                data.switches.decorations = true;
+                $(".perdeco").addClass("disabled");
+                $(".perdeco").unbind("click");
+            })
+            // Handle clicking the empty graves Button
+            $(".perempty").click(function () {
+                data.switches.emptygrave = true;
+                $(".perempty").addClass("disabled");
+                $(".perempty").unbind("click");
             })
 
             // Remove the loading circle so the user now knows he can use all the features.

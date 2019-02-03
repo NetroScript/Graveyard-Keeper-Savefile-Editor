@@ -1,3 +1,13 @@
+0.1.12
+=====
+
+Added:
+* Utilities
+  * Set the efficiency of all workers to 40%
+  * Turn all bodies in your graveyard (in graves) into perfect bodies
+  * Turn all decorations of your grave into the highest possible grade
+  * Turn empty graves into a grave with a perfect body and the best decoration
+  
 0.1.11
 =====
 

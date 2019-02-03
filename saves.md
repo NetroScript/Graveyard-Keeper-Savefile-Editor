@@ -28,7 +28,8 @@ Workers
 -------
 
 Your worker zombies are stored in `savedata->workers`.  
-I didn't have much time to inspect it, but they all have an inventory and their organs are also stored, meaning by changing the organ attributes you can change the efficiency f.e. of a worker.
+References to a WGO object in the map data.
+They have inventories and sub inventories. F.e. they have an inventory which contains portable_backpack - this backpack can contain other items. (Which Porter Workers are currently transporting)
 
 Unlocked Technologies
 ---------------------

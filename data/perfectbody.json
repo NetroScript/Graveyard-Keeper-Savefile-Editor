@@ -1,0 +1,2115 @@
+{
+  "inventory": [
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "skull",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "bone",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "flesh",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "skin",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "embalm_-2_2",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "embalm_-1_1",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "embalm_0_1",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "embalm_1_1",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "brain:brain_-2_3",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "intestine:intestine_-2_3",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    },
+    {
+      "v": {
+        "1068875674": {
+          "v": "",
+          "type": 11
+        },
+        "_params": {
+          "v": {
+            "_progress": {
+              "v": 0,
+              "type": 18
+            },
+            "_money": {
+              "v": 0,
+              "type": 18
+            },
+            "_res_type": {
+              "v": [],
+              "type": 100
+            },
+            "_res_v": {
+              "v": [],
+              "type": 100
+            },
+            "_durability": {
+              "v": 1,
+              "type": 19
+            },
+            "_hp": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "sub_name": {
+          "v": "",
+          "type": 11
+        },
+        "id": {
+          "v": "heart:heart_-2_3",
+          "type": 10
+        },
+        "worker_unique_id": {
+          "v": -1,
+          "type": 4
+        },
+        "is_unique": {
+          "v": false,
+          "type": 2
+        },
+        "multiquality_items": {
+          "v": [],
+          "type": 100
+        },
+        "equipped_as": {
+          "v": {
+            "1826761547": {
+              "v": 0,
+              "type": 16
+            }
+          },
+          "type": 250
+        },
+        "max_value": {
+          "v": null,
+          "type": 0
+        },
+        "common_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "secondary_inventory": {
+          "v": [],
+          "type": 100
+        },
+        "min_value": {
+          "v": null,
+          "type": 0
+        },
+        "_serialize_depth": {
+          "v": 0,
+          "type": 16
+        },
+        "self_chance": {
+          "v": {
+            "_expression": {
+              "v": "",
+              "type": 11
+            },
+            "_simpified_float": {
+              "v": 0,
+              "type": 18
+            },
+            "_simplified": {
+              "v": false,
+              "type": 2
+            },
+            "default_value": {
+              "v": 0,
+              "type": 18
+            }
+          },
+          "type": 250
+        },
+        "inventory": {
+          "v": [],
+          "type": 100
+        },
+        "linked_id": {
+          "v": -1,
+          "type": 3
+        },
+        "value": {
+          "v": 1,
+          "type": 17
+        },
+        "chance_group": {
+          "v": -1,
+          "type": 3
+        }
+      },
+      "type": 250
+    }
+  ],
+  "body": {
+    "1068875674": {
+      "v": "",
+      "type": 11
+    },
+    "_params": {
+      "v": {
+        "_progress": {
+          "v": 0,
+          "type": 18
+        },
+        "_money": {
+          "v": 0,
+          "type": 18
+        },
+        "_res_type": {
+          "v": [
+            {
+              "v": "inventory_size",
+              "type": 10
+            }
+          ],
+          "type": 100
+        },
+        "_res_v": {
+          "v": [
+            {
+              "v": 99,
+              "type": 5
+            }
+          ],
+          "type": 100
+        },
+        "_durability": {
+          "v": 1,
+          "type": 5
+        },
+        "_hp": {
+          "v": 0,
+          "type": 18
+        }
+      },
+      "type": 250
+    },
+    "sub_name": {
+      "v": "",
+      "type": 11
+    },
+    "id": {
+      "v": "body",
+      "type": 10
+    },
+    "worker_unique_id": {
+      "v": -1,
+      "type": 4
+    },
+    "is_unique": {
+      "v": false,
+      "type": 2
+    },
+    "multiquality_items": {
+      "v": [],
+      "type": 100
+    },
+    "equipped_as": {
+      "v": {
+        "1826761547": {
+          "v": 0,
+          "type": 16
+        }
+      },
+      "type": 250
+    },
+    "max_value": {
+      "v": null,
+      "type": 0
+    },
+    "common_chance": {
+      "v": {
+        "_expression": {
+          "v": "",
+          "type": 11
+        },
+        "_simpified_float": {
+          "v": 0,
+          "type": 18
+        },
+        "_simplified": {
+          "v": false,
+          "type": 2
+        },
+        "default_value": {
+          "v": 0,
+          "type": 18
+        }
+      },
+      "type": 250
+    },
+    "secondary_inventory": {
+      "v": [],
+      "type": 100
+    },
+    "min_value": {
+      "v": null,
+      "type": 0
+    },
+    "_serialize_depth": {
+      "v": 0,
+      "type": 16
+    },
+    "self_chance": {
+      "v": {
+        "_expression": {
+          "v": "",
+          "type": 11
+        },
+        "_simpified_float": {
+          "v": 0,
+          "type": 18
+        },
+        "_simplified": {
+          "v": false,
+          "type": 2
+        },
+        "default_value": {
+          "v": 0,
+          "type": 18
+        }
+      },
+      "type": 250
+    },
+    "inventory": {
+      "v": [],
+      "type": 100
+    },
+    "linked_id": {
+      "v": -1,
+      "type": 3
+    },
+    "value": {
+      "v": 1,
+      "type": 17
+    },
+    "chance_group": {
+      "v": -1,
+      "type": 3
+    }
+  },
+  "decoration": {
+    "v": {
+      "1068875674": {
+        "v": "",
+        "type": 11
+      },
+      "_params": {
+        "v": {
+          "_progress": {
+            "v": 0,
+            "type": 18
+          },
+          "_money": {
+            "v": 0,
+            "type": 18
+          },
+          "_res_type": {
+            "v": [
+              {
+                "v": "taken_from_player_inventory",
+                "type": 10
+              }
+            ],
+            "type": 100
+          },
+          "_res_v": {
+            "v": [
+              {
+                "v": 1,
+                "type": 19
+              }
+            ],
+            "type": 100
+          },
+          "_durability": {
+            "v": 1,
+            "type": 19
+          },
+          "_hp": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "sub_name": {
+        "v": "",
+        "type": 11
+      },
+      "id": {
+        "v": "grave_top_sculpt_mrb_1",
+        "type": 10
+      },
+      "worker_unique_id": {
+        "v": -1,
+        "type": 4
+      },
+      "is_unique": {
+        "v": false,
+        "type": 2
+      },
+      "multiquality_items": {
+        "v": [],
+        "type": 100
+      },
+      "equipped_as": {
+        "v": {
+          "1826761547": {
+            "v": 0,
+            "type": 16
+          }
+        },
+        "type": 250
+      },
+      "max_value": {
+        "v": {
+          "_expression": {
+            "v": "",
+            "type": 11
+          },
+          "_simpified_float": {
+            "v": 0,
+            "type": 18
+          },
+          "_simplified": {
+            "v": false,
+            "type": 2
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "common_chance": {
+        "v": {
+          "_expression": {
+            "v": "",
+            "type": 11
+          },
+          "_simpified_float": {
+            "v": 0,
+            "type": 18
+          },
+          "_simplified": {
+            "v": false,
+            "type": 2
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "secondary_inventory": {
+        "v": [],
+        "type": 100
+      },
+      "min_value": {
+        "v": {
+          "_expression": {
+            "v": "1",
+            "type": 10
+          },
+          "_simpified_float": {
+            "v": 1,
+            "type": 19
+          },
+          "_simplified": {
+            "v": true,
+            "type": 1
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "_serialize_depth": {
+        "v": 0,
+        "type": 16
+      },
+      "self_chance": {
+        "v": {
+          "_expression": {
+            "v": "",
+            "type": 11
+          },
+          "_simpified_float": {
+            "v": 0,
+            "type": 18
+          },
+          "_simplified": {
+            "v": false,
+            "type": 2
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "inventory": {
+        "v": [],
+        "type": 100
+      },
+      "linked_id": {
+        "v": -1,
+        "type": 3
+      },
+      "value": {
+        "v": 1,
+        "type": 17
+      },
+      "chance_group": {
+        "v": -1,
+        "type": 3
+      }
+    },
+    "type": 250
+  },
+  "fence": {
+    "v": {
+      "1068875674": {
+        "v": "",
+        "type": 11
+      },
+      "_params": {
+        "v": {
+          "_progress": {
+            "v": 0,
+            "type": 18
+          },
+          "_money": {
+            "v": 0,
+            "type": 18
+          },
+          "_res_type": {
+            "v": [
+              {
+                "v": "taken_from_player_inventory",
+                "type": 10
+              }
+            ],
+            "type": 100
+          },
+          "_res_v": {
+            "v": [
+              {
+                "v": 1,
+                "type": 19
+              }
+            ],
+            "type": 100
+          },
+          "_durability": {
+            "v": 1,
+            "type": 19
+          },
+          "_hp": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "sub_name": {
+        "v": "",
+        "type": 11
+      },
+      "id": {
+        "v": "grave_bot_mrb_2",
+        "type": 10
+      },
+      "worker_unique_id": {
+        "v": -1,
+        "type": 4
+      },
+      "is_unique": {
+        "v": false,
+        "type": 2
+      },
+      "multiquality_items": {
+        "v": [],
+        "type": 100
+      },
+      "equipped_as": {
+        "v": {
+          "1826761547": {
+            "v": 0,
+            "type": 16
+          }
+        },
+        "type": 250
+      },
+      "max_value": {
+        "v": {
+          "_expression": {
+            "v": "",
+            "type": 11
+          },
+          "_simpified_float": {
+            "v": 0,
+            "type": 18
+          },
+          "_simplified": {
+            "v": false,
+            "type": 2
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "common_chance": {
+        "v": {
+          "_expression": {
+            "v": "",
+            "type": 11
+          },
+          "_simpified_float": {
+            "v": 0,
+            "type": 18
+          },
+          "_simplified": {
+            "v": false,
+            "type": 2
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "secondary_inventory": {
+        "v": [],
+        "type": 100
+      },
+      "min_value": {
+        "v": {
+          "_expression": {
+            "v": "1",
+            "type": 10
+          },
+          "_simpified_float": {
+            "v": 1,
+            "type": 19
+          },
+          "_simplified": {
+            "v": true,
+            "type": 1
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "_serialize_depth": {
+        "v": 0,
+        "type": 16
+      },
+      "self_chance": {
+        "v": {
+          "_expression": {
+            "v": "",
+            "type": 11
+          },
+          "_simpified_float": {
+            "v": 0,
+            "type": 18
+          },
+          "_simplified": {
+            "v": false,
+            "type": 2
+          },
+          "default_value": {
+            "v": 0,
+            "type": 18
+          }
+        },
+        "type": 250
+      },
+      "inventory": {
+        "v": [],
+        "type": 100
+      },
+      "linked_id": {
+        "v": -1,
+        "type": 3
+      },
+      "value": {
+        "v": 1,
+        "type": 17
+      },
+      "chance_group": {
+        "v": -1,
+        "type": 3
+      }
+    },
+    "type": 250
+  },
+  "_res_type": {
+    "v": [
+      {
+        "v": "inventory_size",
+        "type": 10
+      },
+      {
+        "v": "hp_inited",
+        "type": 10
+      },
+      {
+        "v": "grave_top_sculpt_mrb_1",
+        "type": 10
+      },
+      {
+        "v": "grave_bot_mrb_2",
+        "type": 10
+      }
+    ],
+    "type": 100
+  },
+  "_res_v": {
+    "v": [
+      {
+        "v": 4,
+        "type": 5
+      },
+      {
+        "v": 1,
+        "type": 19
+      },
+      {
+        "v": 1,
+        "type": 19
+      },
+      {
+        "v": 1,
+        "type": 19
+      }
+    ],
+    "type": 100
+  }
+}

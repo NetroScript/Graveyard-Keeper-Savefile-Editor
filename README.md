@@ -27,10 +27,12 @@ That is why you always should backup your save files. (Although the editor also 
 * Your inventory items
 * Inventories of all (or at least most) storage units
 * Your relationships with NPC's (only if you interacted with them before and have more than 0)
+* Additionally utilities like: 
+  * Removing all drops
+  * Setting the worker efficiency to the highest possible level
+  * Turning the graves into perfect graves
 
-Additionally you can edit your perks in theory, but it seems you also have to modify the underlying technologies for it, so your edits won't have effects.
-In a future version maybe support for technologies is added.
-Additionally if someone supplies me a save with a worker who has 40% efficiency, I can add a button to turn the efficiency of all workers to the highest possible value.
+In a future version maybe support for technologies is added. But because you can simply modify the red/green/blue points I don't really see a need for that.
 
 ## Screenshot
 
@@ -47,12 +49,12 @@ Additionally if someone supplies me a save with a worker who has 40% efficiency,
 
 **OR**
 
-Download a [compiled release](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/releases) for windows.
+Download a [frozen release](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/releases) for windows (so you don't need to install python).
 
 ## Usage
 
 Considering the application has a GUI it should be self explanatory.
-If a name autocompletes to undefined, it might be that this item is not available in the game yet, or my localisation files are missing translations.
+If a name autocompletes to undefined, the item has no internal name or my localisation files are missing translations.
 If you know a item exists, but it doesn't appear in the autocompletion box, leave me a message, this means I forgot some items in my list with items.
 Same if an item doesn't have a preview image - if that happens please leave me a message with the internal id (written in parentheses) and a screenshot of the item in game (so I know which item in the spritesheet is the id)
 
@@ -65,6 +67,11 @@ For information about the possible types, check types.py in the data folder.
 
 Check it [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/changelog.md).
 
+
+## Thanks to
+
+* Reddit user [aMannus](https://www.reddit.com/user/aMannus) for supplying me a save to implement worker efficiency
+* All contributers to this repository
 
 ## Misc
 
