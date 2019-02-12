@@ -375,13 +375,13 @@
             // Add the items in the inventory to the form
             for (let i = 0; i < data["inventory"].length; i++) {
                 let it = data["inventory"][i];
-                $(".items").append(await addItem(it["id"], it["amount"], it["durability"]));
+                addItem(it["id"], it["amount"], it["durability"], $(".items"));
             }
 
             // Add the items in tool section to the equipped inventory list (only allow repairs)
             for (let i = 0; i < data["subinventory"].length; i++) {
                 let it = data["subinventory"][i];
-                $(".equipped-items").append(await addItem(it["id"], it["amount"], it["durability"]));
+                addItem(it["id"], it["amount"], it["durability"], $(".equipped-items"));
             }
 
             // Add additional inventories
@@ -474,8 +474,8 @@
 
             // Add every item to the inventory
             for (let i = 0; i < inventory["items"].length; i++) {
-                $("#inv" + index).parent().find(".items").append(await addItem(inventory["items"][i]["id"], inventory[
-                    "items"][i]["amount"], inventory["items"][i]["durability"]));
+                addItem(inventory["items"][i]["id"], inventory[
+                    "items"][i]["amount"], inventory["items"][i]["durability"], $("#inv" + index).parent().find(".items"));
             }
             
             // Create a preview for that inventory (so it uses less page space)
@@ -544,10 +544,7 @@
         }
 
         //Function to add a single item
-        async function addItem(id, amount, durability) {
-            //Check if we have a icon for the id, if not use default icon
-            url = await getItemUrl(id);
-            console.log(url)
+        async function addItem(id, amount, durability, element) {
 
             //Check for a quality of the item
             let spl = id.split(":");
@@ -574,7 +571,7 @@
 <div class="item justadded${quality}">
     <div class="itemimage">
         <div class="itemquality"></div>
-        <img src="${url}">
+        <img src="">
     </div>
     <div class="iteminfo">
         <div class="itemname">${getLocalisation(id)} <div class="itemid">(${id})</div></div>
@@ -592,13 +589,26 @@
         <div class="itemremove">x</div>
     </div>
 </div>`
-            return item;
+            
+            //Get the Element which we create
+            let el = $(item).appendTo(element)
+            //Check if we have a icon for the id, if not use default icon
+            //Then after loading the image, we change the source to the correct image
+            getItemUrl(id).then((url)=>{
+                console.log(url)
+                el.find(".itemimage img").attr("src", url);
+
+                //Check if the Inventory Preview needs to be updated
+                if($(el).parents(".inventorycon").length>0){
+                    createInventoryMiniPreview(parseInt($(el).parents(".inventorycon").find(".invtinfo").attr("id").split("inv")[1]));
+                }
+            });
+            
+            return true;
         }
 
         //Function to add a single Perk to the list
         async function addPerk(id) {
-            //Check if we have a icon for the id, if not use default icon
-            let url = await getItemUrl(id);
             //If our localisation has it, add a description to the perk
             let description = (data["locals"].hasOwnProperty(id + "_d")) ? data["locals"][id + "_d"] : "";
             //HTML of a single perk
@@ -606,7 +616,7 @@
                 `
 <div class="item justadded">
     <div class="itemimage">
-        <img src="${url}">
+        <img src="">
     </div>
     <div class="iteminfo">
         <div class="itemname">${getLocalisation(id)} <div class="itemid">(${id})</div></div>
@@ -617,21 +627,26 @@
         </div>
     </div>
 </div>`
-            $(".perks").append(item)
+            // Get the element we create
+            let el =  $(item).appendTo(".perks")
+            //Check if we have a icon for the id, if not use default icon
+            //Then change the item image, when it is loaded
+            getItemUrl(id).then((url) => {
+                el.find(".itemimage img").attr("src", url);
+            });
         }
 
         // Function to add a single Relationship to the list
         // Amount is the current friendliness
         async function addRelationShip(id, amount) {
 
-            // Get the URL of the NPC
-            let url = await getItemUrl(id);
+
             // HTML for a single Relationship
             let relationship =
                 `
 <div class="item justadded">
     <div class="npcimage">
-        <img src="${url}">
+        <img src="">
     </div>
     <div class="iteminfo">
         <div class="itemname">${getLocalisation(id)}
@@ -648,8 +663,13 @@
         </div>
     </div>
 </div>`
-            // Add the HTML to the page
-            $(".relationships").append(relationship)
+            // Add the HTML to the page, get the newly created element
+            let el = $(relationship).appendTo(".relationships");
+
+            // Get the URL of the NPC
+            getItemUrl(id).then((url) => {
+                el.find(".npcimage img").attr("src", url);
+            });
         }
 
         // Bind events to the DOM after (most) content loaded
@@ -979,7 +999,7 @@
                         // Check if the items don't exceed the inventory size
                         if (data["additionalstorage"][invindex]["items"].length < parseInt(container.parent().find(
                                 ".invsize").val())) {
-                            $("#inv" + invindex).parent().find(".items").append(await addItem(id, amount, 1));
+                            addItem(id, amount, 1, $("#inv" + invindex).parent().find(".items"));
                         } else {
                             M.toast({
                                 html: "This storage unit only has " + container.parent().find(".invsize").val() +
@@ -1000,7 +1020,7 @@
                     } else {
                         // Check if the items don't exceed the inventory size
                         if (data["inventory"].length < parseInt(container.parent().find(".invsize").val())) {
-                            $("form>.items").append(await addItem(id, amount, 1));
+                            addItem(id, amount, 1, $("form>.items"));
                         } else {
                             M.toast({
                                 html: "Your inventory only has " + container.parent().find(".invsize").val() +
