@@ -119,7 +119,7 @@
                 "checkforupdate": $("#updatesc").prop("checked") || true,
                 "port": parseInt($("#port").val()) || 0,
                 "expert": $("#expert").prop("checked") || false,
-                "backupamount": $("#backupnum").val() || 2
+                "backupamount": parseInt($("#backupnum").val()) || 2
             }
             await eel.set_settings(settings)();
 
