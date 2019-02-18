@@ -12,7 +12,7 @@ from copy import deepcopy
 from traceback import format_exc
 from urllib.request import urlopen
 from io import BytesIO
-from zipfile import ZipFile
+from zipfile import ZipFile, ZIP_DEFLATED
 import shutil
 import psutil
 
@@ -52,6 +52,8 @@ def loadsettings():
         # choose 0 as default port
         if "port" not in options:
             options["port"] = 0
+        if "backupamount" not in options:
+            options["backupamount"] = 3
         web_app_options["port"] = options["port"]
 
 
@@ -218,13 +220,35 @@ def saveslot(data, shash, slot):
     modifysave(data, shash)
     curpath = os.path.join(options["path"], str(saveslots[int(slot)])+".dat")
 
-    # create a single backup of the save file, but if you save again your first backup is lost
-    try:
-        os.replace(curpath, curpath+".back")
-    except Exception:
-        print("Error:")
-        print(format_exc())
-        return {"Error": "There was an error while creating the backup file."}
+    makebackups = options["backupamount"]
+
+    # Create the set amount of backups
+    while makebackups > 0:
+
+        # Get the file to be renamed
+        currentone = curpath+".back_"+str(makebackups-1)+".zip" if makebackups > 1 else curpath
+        try:
+            # If this file to be renamed exists, rename it to the next bigger number (or replace)
+            # and always rename the default save
+            if os.path.isfile(currentone) or makebackups == 1:
+                p = curpath+".back_"+str(makebackups) + (".zip" if makebackups > 1 else "")
+                os.replace(currentone, p)
+
+                # Only if it is the first save file, it is not zipped yet, otherwise it already will be zipped
+                # But this causes the name within the zip to always be _1, but I think that shouldn't matter too much
+                if makebackups == 1:
+                    # Zip the file to save disk space
+                    zip = ZipFile(p+".zip", "w", ZIP_DEFLATED)
+                    zip.write(p, arcname=os.path.basename(p))
+                    zip.close()
+                    os.remove(p)
+
+        except Exception:
+            print("Error:")
+            print(format_exc())
+            return {"Error": "There was an error while creating the backup file."}
+
+        makebackups -= 1
 
     # try saving the save file
     try:
@@ -390,6 +414,31 @@ def modifysave(data, shash):
             d["id"] = modifyvaluetype(shash, d["id"], data["subinventory"][i]["id"])
             d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["subinventory"][i]["durability"])
             i += 1
+
+    # If the user wants to complete the techtree, we replace all objects related to it with our previously extracted objects
+    if data["switches"]["techtree"]:
+
+        # Iterate the lists which we change for quicker access
+        lists = ["unlocked_works", "unlocked_techs", "unlocked_perks", "unlocked_crafts", "revealed_techs"]
+        for l in lists:
+            savefiles[shash]["savedata"][l] = perfectbody[l]
+
+            # Many of those technologies are indexed strings, meaning we have to add the ones which aren't included yet
+            # into the serializer
+            for string in savefiles[shash]["savedata"][l]["v"]:
+                if string["type"] == Types.String_Indexed.value:
+
+                    if string["v"] not in savefiles[shash]["serializer"]:
+                        savefiles[shash]["serializer"].append(string["v"])
+
+        currentinlist = list(map(lambda x: x["v"],savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"]))
+
+        for entry in perfectbody["attributelist"]:
+            if entry in currentinlist:
+                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][currentinlist.index(entry)] = {"type": 19, "v": 1}
+            else:
+                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"].append({"type": 10, "v": entry})
+                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"].append({"type": 19, "v": 1})
 
     # In the following block World Game Objects are iterated
     # For us specifically interesting are all storage units + workers and bodies to modify the items in them
@@ -655,7 +704,8 @@ def editablevalues(shash):
         "workers": False,
         "gravebodies": False,
         "decorations": False,
-        "emptygrave": False
+        "emptygrave": False,
+        "techtree": False
     }
 
     return obj

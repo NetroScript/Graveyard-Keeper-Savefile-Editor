@@ -2111,5 +2111,2823 @@
       }
     ],
     "type": 100
-  }
+  },
+  "unlocked_works": {
+    "type": 100,
+    "v": [
+      {
+        "type": 10,
+        "v": "t_stone"
+      },
+      {
+        "type": 10,
+        "v": "t_wood_small"
+      },
+      {
+        "type": 10,
+        "v": "t_stick"
+      },
+      {
+        "type": 10,
+        "v": "t_iron_ore_1"
+      },
+      {
+        "type": 10,
+        "v": "t_mushroom"
+      },
+      {
+        "type": 10,
+        "v": "t_berry"
+      },
+      {
+        "type": 10,
+        "v": "t_apple"
+      },
+      {
+        "type": 10,
+        "v": "t_coal"
+      },
+      {
+        "type": 10,
+        "v": "t_iron_ore_2"
+      },
+      {
+        "type": 10,
+        "v": "t_sand"
+      },
+      {
+        "type": 10,
+        "v": "t_clai"
+      },
+      {
+        "type": 10,
+        "v": "t_mushroom2"
+      },
+      {
+        "type": 10,
+        "v": "t_wood_big"
+      },
+      {
+        "type": 10,
+        "v": "t_marble"
+      },
+      {
+        "type": 10,
+        "v": "t_diamond"
+      }
+    ]
+  },
+  "unlocked_techs": {
+    "type": 100,
+    "v": [
+      {
+        "type": 10,
+        "v": "First slice"
+      },
+      {
+        "type": 10,
+        "v": "Fast food"
+      },
+      {
+        "type": 10,
+        "v": "Grave plate"
+      },
+      {
+        "type": 10,
+        "v": "The idea of the stone"
+      },
+      {
+        "type": 10,
+        "v": "The idea of the tree"
+      },
+      {
+        "type": 10,
+        "v": "Saw"
+      },
+      {
+        "type": 10,
+        "v": "Iron"
+      },
+      {
+        "type": 10,
+        "v": "Jelly"
+      },
+      {
+        "type": 10,
+        "v": "Gathering"
+      },
+      {
+        "type": 10,
+        "v": "Bread"
+      },
+      {
+        "type": 10,
+        "v": "Softspares"
+      },
+      {
+        "type": 10,
+        "v": "Hardspares"
+      },
+      {
+        "type": 10,
+        "v": "Primitive forging"
+      },
+      {
+        "type": 10,
+        "v": "Instruments"
+      },
+      {
+        "type": 10,
+        "v": "Garden beds"
+      },
+      {
+        "type": 10,
+        "v": "Mining"
+      },
+      {
+        "type": 10,
+        "v": "Firewood"
+      },
+      {
+        "type": 10,
+        "v": "Wood processing"
+      },
+      {
+        "type": 10,
+        "v": "Stone processing"
+      },
+      {
+        "type": 10,
+        "v": "Important parts"
+      },
+      {
+        "type": 10,
+        "v": "Simple gravestones"
+      },
+      {
+        "type": 10,
+        "v": "Advanced forging"
+      },
+      {
+        "type": 10,
+        "v": "Faith"
+      },
+      {
+        "type": 10,
+        "v": "Research"
+      },
+      {
+        "type": 10,
+        "v": "Paper crafting"
+      },
+      {
+        "type": 10,
+        "v": "Precious metals"
+      },
+      {
+        "type": 10,
+        "v": "Corpses burning"
+      },
+      {
+        "type": 10,
+        "v": "Advanced smelting"
+      },
+      {
+        "type": 10,
+        "v": "The idea of the earth"
+      },
+      {
+        "type": 10,
+        "v": "Iron castings"
+      },
+      {
+        "type": 10,
+        "v": "Clay"
+      },
+      {
+        "type": 10,
+        "v": "Desert"
+      },
+      {
+        "type": 10,
+        "v": "Vegetable dishes"
+      },
+      {
+        "type": 10,
+        "v": {
+          "string": "Comfort of faith",
+          "length": 16,
+          "buffer": [
+            -48,
+            -95,
+            2,
+            109,
+            11,
+            2,
+            31,
+            25,
+            77,
+            2,
+            11,
+            77,
+            11,
+            12,
+            4,
+            25,
+            5
+          ]
+        }
+      },
+      {
+        "type": 10,
+        "v": "Power of faith"
+      },
+      {
+        "type": 10,
+        "v": "Faithbuisness"
+      },
+      {
+        "type": 10,
+        "v": "French cuisine"
+      },
+      {
+        "type": 10,
+        "v": "Journalist"
+      },
+      {
+        "type": 10,
+        "v": "Circular saw"
+      },
+      {
+        "type": 10,
+        "v": "2min"
+      },
+      {
+        "type": 10,
+        "v": "Decay"
+      },
+      {
+        "type": 10,
+        "v": "Improvement"
+      },
+      {
+        "type": 10,
+        "v": "Gentle butcher"
+      },
+      {
+        "type": 10,
+        "v": "Price of faith"
+      },
+      {
+        "type": 10,
+        "v": "Light of faith"
+      },
+      {
+        "type": 10,
+        "v": "Glass"
+      },
+      {
+        "type": 10,
+        "v": "Writing"
+      },
+      {
+        "type": 10,
+        "v": "Simple fertilizers"
+      },
+      {
+        "type": 10,
+        "v": "Steel"
+      },
+      {
+        "type": 10,
+        "v": "Books"
+      },
+      {
+        "type": 10,
+        "v": "Second chance"
+      },
+      {
+        "type": 10,
+        "v": "Gardening"
+      },
+      {
+        "type": 10,
+        "v": "Zombie gardening"
+      },
+      {
+        "type": 10,
+        "v": "The Beginning Of Alchemy"
+      },
+      {
+        "type": 10,
+        "v": "Glass-blower"
+      },
+      {
+        "type": 10,
+        "v": "Glass-blower 2"
+      },
+      {
+        "type": 10,
+        "v": "Stone carving"
+      },
+      {
+        "type": 10,
+        "v": "Steel instruments"
+      },
+      {
+        "type": 10,
+        "v": "Complex fertilizers"
+      },
+      {
+        "type": 10,
+        "v": "Jeweler"
+      },
+      {
+        "type": 10,
+        "v": "The master gathering"
+      },
+      {
+        "type": 10,
+        "v": "Alchemy storage"
+      },
+      {
+        "type": 10,
+        "v": "Advanced alchemy"
+      },
+      {
+        "type": 10,
+        "v": "Stone gravestones"
+      },
+      {
+        "type": 10,
+        "v": "Assembly stand"
+      },
+      {
+        "type": 10,
+        "v": "Zombie mining"
+      },
+      {
+        "type": 10,
+        "v": "Softness of faith"
+      },
+      {
+        "type": 10,
+        "v": "Woodcutter"
+      },
+      {
+        "type": 10,
+        "v": "Zombie woodcuttering"
+      },
+      {
+        "type": 10,
+        "v": "Zombie logistic"
+      },
+      {
+        "type": 10,
+        "v": "Zombie quarrying I"
+      },
+      {
+        "type": 10,
+        "v": "Writing supplies"
+      },
+      {
+        "type": 10,
+        "v": "Transplanting"
+      },
+      {
+        "type": 10,
+        "v": "Grape farming"
+      },
+      {
+        "type": 10,
+        "v": "Winemaking"
+      },
+      {
+        "type": 10,
+        "v": "Brewing"
+      },
+      {
+        "type": 10,
+        "v": "Superpower of faith"
+      },
+      {
+        "type": 10,
+        "v": "Weapons"
+      },
+      {
+        "type": 10,
+        "v": "Inborn blacksmith"
+      },
+      {
+        "type": 10,
+        "v": "Steel Weapons"
+      },
+      {
+        "type": 10,
+        "v": "Inventing storyes"
+      },
+      {
+        "type": 10,
+        "v": "Writing tricks"
+      },
+      {
+        "type": 10,
+        "v": "Fish"
+      },
+      {
+        "type": 10,
+        "v": "Embalm 1"
+      },
+      {
+        "type": 10,
+        "v": "Embalming"
+      },
+      {
+        "type": 10,
+        "v": "Embalm 2"
+      },
+      {
+        "type": 10,
+        "v": "Embalming 2"
+      },
+      {
+        "type": 10,
+        "v": "Embalm 3"
+      },
+      {
+        "type": 10,
+        "v": "Illumination of faith"
+      },
+      {
+        "type": 10,
+        "v": "Playwright"
+      },
+      {
+        "type": 10,
+        "v": "Smell of faith"
+      },
+      {
+        "type": 10,
+        "v": "Pheromones"
+      },
+      {
+        "type": 10,
+        "v": "Vegetable soups"
+      },
+      {
+        "type": 10,
+        "v": "Marble Quarrying"
+      },
+      {
+        "type": 10,
+        "v": "Zombie quarrying II"
+      },
+      {
+        "type": 10,
+        "v": "Working trick"
+      },
+      {
+        "type": 10,
+        "v": "Rules of burning"
+      },
+      {
+        "type": 10,
+        "v": "Alcohol cook"
+      },
+      {
+        "type": 10,
+        "v": "Carved gravestones"
+      },
+      {
+        "type": 10,
+        "v": "The art of stone"
+      },
+      {
+        "type": 10,
+        "v": "Grave monuments"
+      },
+      {
+        "type": 10,
+        "v": "Marble gravestones"
+      },
+      {
+        "type": 10,
+        "v": "Anatomy 2"
+      },
+      {
+        "type": 10,
+        "v": "Surgery"
+      },
+      {
+        "type": 10,
+        "v": "Dark body"
+      },
+      {
+        "type": 10,
+        "v": "Tech_cultist"
+      },
+      {
+        "type": 10,
+        "v": "Carved marble gravestones"
+      },
+      {
+        "type": 10,
+        "v": "Praying stand"
+      },
+      {
+        "type": 10,
+        "v": "Corpses burning 2"
+      },
+      {
+        "type": 10,
+        "v": "Random text generator"
+      },
+      {
+        "type": 10,
+        "v": "Related ore"
+      },
+      {
+        "type": 10,
+        "v": "Crypts"
+      },
+      {
+        "type": 10,
+        "v": "Stone praying stand"
+      },
+      {
+        "type": 10,
+        "v": "Browncastle"
+      },
+      {
+        "type": 10,
+        "v": "Insects"
+      },
+      {
+        "type": 10,
+        "v": "Engineer"
+      },
+      {
+        "type": 10,
+        "v": "Ceramic firing"
+      },
+      {
+        "type": 10,
+        "v": "Digestion"
+      },
+      {
+        "type": 10,
+        "v": "Distilate"
+      },
+      {
+        "type": 10,
+        "v": "Master of alchemy"
+      },
+      {
+        "type": 10,
+        "v": "Skilled casting"
+      },
+      {
+        "type": 10,
+        "v": "Sword master"
+      },
+      {
+        "type": 10,
+        "v": "Zombie alchemy"
+      },
+      {
+        "type": 10,
+        "v": "Shining of faith"
+      },
+      {
+        "type": 10,
+        "v": "Precious little things"
+      },
+      {
+        "type": 10,
+        "v": "Martial skills"
+      },
+      {
+        "type": 10,
+        "v": "Scent of gold"
+      },
+      {
+        "type": 10,
+        "v": "Writer inspiration"
+      },
+      {
+        "type": 10,
+        "v": "The domestication of bees"
+      },
+      {
+        "type": 10,
+        "v": "Beefriend"
+      },
+      {
+        "type": 10,
+        "v": "Fish shish kebab"
+      },
+      {
+        "type": 10,
+        "v": "Italian kitchen"
+      },
+      {
+        "type": 10,
+        "v": "Paper production"
+      },
+      {
+        "type": 10,
+        "v": "A simple printing press"
+      },
+      {
+        "type": 10,
+        "v": "Complex printing press"
+      },
+      {
+        "type": 10,
+        "v": "Strong alcohol"
+      },
+      {
+        "type": 10,
+        "v": "Blending"
+      },
+      {
+        "type": 10,
+        "v": "Gems"
+      },
+      {
+        "type": 10,
+        "v": "Best friend"
+      },
+      {
+        "type": 10,
+        "v": "Wooden work"
+      },
+      {
+        "type": 10,
+        "v": "Vegetable bowl"
+      },
+      {
+        "type": 10,
+        "v": "Fish delicous"
+      },
+      {
+        "type": 10,
+        "v": "Sweet baking"
+      },
+      {
+        "type": 10,
+        "v": "Pies"
+      },
+      {
+        "type": 10,
+        "v": "For beer"
+      }
+    ]
+  },
+  "unlocked_perks": {
+    "type": 100,
+    "v": [
+      {
+        "type": 10,
+        "v": "p_preacher"
+      },
+      {
+        "type": 10,
+        "v": "p_t_old_books"
+      },
+      {
+        "type": 10,
+        "v": "p_naturalist"
+      },
+      {
+        "type": 10,
+        "v": "p_t_gold_ore"
+      },
+      {
+        "type": 10,
+        "v": "p_t_silver_ore"
+      },
+      {
+        "type": 10,
+        "v": "p_journalist"
+      },
+      {
+        "type": 10,
+        "v": "p_t_maggot"
+      },
+      {
+        "type": 10,
+        "v": "p_butcher"
+      },
+      {
+        "type": 10,
+        "v": "p_cardinal"
+      },
+      {
+        "type": 10,
+        "v": "p_farmer"
+      },
+      {
+        "type": 10,
+        "v": "p_t_sand_improve"
+      },
+      {
+        "type": 10,
+        "v": "p_collector"
+      },
+      {
+        "type": 10,
+        "v": "p_axeman"
+      },
+      {
+        "type": 10,
+        "v": "p_blacksmith"
+      },
+      {
+        "type": 10,
+        "v": "p_writer"
+      },
+      {
+        "type": 10,
+        "v": "p_good_writer"
+      },
+      {
+        "type": 10,
+        "v": "p_woodworker"
+      },
+      {
+        "type": 10,
+        "v": "p_mason"
+      },
+      {
+        "type": 10,
+        "v": "p_fireman"
+      },
+      {
+        "type": 10,
+        "v": "p_doctor"
+      },
+      {
+        "type": 10,
+        "v": "p_cultist"
+      },
+      {
+        "type": 10,
+        "v": "p_t_pyrite"
+      },
+      {
+        "type": 10,
+        "v": "p_t_sulfur"
+      },
+      {
+        "type": 10,
+        "v": "p_t_lifestone"
+      },
+      {
+        "type": 10,
+        "v": "p_t_beeswax"
+      },
+      {
+        "type": 10,
+        "v": "p_t_butterfly"
+      },
+      {
+        "type": 10,
+        "v": "p_t_moth"
+      },
+      {
+        "type": 10,
+        "v": "p_t_bee"
+      },
+      {
+        "type": 10,
+        "v": "p_engineer"
+      },
+      {
+        "type": 10,
+        "v": "p_scientist"
+      },
+      {
+        "type": 10,
+        "v": "p_sword_master"
+      },
+      {
+        "type": 10,
+        "v": "p_big_guy"
+      },
+      {
+        "type": 10,
+        "v": "p_miner"
+      },
+      {
+        "type": 10,
+        "v": "p_beekeeper2"
+      },
+      {
+        "type": 10,
+        "v": "p_wine_master"
+      },
+      {
+        "type": 10,
+        "v": "p_jevelery"
+      }
+    ]
+  },
+  "unlocked_crafts": {
+    "type": 100,
+    "v": [
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:mf_preparation_1_place"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:corpse_bed_place"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:flesh"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:flesh"
+      },
+      {
+        "type": 10,
+        "v": "burger"
+      },
+      {
+        "type": 10,
+        "v": "sandwich"
+      },
+      {
+        "type": 10,
+        "v": "raw_meat_sliced_from_flesh"
+      },
+      {
+        "type": 10,
+        "v": "baked_meat"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_wd_tab_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_wd_tab_1_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_wd_tab_1_3"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_stones_1_place"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk:p:mf_stones_1_place"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_timber_1_place"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_beam_gantry_1_place"
+      },
+      {
+        "type": 10,
+        "v": "flitch"
+      },
+      {
+        "type": 10,
+        "v": "wood1"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_furnace_0_place"
+      },
+      {
+        "type": 10,
+        "v": "ingot_metal"
+      },
+      {
+        "type": 10,
+        "v": "jelly_green"
+      },
+      {
+        "type": 10,
+        "v": "jelly_red"
+      },
+      {
+        "type": 10,
+        "v": "dough"
+      },
+      {
+        "type": 10,
+        "v": "dough_2"
+      },
+      {
+        "type": 10,
+        "v": "bread"
+      },
+      {
+        "type": 10,
+        "v": "flour_from_wheat"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:blood"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:fat"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:blood"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:fat"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:skull"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:bone"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:skull"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:bone"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:skin"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:skin"
+      },
+      {
+        "type": 10,
+        "v": "mf_wood_builddesk:p:mf_anvil_1"
+      },
+      {
+        "type": 10,
+        "v": "nails"
+      },
+      {
+        "type": 10,
+        "v": "detail_1"
+      },
+      {
+        "type": 10,
+        "v": "shovel_1"
+      },
+      {
+        "type": 10,
+        "v": "shovel_1_2"
+      },
+      {
+        "type": 10,
+        "v": "shovel_1_3"
+      },
+      {
+        "type": 10,
+        "v": "pickaxe_1"
+      },
+      {
+        "type": 10,
+        "v": "pickaxe_1_2"
+      },
+      {
+        "type": 10,
+        "v": "pickaxe_1_3"
+      },
+      {
+        "type": 10,
+        "v": "axe_1"
+      },
+      {
+        "type": 10,
+        "v": "axe_1_2"
+      },
+      {
+        "type": 10,
+        "v": "axe_1_3"
+      },
+      {
+        "type": 10,
+        "v": "hammer_0"
+      },
+      {
+        "type": 9,
+        "v": "garden_builddesk:p:garden_empty_place"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_ore_1_complete"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk:p:mf_ore_1_complete"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_chocks_1"
+      },
+      {
+        "type": 10,
+        "v": "firewood"
+      },
+      {
+        "type": 10,
+        "v": "spike_1"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_workbench_1_place"
+      },
+      {
+        "type": 10,
+        "v": "wooden_plank"
+      },
+      {
+        "type": 10,
+        "v": "repair_wdn"
+      },
+      {
+        "type": 10,
+        "v": "wooden_plank_3"
+      },
+      {
+        "type": 10,
+        "v": "repair_wdn_1"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_hammer_0_place"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk:p:mf_hammer_0_place"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_1"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_1_2"
+      },
+      {
+        "type": 10,
+        "v": "repair_stn"
+      },
+      {
+        "type": 10,
+        "v": "repair_stn_2"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:brain"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:brain"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:heart"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:heart"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:intestine"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:intestine"
+      },
+      {
+        "type": 10,
+        "v": "grave_bot_wd_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_wd_cross_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_stn_plate_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_bot_wd_1_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_wd_cross_1_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_stn_plate_1_2"
+      },
+      {
+        "type": 10,
+        "v": "destroy_wd_cross"
+      },
+      {
+        "type": 10,
+        "v": "destroy_wd_cross_2"
+      },
+      {
+        "type": 10,
+        "v": "destroy_wd_fence"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_top_stn_plate_1"
+      },
+      {
+        "type": 10,
+        "v": "mf_wood_builddesk:p:mf_anvil_2"
+      },
+      {
+        "type": 10,
+        "v": "detail_2"
+      },
+      {
+        "type": 10,
+        "v": "chisel_1"
+      },
+      {
+        "type": 10,
+        "v": "chisel_1_2"
+      },
+      {
+        "type": 10,
+        "v": "b_faith"
+      },
+      {
+        "type": 10,
+        "v": "b_faith_2"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_alchemy_survey_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:table_book_constr_place"
+      },
+      {
+        "type": 10,
+        "v": "skroll_skin_pig"
+      },
+      {
+        "type": 10,
+        "v": "skroll_skin_pig_2"
+      },
+      {
+        "type": 10,
+        "v": "paper_bad"
+      },
+      {
+        "type": 10,
+        "v": "graphite"
+      },
+      {
+        "type": 10,
+        "v": "graphite_2"
+      },
+      {
+        "type": 9,
+        "v": "cremation_builddesk:p:mf_pyre_placed"
+      },
+      {
+        "type": 10,
+        "v": "funeral_urn_1"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:columbarium_stone_place"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_furnace_1_place"
+      },
+      {
+        "type": 10,
+        "v": "mf_furnace_0_to_1"
+      },
+      {
+        "type": 10,
+        "v": "ingot_steel"
+      },
+      {
+        "type": 10,
+        "v": "ingot_steel_2"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_furnace_2_place"
+      },
+      {
+        "type": 10,
+        "v": "mf_furnace_1_to_2"
+      },
+      {
+        "type": 10,
+        "v": "detail_3"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_potter_wheel_1_place"
+      },
+      {
+        "type": 10,
+        "v": "ceramic_1"
+      },
+      {
+        "type": 10,
+        "v": "polishing_paste"
+      },
+      {
+        "type": 10,
+        "v": "polishing_paste_2"
+      },
+      {
+        "type": 10,
+        "v": "pie"
+      },
+      {
+        "type": 10,
+        "v": "cutlet_carrot"
+      },
+      {
+        "type": 10,
+        "v": "bowl_sauerkraut"
+      },
+      {
+        "type": 10,
+        "v": "beet_slice"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:church_bench"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:church_budka_1_place"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:church_table_1_place"
+      },
+      {
+        "type": 10,
+        "v": "b_sins"
+      },
+      {
+        "type": 10,
+        "v": "b_sins_2"
+      },
+      {
+        "type": 10,
+        "v": "flyer_bad"
+      },
+      {
+        "type": 10,
+        "v": "flyer_bad_2"
+      },
+      {
+        "type": 10,
+        "v": "b_village"
+      },
+      {
+        "type": 10,
+        "v": "b_village_2"
+      },
+      {
+        "type": 10,
+        "v": "omlette"
+      },
+      {
+        "type": 10,
+        "v": "fried_egg"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_saw_1_place"
+      },
+      {
+        "type": 10,
+        "v": "wood_balk_1"
+      },
+      {
+        "type": 10,
+        "v": "baked_kebab_7"
+      },
+      {
+        "type": 10,
+        "v": "baked_apple"
+      },
+      {
+        "type": 9,
+        "v": "garden_builddesk:p:v_obj_compost_heap_place"
+      },
+      {
+        "type": 10,
+        "v": "peat_from_waste"
+      },
+      {
+        "type": 9,
+        "v": "garden_builddesk:p:mf_box_stuff_place"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk:p:mf_box_stuff_place"
+      },
+      {
+        "type": 9,
+        "v": "vineyard_builddesk:p:mf_box_stuff_place"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:mf_box_stuff_place"
+      },
+      {
+        "type": 9,
+        "v": "cremation_builddesk:p:mf_box_stuff_place"
+      },
+      {
+        "type": 9,
+        "v": "garden_builddesk:p:garden_empty_stick_place"
+      },
+      {
+        "type": 10,
+        "v": "b_money"
+      },
+      {
+        "type": 10,
+        "v": "b_faith_money"
+      },
+      {
+        "type": 10,
+        "v": "b_faith_money_2"
+      },
+      {
+        "type": 10,
+        "v": "b_money_2"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:candelabrum_1"
+      },
+      {
+        "type": 10,
+        "v": "candle_1"
+      },
+      {
+        "type": 10,
+        "v": "candle_3"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:wall_candelabrum_1"
+      },
+      {
+        "type": 10,
+        "v": "glass_0"
+      },
+      {
+        "type": 10,
+        "v": "glass_0_1"
+      },
+      {
+        "type": 10,
+        "v": "glass_0_2"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_builddesk:p:desk"
+      },
+      {
+        "type": 10,
+        "v": "notes"
+      },
+      {
+        "type": 10,
+        "v": "notes_2"
+      },
+      {
+        "type": 10,
+        "v": "chapter"
+      },
+      {
+        "type": 10,
+        "v": "chapter_2"
+      },
+      {
+        "type": 10,
+        "v": "sack_clock_silver"
+      },
+      {
+        "type": 10,
+        "v": "sack_star_silver"
+      },
+      {
+        "type": 10,
+        "v": "mf_wood_builddesk:p:mf_anvil_3"
+      },
+      {
+        "type": 10,
+        "v": "mf_anvil_2_to_3"
+      },
+      {
+        "type": 10,
+        "v": "chisel_2"
+      },
+      {
+        "type": 10,
+        "v": "hammer_2"
+      },
+      {
+        "type": 10,
+        "v": "chisel_2_2"
+      },
+      {
+        "type": 10,
+        "v": "chisel_2a"
+      },
+      {
+        "type": 10,
+        "v": "chisel_2b"
+      },
+      {
+        "type": 10,
+        "v": "chisel_2_2a"
+      },
+      {
+        "type": 10,
+        "v": "chisel_2_2b"
+      },
+      {
+        "type": 10,
+        "v": "cover_1"
+      },
+      {
+        "type": 10,
+        "v": "cover_hard"
+      },
+      {
+        "type": 10,
+        "v": "book_hard"
+      },
+      {
+        "type": 10,
+        "v": "book_hard_2"
+      },
+      {
+        "type": 10,
+        "v": "cover_hard_2"
+      },
+      {
+        "type": 10,
+        "v": "cover_hard_3"
+      },
+      {
+        "type": 10,
+        "v": "pail_blood"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:zombie_crafting_table_place"
+      },
+      {
+        "type": 10,
+        "v": "b_plant"
+      },
+      {
+        "type": 10,
+        "v": "b_plant_2"
+      },
+      {
+        "type": 9,
+        "v": "garden_builddesk:p:zombie_garden_desk_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_alchemy_craft_02_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_alchemy_stirrer_01_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_alchemy_mill_place"
+      },
+      {
+        "type": 10,
+        "v": "glass_1"
+      },
+      {
+        "type": 10,
+        "v": "glass_1_2"
+      },
+      {
+        "type": 10,
+        "v": "glass_2"
+      },
+      {
+        "type": 10,
+        "v": "glass_2_2"
+      },
+      {
+        "type": 10,
+        "v": "lense"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_hammer_1_place"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_2"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_3"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_2_2"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_2_3"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_2_4"
+      },
+      {
+        "type": 10,
+        "v": "stone_plate_3b"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_2_brain"
+      },
+      {
+        "type": 10,
+        "v": "mix_ash_alchemy_2_yellow"
+      },
+      {
+        "type": 10,
+        "v": "axe_2"
+      },
+      {
+        "type": 10,
+        "v": "shovel_2"
+      },
+      {
+        "type": 10,
+        "v": "pickaxe_2"
+      },
+      {
+        "type": 10,
+        "v": "sack_clock_gold"
+      },
+      {
+        "type": 10,
+        "v": "sack_star_gold"
+      },
+      {
+        "type": 10,
+        "v": "ingot_silver"
+      },
+      {
+        "type": 10,
+        "v": "ingot_silver_2"
+      },
+      {
+        "type": 10,
+        "v": "ingot_gold"
+      },
+      {
+        "type": 10,
+        "v": "ingot_gold_2"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:rack_alchemy_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_alchemy_craft_03_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_distcube_2_clay_place"
+      },
+      {
+        "type": 10,
+        "v": "grave_bot_stn_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_stn_cross_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_stn_plate_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_bot_stn_1_2"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_bot_stn_1"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_top_stn_cross_1"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_top_stn_plate_2"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_workbench_2_place"
+      },
+      {
+        "type": 10,
+        "v": "wood_constr_1"
+      },
+      {
+        "type": 10,
+        "v": "mf_workbench_1_to_2"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk::zombie_mine_bench_left"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk::zombie_mine_bench_right"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk::elevator_place"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:church_bench_2"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_2_shr_agaric"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_3_maggot"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_3_heart"
+      },
+      {
+        "type": 9,
+        "v": "mix_ash_alchemy_2_red_alchemy_3_yellow"
+      },
+      {
+        "type": 9,
+        "v": "zombie_sawmill_unfinished_place"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk:p:porter_station"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk::zombie_mine_fence_front_stone"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk::zombie_mine_fence_left_front_stone"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:obj_church_scroll_cabinet_place"
+      },
+      {
+        "type": 10,
+        "v": "ink_jar"
+      },
+      {
+        "type": 10,
+        "v": "ink_pen"
+      },
+      {
+        "type": 9,
+        "v": "tree_garden_builddesk:p:bush_berry_garden_place"
+      },
+      {
+        "type": 9,
+        "v": "tree_garden_builddesk:p:tree_apple_garden_place"
+      },
+      {
+        "type": 9,
+        "v": "vineyard_builddesk:p:vineyard_grapes_stick_place"
+      },
+      {
+        "type": 10,
+        "v": "garden_grapes_growing"
+      },
+      {
+        "type": 10,
+        "v": "garden_hop_growing"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_vine_press_place"
+      },
+      {
+        "type": 9,
+        "v": "cellar_builddesk:p:mf_vine_press_place"
+      },
+      {
+        "type": 9,
+        "v": "cellar_builddesk:p:mf_barrel_mid_place"
+      },
+      {
+        "type": 10,
+        "v": "bottle_red_vine"
+      },
+      {
+        "type": 9,
+        "v": "cellar_builddesk:p:brewing_stand_place"
+      },
+      {
+        "type": 10,
+        "v": "cup_beer"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:church_budka_2_place"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:church_table_2_place"
+      },
+      {
+        "type": 10,
+        "v": "sword_1"
+      },
+      {
+        "type": 10,
+        "v": "sword_1_2"
+      },
+      {
+        "type": 10,
+        "v": "armor_lamellar_1"
+      },
+      {
+        "type": 10,
+        "v": "armor_lamellar_1_2"
+      },
+      {
+        "type": 10,
+        "v": "sword_steel"
+      },
+      {
+        "type": 10,
+        "v": "armor_lamellar_2"
+      },
+      {
+        "type": 10,
+        "v": "story"
+      },
+      {
+        "type": 10,
+        "v": "story_2"
+      },
+      {
+        "type": 10,
+        "v": "b_pen"
+      },
+      {
+        "type": 10,
+        "v": "b_pen_2"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_1_pumpkin_crop"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_3_pumpkin_crop"
+      },
+      {
+        "type": 10,
+        "v": "baked_fish"
+      },
+      {
+        "type": 10,
+        "v": "soup_fish"
+      },
+      {
+        "type": 10,
+        "v": "nuggets_fish"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk::graveyard_fence_2_upgr"
+      },
+      {
+        "type": 10,
+        "v": "embalm_-1_-1"
+      },
+      {
+        "type": 10,
+        "v": "embalm_1_1"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:mf_balsamation_1_place"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:rack_organs_place"
+      },
+      {
+        "type": 10,
+        "v": "b_skull"
+      },
+      {
+        "type": 10,
+        "v": "b_skull_2"
+      },
+      {
+        "type": 10,
+        "v": "embalm_0_1"
+      },
+      {
+        "type": 10,
+        "v": "embalm_stop"
+      },
+      {
+        "type": 10,
+        "v": "embalm_50"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:mf_balsamation_2_place"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:corpse_fridge_place"
+      },
+      {
+        "type": 10,
+        "v": "mix_alchemy_1_d_green_blood"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_2_flw_chamomile"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_1_nugget_gold"
+      },
+      {
+        "type": 9,
+        "v": "mix_powder_gold_alchemy_2_green_alchemy_3_d_green"
+      },
+      {
+        "type": 10,
+        "v": "embalm_2_0"
+      },
+      {
+        "type": 10,
+        "v": "embalm_-1_1"
+      },
+      {
+        "type": 10,
+        "v": "embalm_-2_2"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:candelabrum_2"
+      },
+      {
+        "type": 10,
+        "v": "candle_4"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:church_window_1"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:wall_candelabrum_2"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:c_obj_incense_1_place"
+      },
+      {
+        "type": 10,
+        "v": "incense_1"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:c_obj_incense_2_place"
+      },
+      {
+        "type": 10,
+        "v": "incense_2"
+      },
+      {
+        "type": 10,
+        "v": "soup_red_green"
+      },
+      {
+        "type": 10,
+        "v": "soup_red_yellow"
+      },
+      {
+        "type": 10,
+        "v": "soup_yellow_green"
+      },
+      {
+        "type": 10,
+        "v": "insert_stamp_into_table"
+      },
+      {
+        "type": 10,
+        "v": "marble_plate_1"
+      },
+      {
+        "type": 10,
+        "v": "repair_mrb"
+      },
+      {
+        "type": 10,
+        "v": "repair_mrb_2"
+      },
+      {
+        "type": 10,
+        "v": "marble_plate_1_2"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk::zombie_mine_fence_front_marble_right"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk::zombie_mine_fence_front_marble_left"
+      },
+      {
+        "type": 10,
+        "v": "b_star"
+      },
+      {
+        "type": 10,
+        "v": "b_star_2"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk::lantern_network"
+      },
+      {
+        "type": 9,
+        "v": "mining_builddesk:p:lantern_place"
+      },
+      {
+        "type": 10,
+        "v": "ingot_metal_huge"
+      },
+      {
+        "type": 10,
+        "v": "ingot_metal_1_huge"
+      },
+      {
+        "type": 10,
+        "v": "ingot_metal_2_huge"
+      },
+      {
+        "type": 10,
+        "v": "cup_mead"
+      },
+      {
+        "type": 10,
+        "v": "grave_bot_stn_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_stn_cross_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_stella_stn_1"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_bot_stn_2"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_top_stella_stn_1"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_top_stn_cross_2"
+      },
+      {
+        "type": 10,
+        "v": "marble_plate_2"
+      },
+      {
+        "type": 10,
+        "v": "marble_plate_3"
+      },
+      {
+        "type": 10,
+        "v": "marble_plate_2_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_sculpt_stn_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_sculpt_stn_2"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_top_sculpt_stn_1"
+      },
+      {
+        "type": 10,
+        "v": "destroy_grave_top_sculpt_stn_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_bot_mrb_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_mrb_cross_1"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_1_nugget_silver"
+      },
+      {
+        "type": 10,
+        "v": "mix_goo_violet_goo_green"
+      },
+      {
+        "type": 9,
+        "v": "mix_powder_silver_alchemy_2_green_alchemy_3_yellow"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_1_intestine"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:mf_preparation_2_place"
+      },
+      {
+        "type": 9,
+        "v": "morgue_builddesk:p:corpse_bed_big_place"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:brain_dark"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:brain_dark"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_1:heart_dark"
+      },
+      {
+        "type": 10,
+        "v": "ex:mf_preparation_2:heart_dark"
+      },
+      {
+        "type": 9,
+        "v": "ex:mf_preparation_1:intestine_dark"
+      },
+      {
+        "type": 9,
+        "v": "ex:mf_preparation_2:intestine_dark"
+      },
+      {
+        "type": 10,
+        "v": "grave_bot_mrb_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_mrb_cross_2"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_stella_mrb_1"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:pray_stand_wd_place"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:grass_sward_2x3"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:grass_sward_2x4"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:grass_sward_2x6"
+      },
+      {
+        "type": 10,
+        "v": "funeral_urn_2"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:columbarium_marble_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:zombie_pulpit"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_sculpt_mrb_1"
+      },
+      {
+        "type": 10,
+        "v": "grave_top_sculpt_mrb_2"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:pray_stand_stn_place"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:road_marble"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk:p:lantern_3"
+      },
+      {
+        "type": 10,
+        "v": "honey_production"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk::well_pump_place"
+      },
+      {
+        "type": 10,
+        "v": "ceramic_2"
+      },
+      {
+        "type": 10,
+        "v": "ceramic_2_1"
+      },
+      {
+        "type": 10,
+        "v": "ceramic_2_2"
+      },
+      {
+        "type": 10,
+        "v": "ceramic_3"
+      },
+      {
+        "type": 10,
+        "v": "ceramic_3_1"
+      },
+      {
+        "type": 10,
+        "v": "ceramic_3_2"
+      },
+      {
+        "type": 9,
+        "v": "cellar_builddesk:p:barrel_brew_place"
+      },
+      {
+        "type": 10,
+        "v": "bottle_apple_braga"
+      },
+      {
+        "type": 10,
+        "v": "bottle_berry_braga"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_2_maggot"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_distcube_2_cuprum_place"
+      },
+      {
+        "type": 10,
+        "v": "upgr_to_mf_distcube_2_cuprum"
+      },
+      {
+        "type": 10,
+        "v": "sword_steel_gem"
+      },
+      {
+        "type": 10,
+        "v": "sword_damask_gem"
+      },
+      {
+        "type": 10,
+        "v": "bloody_nails_wash"
+      },
+      {
+        "type": 10,
+        "v": "mix_salt_alchemy_2_d_green"
+      },
+      {
+        "type": 10,
+        "v": "dinner"
+      },
+      {
+        "type": 9,
+        "v": "graveyard_builddesk::graveyard_fence_3_upgr"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:alchemy_table_zombie_place"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:alchemy_workbench_zombie_place"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:candelabrum_3"
+      },
+      {
+        "type": 9,
+        "v": "church_builddesk:p:wall_candelabrum_3"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_jewelry_place"
+      },
+      {
+        "type": 10,
+        "v": "jewelry_detail_gold"
+      },
+      {
+        "type": 10,
+        "v": "bijouterie_gold"
+      },
+      {
+        "type": 10,
+        "v": "b_sword"
+      },
+      {
+        "type": 10,
+        "v": "b_shield"
+      },
+      {
+        "type": 10,
+        "v": "b_sword_2"
+      },
+      {
+        "type": 10,
+        "v": "b_shield_2"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:obj_church_bookcase_place"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_builddesk:p:desk_2"
+      },
+      {
+        "type": 9,
+        "v": "beegarden_table:p:beehouse_place"
+      },
+      {
+        "type": 10,
+        "v": "beegarden_table"
+      },
+      {
+        "type": 10,
+        "v": "baked_kebab_1"
+      },
+      {
+        "type": 10,
+        "v": "baked_kebab_2"
+      },
+      {
+        "type": 10,
+        "v": "baked_kebab_5"
+      },
+      {
+        "type": 10,
+        "v": "stamped_meat_new"
+      },
+      {
+        "type": 9,
+        "v": "raw_meat_sliced_from_packet_meat"
+      },
+      {
+        "type": 9,
+        "v": "sacrifice_builddesk:p:blood_fountain"
+      },
+      {
+        "type": 9,
+        "v": "sacrifice_builddesk:p:skeleton_crucified_on_wall"
+      },
+      {
+        "type": 9,
+        "v": "sacrifice_builddesk:p:skeleton_crucified"
+      },
+      {
+        "type": 10,
+        "v": "lasagne"
+      },
+      {
+        "type": 10,
+        "v": "pasta"
+      },
+      {
+        "type": 9,
+        "v": "mf_wood_builddesk:p:mf_paper_press_place"
+      },
+      {
+        "type": 10,
+        "v": "paper_from_herb"
+      },
+      {
+        "type": 10,
+        "v": "pail_wet_paper"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_printing_press_place"
+      },
+      {
+        "type": 10,
+        "v": "flyer_good"
+      },
+      {
+        "type": 10,
+        "v": "flyer_good_2"
+      },
+      {
+        "type": 9,
+        "v": "alchemy_builddesk:p:mf_printing_press_2_place"
+      },
+      {
+        "type": 10,
+        "v": "mf_printing_press_1_to_2"
+      },
+      {
+        "type": 9,
+        "v": "cellar_builddesk:p:mf_distcube_3_place"
+      },
+      {
+        "type": 10,
+        "v": "booze_from_bottle_apple_braga"
+      },
+      {
+        "type": 10,
+        "v": "booze_from_bottle_berry_braga"
+      },
+      {
+        "type": 10,
+        "v": "booze_from_bottle_red_vine_1"
+      },
+      {
+        "type": 10,
+        "v": "booze_from_bottle_red_vine_2"
+      },
+      {
+        "type": 10,
+        "v": "booze_from_bottle_red_vine_3"
+      },
+      {
+        "type": 10,
+        "v": "carved_wood"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_1_lifestone"
+      },
+      {
+        "type": 10,
+        "v": "bowl_pumpkin"
+      },
+      {
+        "type": 10,
+        "v": "baked_pumpkin"
+      },
+      {
+        "type": 10,
+        "v": "bowl_lentil"
+      },
+      {
+        "type": 10,
+        "v": "baked_salmon"
+      },
+      {
+        "type": 10,
+        "v": "honey_fish"
+      },
+      {
+        "type": 10,
+        "v": "pancakes"
+      },
+      {
+        "type": 10,
+        "v": "croissant"
+      },
+      {
+        "type": 10,
+        "v": "muffin"
+      },
+      {
+        "type": 10,
+        "v": "pie_1"
+      },
+      {
+        "type": 10,
+        "v": "pie_2"
+      },
+      {
+        "type": 10,
+        "v": "infusion"
+      },
+      {
+        "type": 10,
+        "v": "alchemy_1_bone"
+      },
+      {
+        "type": 10,
+        "v": "fish_carp_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_carp_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_sturgeon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_salmon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_carp_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_bream_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_gudgeon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_gudgeon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_perch_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_eel_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_eel_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_tilapia_fillet"
+      },
+      {
+        "type": 9,
+        "v": "raw_meat_sliced_from_fish_frog_green"
+      },
+      {
+        "type": 10,
+        "v": "fish_anchovy_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_anchovy_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_anchovy_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_sardine_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_salmon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_tuna_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_tuna_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_goldfish_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_eel_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_gudgeon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_gudgeon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_gudgeon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_perch_fillet"
+      },
+      {
+        "type": 9,
+        "v": "raw_meat_sliced_from_fish_frog_green"
+      },
+      {
+        "type": 10,
+        "v": "fish_tilapia_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_bream_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_pike_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_pike_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_sturgeon_fillet"
+      },
+      {
+        "type": 10,
+        "v": "fish_crucian_gold_fillet"
+      },
+      {
+        "type": 10,
+        "v": "onion_ring"
+      },
+      {
+        "type": 10,
+        "v": "toasts"
+      }
+    ]
+  },
+  "revealed_techs": {
+    "type": 100,
+    "v": [
+      {
+        "type": 10,
+        "v": "First slice"
+      },
+      {
+        "type": 10,
+        "v": "Fast food"
+      },
+      {
+        "type": 10,
+        "v": "Grave plate"
+      },
+      {
+        "type": 10,
+        "v": "The idea of the stone"
+      },
+      {
+        "type": 10,
+        "v": "The idea of the tree"
+      },
+      {
+        "type": 10,
+        "v": "Iron"
+      },
+      {
+        "type": 10,
+        "v": "Jelly"
+      },
+      {
+        "type": 10,
+        "v": "Gathering"
+      },
+      {
+        "type": 10,
+        "v": "Bread"
+      },
+      {
+        "type": 10,
+        "v": "Garden beds"
+      },
+      {
+        "type": 10,
+        "v": "Faith"
+      },
+      {
+        "type": 10,
+        "v": "Research"
+      },
+      {
+        "type": 10,
+        "v": "The idea of the earth"
+      },
+      {
+        "type": 10,
+        "v": "Desert"
+      },
+      {
+        "type": 10,
+        "v": "Vegetable dishes"
+      },
+      {
+        "type": 10,
+        "v": "French cuisine"
+      },
+      {
+        "type": 10,
+        "v": "2min"
+      },
+      {
+        "type": 10,
+        "v": "Second chance"
+      },
+      {
+        "type": 10,
+        "v": "Zombie mining"
+      },
+      {
+        "type": 10,
+        "v": "Zombie woodcuttering"
+      },
+      {
+        "type": 10,
+        "v": "Zombie quarrying I"
+      },
+      {
+        "type": 10,
+        "v": "Zombie quarrying II"
+      },
+      {
+        "type": 10,
+        "v": "Zombie gardening"
+      },
+      {
+        "type": 10,
+        "v": "Random text generator"
+      },
+      {
+        "type": 10,
+        "v": "Zombie alchemy"
+      },
+      {
+        "type": 10,
+        "v": "The Beginning Of Alchemy"
+      },
+      {
+        "type": 10,
+        "v": "Fish"
+      },
+      {
+        "type": 10,
+        "v": "Vegetable soups"
+      },
+      {
+        "type": 10,
+        "v": "Alcohol cook"
+      },
+      {
+        "type": 10,
+        "v": "Dark body"
+      },
+      {
+        "type": 10,
+        "v": "Fish shish kebab"
+      },
+      {
+        "type": 10,
+        "v": "Italian kitchen"
+      },
+      {
+        "type": 10,
+        "v": "Vegetable bowl"
+      },
+      {
+        "type": 10,
+        "v": "Fish delicous"
+      },
+      {
+        "type": 10,
+        "v": "Sweet baking"
+      },
+      {
+        "type": 10,
+        "v": "Pies"
+      },
+      {
+        "type": 10,
+        "v": "For beer"
+      }
+    ]
+  },
+  "Type 19 - V 1": "",
+  "attributelist": [
+    "p_preacher",
+    "p_t_old_books",
+    "p_naturalist",
+    "p_t_gold_ore",
+    "p_t_silver_ore",
+    "p_journalist",
+    "p_t_maggot",
+    "p_butcher",
+    "p_cardinal",
+    "p_farmer",
+    "p_t_sand_improve",
+    "p_collector",
+    "p_axeman",
+    "p_blacksmith",
+    "p_writer",
+    "p_good_writer",
+    "p_woodworker",
+    "p_mason",
+    "p_fireman",
+    "p_doctor",
+    "p_cultist",
+    "p_t_pirit",
+    "p_t_sulfur",
+    "p_t_lifestone",
+    "p_t_beeswax",
+    "p_t_butterfly",
+    "p_t_moth",
+    "p_t_bee",
+    "p_engineer",
+    "p_scientist",
+    "p_sword_master",
+    "p_big_guy",
+    "p_miner",
+    "p_beekeeper2",
+    "p_wine_master",
+    "p_jevelery"
+  ]
 }

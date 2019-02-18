@@ -1,3 +1,15 @@
+0.1.13
+=====
+
+Added:
+* Utilities
+  * Complete tech tree
+  
+Improved:
+* You can now set in settings how many backups are kept, additionally those are zipped now to safe space
+* Added hint considering usage of Perfect Body / Grave / ...
+* Greatly decreased the time until the GUI is interactable when loading a save
+  
 0.1.12
 =====
 

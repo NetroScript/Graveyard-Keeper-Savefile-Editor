@@ -14,7 +14,7 @@ Additionally you can export the loaded save to a .json file, which has a similar
 The Application uses a webbrowser as a GUI (by default Chrome in App Mode).
 
 I want to add I am not responsible if you break your save file, I try to mantain this editor in a way, in which it can't break save files (or not by mistake) but it is still possible that this editor produces a bugged save file (if you f.e. add an item in a quality in which the item doesn't exist.)
-That is why you always should backup your save files. (Although the editor also creates 1 copy of the save slot it overwrites, but if you save again, this backup is overwritten again. So test your save file before saving again.)
+That is why you always should backup your save files. (In the settings of the editor you can also set the number of backups the editor should create (which are zipped) - on saving the editor all backups are shifted by one, so if set it to 3 backups and save 4 times, your oldest backup is lost).
 
 ## Currently Editable
 
@@ -31,8 +31,7 @@ That is why you always should backup your save files. (Although the editor also 
   * Removing all drops
   * Setting the worker efficiency to the highest possible level
   * Turning the graves into perfect graves
-
-In a future version maybe support for technologies is added. But because you can simply modify the red/green/blue points I don't really see a need for that.
+  * Complete the entire tech tree
 
 ## Screenshot
 
@@ -104,6 +103,7 @@ python -m eel main.py "./data/html" -n "Graveyard Keeper Savefile Editor" -i "./
 
 copy "%cd%\data\hashes" "%cd%\dist\Graveyard Keeper Savefile Editor\data\hashes" /Y
 copy "%cd%\data\locals.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\locals.json" /Y
+copy "%cd%\data\perfectbody.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\perfectbody.json" /Y
 copy "%cd%\data\version" "%cd%\dist\Graveyard Keeper Savefile Editor\data\version" /Y
 copy "%cd%\data\itemversion" "%cd%\dist\Graveyard Keeper Savefile Editor\data\itemversion" /Y
 

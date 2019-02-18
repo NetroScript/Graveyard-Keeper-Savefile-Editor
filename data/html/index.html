@@ -244,10 +244,12 @@
 
         <div class="row miscbuttons">
             <div class="btn deldrops col s6 offset-s3">Remove all Drops</div>
+            <div class="note col s12"><b>WARNING:</b><br>For the perfect bodies/workers/graves to work it is necessary to have the technologies / crafting recipes like embalming because otherwise the game "resets" those bodies / decorations to a state which you could have done with your current tech tree / advancement. For this reason a "Unlock the entire tech tree" button was added. <b>BUT</b> the game save is rather complex, meaning even if you have all technologies and theoretically you couldn't have advanced this far the bodies will be bugged, f.e. broken in the morgue table. I assume (without having looked at the game code) that you need a certain progress in the game. F.e. when I used all technologies + perfect bodies on a completely new save, the bodies had 7 skulls, but actually (when taking a look at the exportet save) the bodies where the correct bodies. So progress normally and use the unlock tech tree button or perfect worker button on a late game save (or where you already manually could produce the perfect bodies, but are lacking the resources)</div>
             <p class="btn workereff col s12">Set all workers to 40% Efficiency</p>
             <div class="btn perbody col s12">Replace all the bodies in graves with perfect bodies</div>
             <p class="btn perdeco col s12">Set all grave decorations to the highest</p>
             <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
+            <p class="btn pertech col s12">Unlock the entire tech tree</p>
         </div>
     </form>
 </div>
@@ -913,7 +915,7 @@
                 })
             })
 
-            // Handle clicking the 40% Efficiency Button
+            // Handle clicking the 40% efficiency button
             $(".workereff").click(function () {
                 data.switches.workers = true;
                 $(".workereff").addClass("disabled");
@@ -931,11 +933,17 @@
                 $(".perdeco").addClass("disabled");
                 $(".perdeco").unbind("click");
             })
-            // Handle clicking the empty graves Button
+            // Handle clicking the empty graves button
             $(".perempty").click(function () {
                 data.switches.emptygrave = true;
                 $(".perempty").addClass("disabled");
                 $(".perempty").unbind("click");
+            })
+            // Handle clicking the perfect tech tree button
+            $(".pertech").click(function () {
+                data.switches.techtree = true;
+                $(".pertech").addClass("disabled");
+                $(".pertech").unbind("click");
             })
 
             // Remove the loading circle so the user now knows he can use all the features.

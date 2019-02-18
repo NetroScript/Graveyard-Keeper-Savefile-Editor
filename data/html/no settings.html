@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <input placeholder="Save folder (Commonly in Appdata-LocalLow-Lazy Bear Games-Graveyard Keeper)" id="path" type="text" class="validate invalid">
-                                <label for="path">Folder Path</label>
+                                <label for="path" class="white-text">Folder Path</label>
                                 <a class="waves-effect waves-light btn col s2 offset-s5" id="requestfile">Open</a>
                                 <span class="helper-text" data-error="Please enter the path" data-success=""></span>
                             </div>
@@ -49,7 +49,7 @@
                         <div class="row port">
                             <div class="input-field col s12">
                                 <input placeholder="" value="0" id="port" type="number" class="validate valid" min="0" max="65535" step="1">
-                                <label for="port">Input a port (0 chooses a random available port) - only applied after application restart</label>
+                                <label for="port" class="white-text">Input a port (0 chooses a random available port) - only applied after application restart</label>
                                 <span class="helper-text" data-error="Please a correct port (0-65535)" data-success=""></span>
                             </div>
                         </div>
@@ -67,6 +67,15 @@
                                 your safe with a non existant item f.e. is increased. But if you know the internal id of an item and it doesn't
                                 exist, you can add it with this option. This option does not require an application restart, but it requires to
                                 reload the page (so that the settings are loaded again).
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input  id="backupnum" min="0" type="number" value="2" step="1" class="validate valid">
+                                <label for="backupnum" class="white-text">Up to how many backups should be kept by the editor when saving? (Each save)</label>
+                                <span class="helper-text" data-error="Please enter a number" data-success=""></span>
+                            </div>
+                            <div class="note">Backup saves are automatically zipped with deflate to save space on the disk. It is intended and correct that the name within the zip is always the same ([...].back_1).
                             </div>
                         </div>
                     </form>
@@ -109,7 +118,8 @@
                 "path": $("#path").val() || "",
                 "checkforupdate": $("#updatesc").prop("checked") || true,
                 "port": parseInt($("#port").val()) || 0,
-                "expert": $("#expert").prop("checked") || false
+                "expert": $("#expert").prop("checked") || false,
+                "backupamount": $("#backupnum").val() || 2
             }
             await eel.set_settings(settings)();
 
@@ -129,6 +139,7 @@
             $("#updatesc").prop("checked", b["checkforupdate"]);
             $("#expert").prop("checked", b["expert"]);
             $("#port").val(b["port"]);
+            $("#backupnum").val(b["backupamount"]);
         }
         
         // Bind the click of the button to the getFolder function
