@@ -250,6 +250,8 @@
             <p class="btn perdeco col s12">Set all grave decorations to the highest</p>
             <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
             <p class="btn pertech col s12">Unlock the entire tech tree</p>
+            <div class="note col s12"><b>WARNING:</b><br>This replaces your current donkey object with the a working one from my savefile. It will then be infront of your morgue. <b>Don't be surprised if it doesn't drop the body even if you have enough carrots. Through replacing the donkey this check gets skipped.</b> Just put 10 more in and the donkey should work - I tried it on a save in the bug report channel of the discord (from Lazy Bear Games). THIS IS NOT REALLY A FIX, but only an improvement to the current problem - wait for an official fix by the developer. (It might be that the donkey gets stuck again, then just repeat this). <b>Also only use this if your donkey is actually stuck!</b></div>
+            <div class="btn repairdonkey col s12">Replace your current donkey NPC</div>
         </div>
     </form>
 </div>
@@ -945,6 +947,13 @@
                 $(".pertech").addClass("disabled");
                 $(".pertech").unbind("click");
             })
+            // Handle clicking the repair donkey
+            $(".repairdonkey").click(function () {
+                data.switches.donkey = true;
+                $(".repairdonkey").addClass("disabled");
+                $(".repairdonkey").unbind("click");
+            })
+            
 
             // Remove the loading circle so the user now knows he can use all the features.
             $(".loadingmask").fadeOut(500);

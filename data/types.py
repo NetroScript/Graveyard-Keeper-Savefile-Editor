@@ -46,8 +46,8 @@ with open("./data/locals.json", encoding="utf8") as f:
 with open("./data/html/items.json") as f:
     gamedata = load(f)
 
-with open("./data/perfectbody.json") as f:
-    perfectbody = load(f)
+with open("./data/data.json") as f:
+    jsongamedata = load(f)
 
 # A example item in the case of the inventory being empty and people wanting to add items to it
 fallback_item = {

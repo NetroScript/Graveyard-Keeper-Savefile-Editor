@@ -1,4 +1,4 @@
-from data.types import id_to_name, gamedata, Types, fallback_item, perfectbody
+from data.types import id_to_name, gamedata, Types, fallback_item, jsongamedata
 from tkinter import Tk
 from tkinter import filedialog
 from tkinter import PhotoImage
@@ -421,7 +421,7 @@ def modifysave(data, shash):
         # Iterate the lists which we change for quicker access
         lists = ["unlocked_works", "unlocked_techs", "unlocked_perks", "unlocked_crafts", "revealed_techs"]
         for l in lists:
-            savefiles[shash]["savedata"][l] = perfectbody[l]
+            savefiles[shash]["savedata"][l] = jsongamedata[l]
 
             # Many of those technologies are indexed strings, meaning we have to add the ones which aren't included yet
             # into the serializer
@@ -433,7 +433,7 @@ def modifysave(data, shash):
 
         currentinlist = list(map(lambda x: x["v"],savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"]))
 
-        for entry in perfectbody["attributelist"]:
+        for entry in jsongamedata["attributelist"]:
             if entry in currentinlist:
                 savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][currentinlist.index(entry)] = {"type": 19, "v": 1}
             else:
@@ -495,7 +495,10 @@ def modifysave(data, shash):
         if data["switches"]["workers"] and it["obj_id"]["v"] == "worker_zombie_1":
             # We keep the last item of the old inventory, because that is the used backpack which still might contain
             # items
-            it["-1126421579"]["v"]["inventory"]["v"] = perfectbody["inventory"]+[it["-1126421579"]["v"]["inventory"]["v"][-1]]
+            it["-1126421579"]["v"]["inventory"]["v"] = jsongamedata["inventory"]+[it["-1126421579"]["v"]["inventory"]["v"][-1]]
+
+        if data["switches"]["donkey"] and  it["obj_id"]["v"] == "donkey":
+            savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i] = jsongamedata["working_donkey"]
 
         # If empty graves should be turned into perfect graves we first change the id to a normal grave and then
         # use the code for perfect body and perfect decoration to also transform this grave into a perfect grave
@@ -509,12 +512,12 @@ def modifysave(data, shash):
 
             # If the grave is empty we add a body to it
             if len(it["-1126421579"]["v"]["inventory"]["v"]) == 0:
-                it["-1126421579"]["v"]["inventory"]["v"].append({"type": 250, "v": perfectbody["body"]})
+                it["-1126421579"]["v"]["inventory"]["v"].append({"type": 250, "v": jsongamedata["body"]})
 
             # We iterate the items until we found the body and then change the inventory of the body
             for item in it["-1126421579"]["v"]["inventory"]["v"]:
                 if item["v"]["id"]["v"] == "body":
-                    item["v"]["inventory"]["v"] = perfectbody["inventory"]
+                    item["v"]["inventory"]["v"] = jsongamedata["inventory"]
                     item["v"]["_params"]["v"]["_durability"]["v"] = 1
                     break
 
@@ -524,10 +527,10 @@ def modifysave(data, shash):
             # We iterate the items to delete all but the body so we can add the new ones
             it["-1126421579"]["v"]["inventory"]["v"][:] = [x for x in it["-1126421579"]["v"]["inventory"]["v"]
                                                            if x["v"]["id"]["v"] == "body"]
-            it["-1126421579"]["v"]["inventory"]["v"].append(perfectbody["fence"])
-            it["-1126421579"]["v"]["inventory"]["v"].append(perfectbody["decoration"])
-            it["-1126421579"]["v"]["_params"]["v"]["_res_type"] = perfectbody["_res_type"]
-            it["-1126421579"]["v"]["_params"]["v"]["_res_v"] = perfectbody["_res_v"]
+            it["-1126421579"]["v"]["inventory"]["v"].append(jsongamedata["fence"])
+            it["-1126421579"]["v"]["inventory"]["v"].append(jsongamedata["decoration"])
+            it["-1126421579"]["v"]["_params"]["v"]["_res_type"] = jsongamedata["_res_type"]
+            it["-1126421579"]["v"]["_params"]["v"]["_res_v"] = jsongamedata["_res_v"]
 
         i += 1
 
@@ -705,7 +708,8 @@ def editablevalues(shash):
         "gravebodies": False,
         "decorations": False,
         "emptygrave": False,
-        "techtree": False
+        "techtree": False,
+        "donkey": False
     }
 
     return obj

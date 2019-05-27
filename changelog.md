@@ -1,3 +1,10 @@
+0.1.14
+=====
+
+Added:
+* Utilities
+  * Fix for a stuck donkey
+  
 0.1.13
 =====
 

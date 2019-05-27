@@ -4929,5 +4929,720 @@
     "p_beekeeper2",
     "p_wine_master",
     "p_jevelery"
-  ]
+  ],
+  "working_donkey": {
+    "v": {
+      "position": {
+        "x": 3675.85546875,
+        "y": -2016.0003662109375,
+        "z": -422.77593994140625,
+        "type": "Vector3"
+      },
+      "obj_id": {
+        "v": "donkey",
+        "type": 10
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "n": 1,
+        "type": "Quaternion"
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1,
+        "type": "Vector3"
+      },
+      "custom_tag": {
+        "v": "donkey",
+        "type": 10
+      },
+      "-1126421579": {
+        "v": {
+          "id": {
+            "v": "donkey",
+            "type": 10
+          },
+          "value": {
+            "v": -1,
+            "type": 3
+          },
+          "min_value": {
+            "v": {
+              "_expression": {
+                "v": "",
+                "type": 11
+              },
+              "_simplified": {
+                "v": false,
+                "type": 2
+              },
+              "_simpified_float": {
+                "v": 0,
+                "type": 18
+              },
+              "default_value": {
+                "v": 0,
+                "type": 18
+              }
+            },
+            "type": 250
+          },
+          "max_value": {
+            "v": {
+              "_expression": {
+                "v": "",
+                "type": 11
+              },
+              "_simplified": {
+                "v": false,
+                "type": 2
+              },
+              "_simpified_float": {
+                "v": 0,
+                "type": 18
+              },
+              "default_value": {
+                "v": 0,
+                "type": 18
+              }
+            },
+            "type": 250
+          },
+          "linked_id": {
+            "v": -1,
+            "type": 3
+          },
+          "self_chance": {
+            "v": {
+              "_expression": {
+                "v": "",
+                "type": 11
+              },
+              "_simplified": {
+                "v": false,
+                "type": 2
+              },
+              "_simpified_float": {
+                "v": 0,
+                "type": 18
+              },
+              "default_value": {
+                "v": 0,
+                "type": 18
+              }
+            },
+            "type": 250
+          },
+          "common_chance": {
+            "v": {
+              "_expression": {
+                "v": "",
+                "type": 11
+              },
+              "_simplified": {
+                "v": false,
+                "type": 2
+              },
+              "_simpified_float": {
+                "v": 0,
+                "type": 18
+              },
+              "default_value": {
+                "v": 0,
+                "type": 18
+              }
+            },
+            "type": 250
+          },
+          "chance_group": {
+            "v": -1,
+            "type": 3
+          },
+          "is_unique": {
+            "v": false,
+            "type": 2
+          },
+          "multiquality_items": {
+            "v": [],
+            "type": 100
+          },
+          "equipped_as": {
+            "v": {
+              "1826761547": {
+                "v": 0,
+                "type": 16
+              }
+            },
+            "type": 250
+          },
+          "1068875674": {
+            "v": "",
+            "type": 11
+          },
+          "worker_unique_id": {
+            "v": -1,
+            "type": 4
+          },
+          "_params": {
+            "v": {
+              "_res_type": {
+                "v": [
+                  {
+                    "v": "inventory_size",
+                    "type": 10
+                  },
+                  {
+                    "v": "damage",
+                    "type": 10
+                  },
+                  {
+                    "v": "hp_inited",
+                    "type": 10
+                  },
+                  {
+                    "v": "on_the_way_now",
+                    "type": 10
+                  },
+                  {
+                    "v": "donkey_stays_at_cemetery",
+                    "type": 10
+                  },
+                  {
+                    "v": "speed",
+                    "type": 10
+                  },
+                  {
+                    "v": "donkey_must_wait_at_cemetery",
+                    "type": 10
+                  },
+                  {
+                    "v": "was_first_check_carrot_box",
+                    "type": 10
+                  },
+                  {
+                    "v": "check_carrot_box",
+                    "type": 10
+                  },
+                  {
+                    "v": "strike_completed",
+                    "type": 10
+                  },
+                  {
+                    "v": "get_carrots_not_locked",
+                    "type": 10
+                  }
+                ],
+                "type": 100
+              },
+              "_res_v": {
+                "v": [
+                  {
+                    "v": 999.0,
+                    "type": 5
+                  },
+                  {
+                    "v": 0,
+                    "type": 18
+                  },
+                  {
+                    "v": 1,
+                    "type": 19
+                  },
+                  {
+                    "v": 0,
+                    "type": 18
+                  },
+                  {
+                    "v": 1,
+                    "type": 19
+                  },
+                  {
+                    "v": 1.2000000476837158,
+                    "type": 5
+                  },
+                  {
+                    "v": 1,
+                    "type": 19
+                  },
+                  {
+                    "v": 1,
+                    "type": 19
+                  },
+                  {
+                    "v": 1,
+                    "type": 19
+                  },
+                  {
+                    "v": 2.0,
+                    "type": 5
+                  },
+                  {
+                    "v": 1,
+                    "type": 19
+                  }
+                ],
+                "type": 100
+              },
+              "_hp": {
+                "v": 0,
+                "type": 18
+              },
+              "_progress": {
+                "v": 0,
+                "type": 18
+              },
+              "_money": {
+                "v": 0,
+                "type": 18
+              },
+              "_durability": {
+                "v": 1,
+                "type": 19
+              }
+            },
+            "type": 250
+          },
+          "inventory": {
+            "v": [
+              {
+                "v": {
+                  "id": {
+                    "v": "fruit:berry",
+                    "type": 10
+                  },
+                  "value": {
+                    "v": 1,
+                    "type": 17
+                  },
+                  "min_value": {
+                    "v": null,
+                    "type": 0
+                  },
+                  "max_value": {
+                    "v": null,
+                    "type": 0
+                  },
+                  "linked_id": {
+                    "v": -1,
+                    "type": 3
+                  },
+                  "self_chance": {
+                    "v": {
+                      "_expression": {
+                        "v": "",
+                        "type": 11
+                      },
+                      "_simplified": {
+                        "v": false,
+                        "type": 2
+                      },
+                      "_simpified_float": {
+                        "v": 0,
+                        "type": 18
+                      },
+                      "default_value": {
+                        "v": 0,
+                        "type": 18
+                      }
+                    },
+                    "type": 250
+                  },
+                  "common_chance": {
+                    "v": {
+                      "_expression": {
+                        "v": "",
+                        "type": 11
+                      },
+                      "_simplified": {
+                        "v": false,
+                        "type": 2
+                      },
+                      "_simpified_float": {
+                        "v": 0,
+                        "type": 18
+                      },
+                      "default_value": {
+                        "v": 0,
+                        "type": 18
+                      }
+                    },
+                    "type": 250
+                  },
+                  "chance_group": {
+                    "v": -1,
+                    "type": 3
+                  },
+                  "is_unique": {
+                    "v": false,
+                    "type": 2
+                  },
+                  "multiquality_items": {
+                    "v": [],
+                    "type": 100
+                  },
+                  "equipped_as": {
+                    "v": {
+                      "1826761547": {
+                        "v": 0,
+                        "type": 16
+                      }
+                    },
+                    "type": 250
+                  },
+                  "1068875674": {
+                    "v": "",
+                    "type": 11
+                  },
+                  "worker_unique_id": {
+                    "v": -1,
+                    "type": 4
+                  },
+                  "_params": {
+                    "v": {
+                      "_res_type": {
+                        "v": [],
+                        "type": 100
+                      },
+                      "_res_v": {
+                        "v": [],
+                        "type": 100
+                      },
+                      "_hp": {
+                        "v": 0,
+                        "type": 18
+                      },
+                      "_progress": {
+                        "v": 0,
+                        "type": 18
+                      },
+                      "_money": {
+                        "v": 0,
+                        "type": 18
+                      },
+                      "_durability": {
+                        "v": 1,
+                        "type": 19
+                      }
+                    },
+                    "type": 250
+                  },
+                  "inventory": {
+                    "v": [],
+                    "type": 100
+                  },
+                  "secondary_inventory": {
+                    "v": [],
+                    "type": 100
+                  },
+                  "_serialize_depth": {
+                    "v": 0,
+                    "type": 16
+                  },
+                  "sub_name": {
+                    "v": "",
+                    "type": 11
+                  }
+                },
+                "type": 250
+              }
+            ],
+            "type": 100
+          },
+          "secondary_inventory": {
+            "v": [],
+            "type": 100
+          },
+          "_serialize_depth": {
+            "v": 0,
+            "type": 16
+          },
+          "sub_name": {
+            "v": "",
+            "type": 11
+          }
+        },
+        "type": 250
+      },
+      "variation": {
+        "v": 0,
+        "type": 16
+      },
+      "variation_2": {
+        "v": 0,
+        "type": 16
+      },
+      "auto_craft_time_spent": {
+        "v": 0,
+        "type": 18
+      },
+      "craft": {
+        "v": {
+          "available": {
+            "v": false,
+            "type": 2
+          },
+          "is_crafting": {
+            "v": false,
+            "type": 2
+          },
+          "cur_craft_id": {
+            "v": null,
+            "type": 0
+          },
+          "cur_item_id": {
+            "v": null,
+            "type": 0
+          },
+          "cur_item_dur": {
+            "v": 0,
+            "type": 18
+          },
+          "dur_item_id": {
+            "v": null,
+            "type": 0
+          },
+          "dur_item_dur": {
+            "v": 0,
+            "type": 18
+          },
+          "multiquality_item_id": {
+            "v": null,
+            "type": 0
+          },
+          "1997828811": {
+            "v": null,
+            "type": 0
+          },
+          "1907526653": {
+            "v": 0,
+            "type": 16
+          },
+          "-971149643": {
+            "v": null,
+            "type": 0
+          },
+          "1028041256": {
+            "v": null,
+            "type": 0
+          },
+          "-1417513193": {
+            "v": 0,
+            "type": 16
+          },
+          "270997837": {
+            "v": null,
+            "type": 0
+          },
+          "-1274665482": {
+            "v": [],
+            "type": 100
+          }
+        },
+        "type": 250
+      },
+      "movement_component": {
+        "v": {
+          "avaliable": {
+            "v": true,
+            "type": 1
+          },
+          "cur_astar_path": {
+            "v": "{\"list\":[{\"x\":15360.0,\"y\":-2016.0,\"z\":0.0},{\"x\":15360.0009765625,\"y\":-2016.0001220703125,\"z\":0.0},{\"x\":3676.000244140625,\"y\":-2016.0001220703125,\"z\":0.0}]}",
+            "type": 9
+          },
+          "path_waypoint": {
+            "v": 3,
+            "type": 3
+          },
+          "state": {
+            "v": {
+              "1826761547": {
+                "v": 0,
+                "type": 16
+              }
+            },
+            "type": 250
+          },
+          "event_on_complete": {
+            "v": "",
+            "type": 11
+          },
+          "anchor_gd_tag": {
+            "v": "",
+            "type": 11
+          },
+          "anchor_custom_tag": {
+            "v": "",
+            "type": 11
+          },
+          "anchor_is_wgo": {
+            "v": false,
+            "type": 2
+          },
+          "using_gd_path": {
+            "v": true,
+            "type": 1
+          },
+          "idle_animation": {
+            "v": 0,
+            "type": 16
+          },
+          "target_gd_point_tag": {
+            "v": "",
+            "type": 11
+          },
+          "astar_dest": {
+            "x": 0,
+            "y": 0,
+            "type": "Vector2"
+          },
+          "current_point_pos": {
+            "x": 3676.000244140625,
+            "y": -2016.0001220703125,
+            "type": "Vector2"
+          },
+          "current_pos": {
+            "x": 3675.85546875,
+            "y": -2016.0003662109375,
+            "z": -422.77593994140625,
+            "type": "Vector3"
+          },
+          "stored_speed": {
+            "v": 1.2000000476837158,
+            "type": 5
+          },
+          "in_stored_speed_mode": {
+            "v": false,
+            "type": 2
+          }
+        },
+        "type": 250
+      },
+      "wop_skin_id": {
+        "v": "",
+        "type": 11
+      },
+      "unique_id": {
+        "v": 1985,
+        "type": 4
+      },
+      "-1368774492": {
+        "v": -1,
+        "type": 4
+      },
+      "worker_unique_id": {
+        "v": 0,
+        "type": 4
+      },
+      "chunk": {
+        "v": {
+          "always_active": {
+            "v": false,
+            "type": 2
+          },
+          "active_now_because_of_movement": {
+            "v": false,
+            "type": 2
+          },
+          "active_now_because_of_events": {
+            "v": false,
+            "type": 2
+          },
+          "1449512016": {
+            "v": false,
+            "type": 2
+          }
+        },
+        "type": 250
+      },
+      "interaction_events": {
+        "v": null,
+        "type": 0
+      },
+      "events_json": {
+        "v": null,
+        "type": 0
+      },
+      "-757709129": {
+        "v": {
+          "-1775684599": {
+            "v": [],
+            "type": 100
+          },
+          "-1125994199": {
+            "v": [],
+            "type": 100
+          }
+        },
+        "type": 250
+      },
+      "cur_gd_point": {
+        "v": "donkey_cemetery_point",
+        "type": 10
+      },
+      "cur_zone": {
+        "v": "",
+        "type": 11
+      },
+      "floor_line": {
+        "v": 0,
+        "type": 18
+      },
+      "fine_tune_z": {
+        "v": 0,
+        "type": 16
+      },
+      "anim_state_json": {
+        "v": "{\"pars\":[{\"int_v\":0,\"bool_v\":false,\"float_v\":0.0,\"trigger_v\":false,\"param_type\":3,\"param_name\":\"global_state\"},{\"int_v\":0,\"bool_v\":false,\"float_v\":-90.0,\"trigger_v\":false,\"param_type\":1,\"param_name\":\"direction_angle\"},{\"int_v\":0,\"bool_v\":false,\"float_v\":0.0,\"trigger_v\":false,\"param_type\":3,\"param_name\":\"sub_state\"}]}",
+        "type": 9
+      },
+      "parent_gd_point": {
+        "v": null,
+        "type": 0
+      },
+      "last_opened_tab": {
+        "v": "",
+        "type": 11
+      },
+      "idle_serialized": {
+        "v": false,
+        "type": 2
+      },
+      "idle": {
+        "v": null,
+        "type": 0
+      },
+      "has_spawner": {
+        "v": false,
+        "type": 2
+      },
+      "spawner_coords": {
+        "x": 0,
+        "y": 0,
+        "type": "Vector2"
+      },
+      "-1649930129": {
+        "v": {
+          "state": {
+            "v": {
+              "1826761547": {
+                "v": 0,
+                "type": 16
+              }
+            },
+            "type": 250
+          },
+          "2097215635": {
+            "v": null,
+            "type": 0
+          }
+        },
+        "type": 250
+      }
+    },
+    "type": 250
+  }
 }
