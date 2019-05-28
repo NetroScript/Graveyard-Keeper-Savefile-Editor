@@ -497,8 +497,12 @@ def modifysave(data, shash):
             # items
             it["-1126421579"]["v"]["inventory"]["v"] = jsongamedata["inventory"]+[it["-1126421579"]["v"]["inventory"]["v"][-1]]
 
+        # If the donkey should be replaced with a working one we just replace it but store and restore the unique id the
+        # donkey had
         if data["switches"]["donkey"] and  it["obj_id"]["v"] == "donkey":
+            previousuniqueid = it["unique_id"]["v"]
             savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i] = jsongamedata["working_donkey"]
+            savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]["unique_id"]["v"] = previousuniqueid
 
         # If empty graves should be turned into perfect graves we first change the id to a normal grave and then
         # use the code for perfect body and perfect decoration to also transform this grave into a perfect grave

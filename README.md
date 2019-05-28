@@ -104,7 +104,7 @@ python -m eel main.py "./data/html" -n "Graveyard Keeper Savefile Editor" -i "./
 
 copy "%cd%\data\hashes" "%cd%\dist\Graveyard Keeper Savefile Editor\data\hashes" /Y
 copy "%cd%\data\locals.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\locals.json" /Y
-copy "%cd%\data\perfectbody.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\data.json" /Y
+copy "%cd%\data\data.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\data.json" /Y
 copy "%cd%\data\version" "%cd%\dist\Graveyard Keeper Savefile Editor\data\version" /Y
 copy "%cd%\data\itemversion" "%cd%\dist\Graveyard Keeper Savefile Editor\data\itemversion" /Y
 
