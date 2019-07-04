@@ -1,3 +1,10 @@
+0.1.15
+=====
+
+Improved:
+* Utilities
+  * Remove drops button now also removes red, green and blue points
+  
 0.1.14
 =====
 

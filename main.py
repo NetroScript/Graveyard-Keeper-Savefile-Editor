@@ -541,6 +541,7 @@ def modifysave(data, shash):
     # Clear the drop data when requested
     if len(data["drops"]) < len(savefiles[shash]["savedata"]["drops"]["v"]):
         savefiles[shash]["savedata"]["drops"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["drops"], [])
+        savefiles[shash]["savedata"]["map"]["v"]["1968591194"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["map"]["v"]["1968591194"], [])
 
 
 # Made for the basic types, not made for Vector2, Vector3, ...
@@ -705,6 +706,9 @@ def editablevalues(shash):
     # To display the objects which will get deleted when you clear the drops we extract them
     for drop in data["savedata"]["drops"]["v"]:
         obj["drops"].append(drop["v"]["res"]["v"]["id"]["v"])
+    for drop in data["savedata"]["map"]["v"]["1968591194"]["v"]:
+        types = ["Red points", "Blue points", "Green points"]
+        obj["drops"].append(types[drop["v"]["type"]["v"]["1826761547"]["v"]])
 
     # Variables to determine if all bodies in the graves / all workers get turned into perfect bodies / workers
     obj["switches"] = {

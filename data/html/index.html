@@ -901,7 +901,7 @@
                 // Generate an object with each item and the amount of them
                 // But that amount is only item objects - a single item can have f.e. a stack size of 12 already
                 let out = {};
-                data.drops.map(e => {e = getLocalisation(e);out.hasOwnProperty(e) ? out[e]++ : out[e] = 1});
+                data.drops.map(e => {e = getLocalisation(e) || e;out.hasOwnProperty(e) ? out[e]++ : out[e] = 1});
 
                 // Display a warning
                 let m = M.toast({html: `<div><p>Warning - this will remove ${data.drops.length} item(s) / group(s) from your game including:</p> ${Object.keys(out).map(e => {return out[e]+"x " + e}).join(", ")}</div><div class="confirm">Click here to confirm</div>`, displayLength: 1000000})
