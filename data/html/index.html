@@ -10,6 +10,7 @@
     <script type="text/javascript" src="/eel.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/items.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <title>Graveyard Keeper Savefile Editor | Edit Savefile</title>
@@ -275,7 +276,7 @@
         <div class="item add">
             <div class="itemimage">
                 <div class="itemquality"></div>
-                <img src="/rsc/unknown_item.png">
+                <div class="item_icon"></div>
             </div>
             <div class="iteminfo">
                 <div class="itemname autocomplete">
@@ -411,7 +412,7 @@
         // For a specific inventory generate the preview images by copying every item icon and putting it as small version in a different container
         function createInventoryMiniPreview(index) {
             $("#inv" + index).parent().find(".inventoryminipreview").html("");
-            $("#inv" + index).parent().find(".items img").clone().appendTo($("#inv" + index).parent().find(
+            $("#inv" + index).parent().find(".items .item_icon").clone().appendTo($("#inv" + index).parent().find(
                 ".inventoryminipreview"));
         }
 
@@ -452,7 +453,7 @@
 <div class="item add">
     <div class="itemimage">
         <div class="itemquality"></div>
-        <img src="/rsc/unknown_item.png">
+        <div class="item_icon"></div>
     </div>
     <div class="iteminfo">
         <div class="itemname autocomplete">
@@ -505,6 +506,16 @@
                 if (data["locals"].hasOwnProperty(id + ":3")) return data["locals"][id + ":3"];
             }
             return undefined;
+        }
+
+
+        // Turn an item id into the correct id for the css classes for the icons
+        function sanitzize_item_id(id){
+            // CSS doesnt allow leading numbers
+            if(id.match(/^\d/)){
+                id = "_" + id
+            };
+            return id.replace(/(:1|:2|:3)$/, "").replace(/:/g, "__")
         }
 
         // Get the url to the item icon by id
@@ -575,7 +586,7 @@
 <div class="item justadded${quality}">
     <div class="itemimage">
         <div class="itemquality"></div>
-        <img src="">
+        <div class="item_icon ${sanitzize_item_id(id)}"></div>
     </div>
     <div class="iteminfo">
         <div class="itemname">${getLocalisation(id)} <div class="itemid">(${id})</div></div>
@@ -596,17 +607,12 @@
             
             //Get the Element which we create
             let el = $(item).appendTo(element)
-            //Check if we have a icon for the id, if not use default icon
-            //Then after loading the image, we change the source to the correct image
-            getItemUrl(id).then((url)=>{
-                console.log(url)
-                el.find(".itemimage img").attr("src", url);
+            
 
-                //Check if the Inventory Preview needs to be updated
-                if($(el).parents(".inventorycon").length>0){
-                    createInventoryMiniPreview(parseInt($(el).parents(".inventorycon").find(".invtinfo").attr("id").split("inv")[1]));
-                }
-            });
+            //Check if the Inventory Preview needs to be updated
+            if ($(el).parents(".inventorycon").length > 0) {
+                createInventoryMiniPreview(parseInt($(el).parents(".inventorycon").find(".invtinfo").attr("id").split("inv")[1]));
+            }
             
             return true;
         }
@@ -812,13 +818,12 @@
                         if (val.split("(").length > 1) {
                             // Get the item ID and URL
                             let id = val.split("(").pop().split(")")[0];
-                            let url = await getItemUrl(id);
 
                             // Destroy the Autocomplete Object
                             M.Autocomplete.getInstance($(e).find(".itemname input")).destroy();
 
                             // Create new HTML
-                            $(e).parent().find("img").attr("src", url);
+                            $(e).parent().find(".item_icon").attr("class", "item_icon "+ sanitzize_item_id(id));
                             $(e).find(".itemname").html(getLocalisation(id) + ' <div class="itemid">(' + id +
                                 ')</div>');
                             $(e).find(".itemname").removeClass("curactive");
@@ -1126,9 +1131,7 @@
                     $(this.el).parents(".item").attr("class", "item add");
                 }
 
-                // Update item icon url
-                let url = await getItemUrl(id);
-                $(this.el).parents(".item").find("img").attr("src", url);
+                $(this.el).parents(".item").find(".item_icon").attr("class", "item_icon " + sanitzize_item_id(id));;
             }
         }
 

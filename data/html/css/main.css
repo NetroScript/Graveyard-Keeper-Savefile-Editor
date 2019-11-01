@@ -1,6 +1,8 @@
 body {
     background-color: #212121;
     zoom: 1.5;
+    /*Special case for firefox*/
+    image-rendering: -moz-crisp-edges
 }
 
 .intro {
@@ -232,6 +234,7 @@ form.s10.col.offset-s1.editsavedata {
     max-width: 80px;
     max-height: 80px;
     flex: 1;
+    padding:2px;
 }
 
 .iteminfo {
@@ -434,7 +437,7 @@ form.s10.col.offset-s1.editsavedata {
     background-image: url("/rsc/Empty_Star.png");
     image-rendering: pixelated;
     background-size:cover;
-    transform: translate(50px, 50px);
+    transform: translate(50px, 70px);
     cursor: pointer;
 }
 
@@ -506,6 +509,12 @@ form.s10.col.offset-s1.editsavedata {
 .inventoryminipreview img {
     image-rendering: pixelated;
     height: 24px;
+}
+
+.inventoryminipreview .item_icon {
+    width: 25px!important;
+    height: 25px!important;
+    display: inline-block !important;
 }
 
 .inventoryminipreview {
@@ -642,3 +651,7 @@ p.timeoutput {
 .equipped-items .amount {
     visibility: hidden;
 }
+
+.itemimage .item_icon {
+    float: left;
+} 

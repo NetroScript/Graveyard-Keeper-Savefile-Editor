@@ -1,3 +1,12 @@
+0.1.16
+=====
+
+Added:
+* New items (of version 1.200 / DLC)
+
+Improved:
+* Instead of having an image for every item a spritesheet is used now which speeds up interface loading times
+  
 0.1.15
 =====
 
