@@ -1,3 +1,12 @@
+0.1.17
+=====
+
+Improved:
+* The editor now tries to automatically get the save file location on the first start of the application
+* The save file location field now allows path variables
+* The Open button in the settings menu will now start in the directory which is currently in the field
+* If you want to use your context menu (to f.e. inspect elements for debugging) you can now press `ALT` once to enable it again 
+  
 0.1.16
 =====
 

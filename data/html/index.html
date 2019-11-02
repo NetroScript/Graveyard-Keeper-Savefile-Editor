@@ -90,9 +90,21 @@
     </div>
     <footer></footer>
     <script>
-        // There is no intended right click behaviour, so let's disable it
-        $(document).contextmenu(function (e) {
-            e.preventDefault()
+
+        let disable_context_menu = true;
+
+        // Contextmenu is not needed, for that reason it is disabled
+        $(document).contextmenu(function(e){
+            if (disable_context_menu) {
+                e.preventDefault()
+            }
+        });
+
+        // Allow context menu when ALT was clicked once
+        $("body").keydown(function(e){
+            if(e.altKey == true){
+                disable_context_menu = false;
+            };
         })
 
         // Setup global variables

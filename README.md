@@ -46,7 +46,7 @@ But I want to mention the last time someone asked for help due to a save broken 
 
 * Download this as zip and extract it to the folder where you want it to be
 * Get Python (>=3.3)
-* If you are using a macOS/Linux system where `python` is by default python 2.x, replace `python` with `python3`. Also instead of creating a .bat file, create a .sh file.
+* If you are using a macOS/Linux system where `python` is by default python 2.x, replace `python` with `python3`. Also instead of creating a .bat file, create a .sh file. Additionally according to users you might also need to install `python-tk` if it is not yet included in your distribution.
 * Install dependencies using `python -m pip install -r requirements.txt`.
 * Execute the file with `python main.py` (in the console with the folder where main.py resides as working directory - to simplify this just create a `run.bat` in the directory with the same content)
 * Enjoy
@@ -54,6 +54,24 @@ But I want to mention the last time someone asked for help due to a save broken 
 **OR**
 
 Download a [frozen release](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/releases) for windows (so you don't need to install python).
+
+## Save File Locations
+
+Linux / Ubuntu:
+
+* `/home/$USER/.config/unity3d/Lazy Bear Games/Graveyard Keeper/`
+
+MacOS:
+
+* `/Users/$USER/Library/Application Support/unity.LazyBearGames.GraveyardKeeper/`
+
+Windows:
+
+* `C:\Users\%username%\AppData\LocalLow\Lazy Bear Games\Graveyard Keeper`
+
+
+**Warning**: 
+The application supports variables in the path starting with 0.1.17. If you use an earlier version manually fill in your user name for the variables. 
 
 ## Usage
 

@@ -22,7 +22,7 @@
         <div class="con">
             <div class="intro">
                 <h3>Hey, seems like you are using this Application for the first time, meaning you now have the chance to set
-                    some options.</h3>
+                    some options. If the application automatically set a save folder please also check it to be sure that it is correct.</h3>
             </div>
             <div class="settingsform">
                 <div class="row">
@@ -90,24 +90,45 @@
     </main>
     <footer></footer>
     <script>
+
+        let disable_context_menu = true;
+
         // Contextmenu is not needed, for that reason it is disabled
         $(document).contextmenu(function(e){
-            e.preventDefault()
+            if (disable_context_menu) {
+                e.preventDefault()
+            }
         });
+
+        // Allow context menu when ALT was clicked once
+        $("body").keydown(function(e){
+            if(e.altKey == true){
+                disable_context_menu = false;
+            };
+        })
 
         // On page load check if this is the first usage of the program (because settings doesn't exist) or if the user is modifying the settings again
         // In the case of him modifying it again we change the info, title and load the settings
         $(document).ready(function(){
+
             if(window.location.hash == "#WithinApplication"){
+                console.log("We already have settings, so we load them");
                 $("title").text("Graveyard Keeper Savefile Editor | Settings");
                 $(".intro h3").text("To apply changed settings, please restart the applications after clicking DONE.");
                 getSettings();
+            } else {
+                console.log("First time using the application, trying to get default folder.")
+                let b = eel.get_default_path()().then(function(path){
+                    $("#path").val(settings);
+                    $("#path").removeClass("invalid");
+                });
+                
             }
         });
         
         // Function to call the python function to select a folder for the save file.
         async function getFolder() {
-            f = await eel.get_folder()();
+            f = await eel.get_folder($("#path").val())();
             console.log(f);
             $("#path").val(f);
         }

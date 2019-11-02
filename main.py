@@ -1,9 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from data.types import id_to_name, gamedata, Types, fallback_item, jsongamedata
 from tkinter import Tk
 from tkinter import filedialog
 from tkinter import PhotoImage
 import eel
 import os
+import sys
 import json
 from data.hashes import Hashlist
 from data.decode import Decoder
@@ -757,16 +760,32 @@ def siteloaded():
 
 # Make it possible for the ui to open a folder select dialogue for the save files
 @eel.expose
-def get_folder():
-    options["path"] = filedialog.askdirectory(title="Select the savegame folder of Graveyard Keeper")
-    return options["path"]
+def get_folder(initial=""):
+    if initial == "":
+        initial = None
+    return filedialog.askdirectory(title="Select the savegame folder of Graveyard Keeper", initialdir=initial)
 
+
+# Try to automatically populate the default folder, at least for known systems
+@eel.expose
+def get_default_path():
+    if sys.platform in ['win32', 'win64']:
+        return os.path.expandvars("C:\\Users\\%username%\\AppData\\LocalLow\\Lazy Bear Games\\Graveyard Keeper")
+    elif sys.platform.startswith('linux'):
+        return os.path.expanduser('~/.config/unity3d/Lazy Bear Games/Graveyard Keeper/')
+    elif sys.platform == 'darwin':
+        return os.path.expandvars("/Users/$USER/Library/Application Support/unity.LazyBearGames.GraveyardKeeper/")
+    return ""
 
 # Function exposed to the ui to save changed settings
 @eel.expose
 def set_settings(settings):
     global options
     options = settings
+    
+    if "path" in options:
+        options["path"] = os.path.expandvars(options["path"])
+    
     with open("./data/settings", "w") as f:
         json.dump(settings, f)
     return True
