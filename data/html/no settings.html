@@ -118,8 +118,8 @@
                 getSettings();
             } else {
                 console.log("First time using the application, trying to get default folder.")
-                let b = eel.get_default_path()().then(function(path){
-                    $("#path").val(settings);
+                eel.get_default_path()().then(function(path){
+                    $("#path").val(path);
                     $("#path").removeClass("invalid");
                 });
                 
