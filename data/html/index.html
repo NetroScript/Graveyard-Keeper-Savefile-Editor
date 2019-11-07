@@ -257,13 +257,13 @@
 
         <div class="row miscbuttons">
             <div class="btn deldrops col s6 offset-s3">Remove all Drops</div>
-            <div class="note col s12"><b>WARNING:</b><br>For the perfect bodies/workers/graves to work it is necessary to have the technologies / crafting recipes like embalming because otherwise the game "resets" those bodies / decorations to a state which you could have done with your current tech tree / advancement. For this reason a "Unlock the entire tech tree" button was added. <b>BUT</b> the game save is rather complex, meaning even if you have all technologies and theoretically you couldn't have advanced this far the bodies will be bugged, f.e. broken in the morgue table. I assume (without having looked at the game code) that you need a certain progress in the game. F.e. when I used all technologies + perfect bodies on a completely new save, the bodies had 7 skulls, but actually (when taking a look at the exportet save) the bodies where the correct bodies. So progress normally and use the unlock tech tree button or perfect worker button on a late game save (or where you already manually could produce the perfect bodies, but are lacking the resources)</div>
+            <div class="note col s12"><b>WARNING:</b><br>For the perfect bodies/workers/graves to work it is necessary to have the technologies / crafting recipes like embalming because otherwise the game "resets" those bodies / decorations to a state which you could have done with your current tech tree / advancement. For this reason a "Unlock the entire tech tree" button was added. <b>BUT</b> the game save is rather complex, meaning even if you have all technologies and theoretically you couldn't have advanced this far the bodies will be bugged, f.e. broken in the morgue table. I assume (without having looked at the game code) that you need a certain progress in the game. F.e. when I used all technologies + perfect bodies on a completely new save, the bodies had 7 skulls, but actually (when taking a look at the exported save) the bodies where the correct bodies. So progress normally and use the unlock tech tree button or perfect worker button on a late game save (or where you already manually could produce the perfect bodies, but are lacking the resources)</div>
             <p class="btn workereff col s12">Set all workers to 40% Efficiency</p>
             <div class="btn perbody col s12">Replace all the bodies in graves with perfect bodies</div>
             <p class="btn perdeco col s12">Set all grave decorations to the highest</p>
             <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
-            <p class="btn pertech col s12">Unlock the entire tech tree</p>
-            <div class="note col s12"><b>WARNING:</b><br>This replaces your current donkey object with the a working one from my savefile. It will then be infront of your morgue. <b>Don't be surprised if it doesn't drop the body even if you have enough carrots. Through replacing the donkey this check gets skipped.</b> Just put 10 more in and the donkey should work - I tried it on a save in the bug report channel of the discord (from Lazy Bear Games). THIS IS NOT REALLY A FIX, but only an improvement to the current problem - wait for an official fix by the developer. (It might be that the donkey gets stuck again, then just repeat this). <b>Also only use this if your donkey is actually stuck!</b></div>
+            <p class="btn pertech col s12">Unlock the entire tech tree [pre 1.200]</p>
+            <div class="note col s12"><b>WARNING:</b><br>This replaces your current donkey object with the a working one from my savefile. It will then be in front of your morgue. <b>Don't be surprised if it doesn't drop the body even if you have enough carrots. Through replacing the donkey this check gets skipped.</b> Just put 10 more in and the donkey should work - I tried it on a save in the bug report channel of the discord (from Lazy Bear Games). ONLY USE THIS IF THE BUG FIX OF THE DEVELOPERS DIDN'T WORK AND YOU ALREADY HAVE THE BOX WITH CARROTS. <b>Also only use this if your donkey is actually stuck!</b></div>
             <div class="btn repairdonkey col s12">Replace your current donkey NPC</div>
         </div>
     </form>
@@ -275,7 +275,7 @@
 <div class="row">
     <form class="s10 col offset-s1 editsavedata">
         <div class="row">
-            <div class="col s12">Inventorysize:
+            <div class="col s12">Inventory size:
                 <div class="input-field inline s8">
                     <input id="invsize" type="number" class="validate valid invsize" min="0" value="${data["inventory_size"]["cur"]}">
                     <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
@@ -339,7 +339,7 @@
 </div>
 <div class="intro lesspadding">Save or Export:</div>
 <div class="row savingcon">
-    <div class="col s12"><div class="btn" id="overwrite">Save to saveslot (creates a backup)</div></div>
+    <div class="col s12"><div class="btn" id="overwrite">Save to save slot (creates a backup)</div></div>
     <div class="col s12"><div class="btn" id="exportjson">Export to a .json file</div></div>
     <div class="col s12"><div class="btn" id="exportdat">Export to a .dat file</div></div>
 </div>`
@@ -452,7 +452,7 @@
 <div class="invt">
 <!--After trying it seems inventory size for the storage units is hard coded, thats why we hide it--!>
 <div class="row hide">
-    <div class="col s12">Inventorysize:
+    <div class="col s12">Inventory size:
         <div class="input-field inline s8">
             <input type="number" class="validate valid invsize" min="0" value="${inventory["size"]}">
             <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
@@ -523,14 +523,14 @@
 
         // Turn an item id into the correct id for the css classes for the icons
         function sanitzize_item_id(id){
-            // CSS doesnt allow leading numbers
+            // CSS doesn't allow leading numbers
             if(id.match(/^\d/)){
                 id = "_" + id
             };
             return id.replace(/(:1|:2|:3)$/, "").replace(/:/g, "__")
         }
 
-        // Get the url to the item icon by id
+        // Get the URL to the item icon by id
         async function getItemUrl(id) {
 
             if(imageurls.hasOwnProperty(id)){
@@ -757,7 +757,7 @@
                 }, 520);
             });
 
-            //Make item quality toggleable by keeping to click the icon
+            //Make item quality toggle able by keeping to click the icon
             $(".items, .item.add").on("click", ".itemquality", function () {
                 let e = $(this);
                 let item = e.parent().parent()
@@ -792,7 +792,7 @@
                     item.addClass("copper");
                 }
 
-                // Change the itemid (again depending on if normal item name or if currently a input field)
+                // Change the item id (again depending on if normal item name or if currently a input field)
                 if (item.hasClass("add")) {
                     console.log(id)
                     console.log(newid)
@@ -822,7 +822,7 @@
 
 
 
-                // The function changing the data, when an autocomplete is selected
+                // The function changing the data, when an auto complete is selected
                 let d = async function () {
                     try {
                         let val = $(e).find("input").val();
@@ -928,7 +928,7 @@
 
                     M.toast({html: "Removed drops successfully"});     
 
-                    // Prevent the dialouge to fire again
+                    // Prevent the dialog to fire again
                     $(".deldrops").addClass("disabled");
                     $(".deldrop").unbind("click");
                 })
@@ -1208,7 +1208,7 @@
 
         // Check if a item didn't autocomplete, so that the user doesn't save old ID's
         function canContinue() {
-            if ($(".currentlyediting").length > 0) return "Please autocomplete all Items before saving";
+            if ($(".currentlyediting").length > 0) return "Please auto complete all Items before saving";
 
             return true;
         }
