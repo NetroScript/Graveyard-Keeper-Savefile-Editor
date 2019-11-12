@@ -31,12 +31,13 @@ But I want to mention the last time someone asked for help due to a save broken 
 * Your inventory items
 * Inventories of all (or at least most) storage units
 * Your relationships with NPC's (only if you interacted with them before and have more than 0)
-* Additionally utilities like: 
+* Additionally utilities like:
   * Removing all drops
   * Setting the worker efficiency to the highest possible level
   * Turning the graves into perfect graves
   * Complete the entire tech tree (state is pre DLC)
-  * Fix if the donkey is stuck 
+  * Fix if the donkey is stuck
+  * Reset the morgue body counter should it be broken
 
 ## Screenshot
 

@@ -171,7 +171,9 @@ def getsavefile(slot, shash):
 def getcustomsavefile(shash):
 
     # tkinter file dialog
+    tkinter_gain_focus()
     file = filedialog.askopenfilename(title="Select a savegame which is not created by Graveyard Keeper", defaultextension=".dat", filetypes=(("Graveyard Keeper File Save", "*.dat"), ("All Files", "*.*")))
+    root.withdraw()
     # Check if the path is already loaded into memory
     if file in savefiles:
         savefiles[shash] = file
@@ -193,7 +195,9 @@ def getcustomsavefile(shash):
 def getjsonsavefile(shash):
 
     # tkinter file dialog
+    tkinter_gain_focus()
     file = filedialog.askopenfilename(title="Select a savegame which is exported by this application", defaultextension=".json", filetypes=(("Graveyard Keeper JSON File Save", "*.json"), ("All Files", "*.*")))
+    root.withdraw()
     # Check if the path is already loaded into memory
     if file in savefiles:
         savefiles[shash] = file
@@ -268,7 +272,9 @@ def saveslot(data, shash, slot):
 def savecustomsavefile(data, shash):
 
     # tkinter file dialogue
+    tkinter_gain_focus()
     file = filedialog.asksaveasfilename(title="Export .dat file", defaultextension=".dat", filetypes=(("Graveyard Keeper File Save", "*.dat"), ("All Files", "*.*")))
+    root.withdraw()
 
     # Load the save object, we have to check if it is directly saved in the savefiles object or if it is linked to a
     # save hash
@@ -295,7 +301,9 @@ def savecustomsavefile(data, shash):
 def savejsonsavefile(data, shash):
 
     # tkinter file dialogue
+    tkinter_gain_focus()
     file = filedialog.asksaveasfilename(title="Export .json file", defaultextension=".json", filetypes=(("Graveyard Keeper JSON File Save", "*.json"), ("All Files", "*.*")))
+    root.withdraw()
 
     # Load the save object, we have to check if it is directly saved in the savefiles object or if it is linked to a
     # save hash
@@ -502,7 +510,7 @@ def modifysave(data, shash):
 
         # If the donkey should be replaced with a working one we just replace it but store and restore the unique id the
         # donkey had
-        if data["switches"]["donkey"] and  it["obj_id"]["v"] == "donkey":
+        if data["switches"]["donkey"] and it["obj_id"]["v"] == "donkey":
             previousuniqueid = it["unique_id"]["v"]
             savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i] = jsongamedata["working_donkey"]
             savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]["unique_id"]["v"] = previousuniqueid
@@ -543,10 +551,31 @@ def modifysave(data, shash):
 
     # Clear the drop data when requested
     if len(data["drops"]) < len(savefiles[shash]["savedata"]["drops"]["v"]):
+
+        # First go through the drops to see if we need to adjust the morgue body count (because we remove bodies)
+        reduce = 0.0
+        for drop in savefiles[shash]["savedata"]["drops"]["v"]:
+            if drop["v"]["res"]["v"]["id"]["v"] == "body":
+                reduce+=1
+
+        # If the morgue counter needs to be reduced do so
+        if reduce > 0:
+            # Get the previous value
+            change_value = get_parameter_value(savefiles[shash]["savedata"]["_inventory"] ,"cur_bodies_count")
+
+            # Only save changes when there was a value before
+            if change_value != None:
+                change_value["v"] = max(0 , change_value["v"]-reduce)
+                # Set the new value
+                set_parameter_value(shash, savefiles[shash]["savedata"]["_inventory"] ,"cur_bodies_count", change_value)
+
         savefiles[shash]["savedata"]["drops"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["drops"], [])
         # Check first if they exist
         if "1968591194" in savefiles[shash]["savedata"]["map"]["v"]:
             savefiles[shash]["savedata"]["map"]["v"]["1968591194"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["map"]["v"]["1968591194"], [])
+
+    if data["switches"]["resetmorgue"]:
+        set_parameter_value(shash, savefiles[shash]["savedata"]["_inventory"] ,"cur_bodies_count", {"v": 0.0, "type": 5})
 
 
 # Made for the basic types, not made for Vector2, Vector3, ...
@@ -725,7 +754,8 @@ def editablevalues(shash):
         "decorations": False,
         "emptygrave": False,
         "techtree": False,
-        "donkey": False
+        "donkey": False,
+        "resetmorgue": False
     }
 
     return obj
@@ -746,6 +776,58 @@ def getinventory(inv):
     return out
 
 
+# Function to return a parameter from an inventory, exists to simplify it
+def get_parameter_value(inventory, parameter):
+    params = inventory["v"]["_params"]["v"]
+
+    # The position of our value
+    index = -1
+    i = 0
+    # Get it in the list
+    for type in params["_res_type"]["v"]:
+        
+        # Break when found
+        if type["v"] == parameter:
+            index = i
+            break
+
+        i+=1
+
+    # Return empty value if non existant
+    if index == -1:
+        return None
+    
+    # Otherwise return result
+    return params["_res_v"]["v"][index]
+
+
+# Set a specific parameter of an inventory
+def set_parameter_value(shash, inventory, parameter, value):
+    
+    params = inventory["v"]["_params"]["v"]
+
+    # The position of our value
+    index = -1
+    i = 0
+    # Get it in the list
+    for type in params["_res_type"]["v"]:
+        
+        # Break when found
+        if type["v"] == parameter:
+            index = i
+            break
+
+        i+=1
+
+    # The value doesn't exist, so we add it to the list
+    if index == -1:
+        params["_res_type"]["v"].append(modifyvaluetype(shash, {"v": "Old Parameter Name", "type":10}, parameter))
+        params["_res_v"]["v"].append(value)
+    # Otherwise set the value
+    else:
+        params["_res_v"]["v"][index] = modifyvaluetype(shash, params["_res_v"]["v"][index], value)
+
+
 # Call on page load of the main page (with the save slots)
 @eel.expose
 def siteloaded():
@@ -763,7 +845,10 @@ def siteloaded():
 def get_folder(initial=""):
     if initial == "":
         initial = None
-    return filedialog.askdirectory(title="Select the savegame folder of Graveyard Keeper", initialdir=initial)
+    tkinter_gain_focus()
+    folder = filedialog.askdirectory(title="Select the savegame folder of Graveyard Keeper", initialdir=initial)
+    root.withdraw()
+    return folder
 
 
 # Try to automatically populate the default folder, at least for known systems
@@ -819,6 +904,15 @@ except Exception:
         print("Unable to set icon, just skipping it")
 # Hide the tkinter instance
 root.withdraw()
+root.overrideredirect(True)
+root.geometry('0x0+0+0')
+
+
+# Allow file dialogs to gain focus
+def tkinter_gain_focus():
+    root.deiconify()
+    root.lift()
+    root.focus_force() 
 
 def run():
     global web_app_options

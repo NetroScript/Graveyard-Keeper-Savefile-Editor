@@ -1,3 +1,15 @@
+0.1.18
+=====
+
+Added:
+* Utilities
+  * Reset morgue body count to 0
+
+Improved:
+* Now the remove drops button doesn't bug your morgue (when removing bodies from the floor it will decrease the morgue counter)
+* Replaced some NPC images with better ones and added some
+* Hints / Warnings are now hidden by default and you can hover to display them so they don't clutter the UI as much with text
+  
 0.1.17
 =====
 

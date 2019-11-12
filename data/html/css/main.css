@@ -655,3 +655,29 @@ p.timeoutput {
 .itemimage .item_icon {
     float: left;
 } 
+
+.note.hover::before {
+    content: "Hover";
+    position: absolute;
+    margin-top: -10px;
+    font-size: 70%;
+}
+
+.note.hover {
+    transition: all 0.7s;
+    max-height: 20px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.note.hover:hover {
+    max-height: 400px;
+}
+
+.miscbuttons .note {
+    margin-bottom: 10px;
+}
+
+.miscbuttons .btn {
+    margin: 10px 0px 10px 0px;
+}
