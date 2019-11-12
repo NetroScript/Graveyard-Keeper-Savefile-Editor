@@ -9,6 +9,7 @@ Improved:
 * Now the remove drops button doesn't bug your morgue (when removing bodies from the floor it will decrease the morgue counter)
 * Replaced some NPC images with better ones and added some
 * Hints / Warnings are now hidden by default and you can hover to display them so they don't clutter the UI as much with text
+* Now the application requests focus when opening file dialogs, so now they don't hide behind tons of windows anymore
   
 0.1.17
 =====
