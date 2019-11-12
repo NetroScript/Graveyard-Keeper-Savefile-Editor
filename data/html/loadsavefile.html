@@ -186,19 +186,20 @@
 
         // If there is a new version get the information about the new version in the changelog and display it
         async function setUpdateInformation(oldv, newv){
-            let t; 
+
             await fetch( "https://raw.githubusercontent.com/NetroScript/Graveyard-Keeper-Savefile-Editor/master/changelog.md"
-            ).then(response => { response.text().then((txt) => { t = txt }) })
-            // Get only the new features out of the changelog 
-            let changes = t.split(oldv)[0]; 
+            ).then(response => {response.text().then((txt) => {
+            // Get only the new features out of the changelog
+            let changes = txt.split(oldv)[0];
             // Add the HTML to the DOM
             $(".con").prepend(`
-<div 1="" class="intro newv">
-    <h3>A new Version (` + newv + `) is available! Get it on
-        <a href="https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor" target="_blank">Github</a>. There were the following changes since your version:</h3>
-    <div class="changes">${changes}</div>
-</div>` 
-            )
+            <div 1="" class="intro newv">
+                <h3>A new Version (` + newv + `) is available! Get it on
+                    <a href="https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor" target="_blank">Github</a>. There were
+                    the following changes since your version:</h3>
+                <div class="changes">${changes}</div>
+            </div>`)
+            })})
         }
 
         // Allow python to call the function to display the new version if there is a new version
