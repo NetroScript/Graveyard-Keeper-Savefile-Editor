@@ -13,7 +13,7 @@ Additionally you can export the loaded save to a .json file, which has a similar
 
 **The Application uses a webbrowser as a GUI** (by default Chrome in App Mode, but during development FireFox was tried too - f.e. Opera should work too, but watch out for your Opera version - see [Issue #54](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/issues/54)).
 
-I want to add I am not responsible if you break your save file, I try to mantain this editor in a way, in which it can't break save files (or not by mistake) but it is still possible that this editor produces a bugged save file (if you f.e. add an item in a quality in which the item doesn't exist.)
+I want to add I am not responsible if you break your save file, I try to mantain this editor in a way, in which it can't break save files (or not by mistake) but it is still possible that this editor produces a bugged save file (if you for example add an item in a quality in which the item doesn't exist. - although in non expert mode the editor will prevent saving your file when a non existant item is selected)
 That is why you always should backup your save files. (In the settings of the editor you can also set the number of backups the editor should create (which are zipped) - on saving the editor all backups are shifted by one, so if set it to 3 backups and save 4 times, your oldest backup is lost).
 
 But I want to mention the last time someone asked for help due to a save broken by the save editor was in september 2018 and since then I also took additional measures.
@@ -77,10 +77,8 @@ The application supports variables in the path starting with 0.1.17. If you use 
 ## Usage
 
 Considering the application has a GUI it should be self explanatory.
-If a name autocompletes to undefined, the item has no internal name or my localisation files are missing translations.
-If you know an item exists, but it doesn't appear in the autocompletion box, leave me a message, this means I forgot some items in my list with items.
-Same if an item doesn't have a preview image - if that happens please leave me a message with the internal id (written in parentheses) and a screenshot of the item in game (so I know which item in the spritesheet is the id)
-
+If a red border appears around an item, it means the save editor doesn't have this item indexed. Either because the item doesn't exist, or it was added in an update which wasn't included yet in the editor.
+Same if an item doesn't have a preview image - if that happens please leave me a message with the internal id (written in parentheses) and a screenshot of the item in game (so I know which item in the spritesheet is the id).
 
 If you want to manually edit save files, when you change values, watch out if you change the type of the variable. F.e. if you would change a value from 0 to 1, the type would change and you would need to manually change the type to the correct one.
 For information about the possible types, check types.py in the data folder.

@@ -67,28 +67,22 @@ def updateitemversion():
     response = urlopen("https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/archive/master.zip")
     # Load the downloaded in memory file as a zip file
     zipfile = ZipFile(BytesIO(response.read()))
-    print("Deleting Old /rsc folder")
-    shutil.rmtree('./data/html/rsc', ignore_errors=True)
-    os.mkdir("./data/html/rsc")
-    print("Copying new rsc files")
+    print("Deleting Old Frontend (html folder)")
+    shutil.rmtree('./data/html', ignore_errors=True)
+    os.mkdir("./data/html")
+    print("Copying new frontend files")
     # We iterate all files in the zip to be able to extract 1 whole specific folder
     for zip_info in zipfile.infolist():
         # We only want the rsc folder
-        if zip_info.filename.startswith("Graveyard-Keeper-Savefile-Editor-master/data/html/rsc/"):
+        if zip_info.filename.startswith("Graveyard-Keeper-Savefile-Editor-master/data/html/"):
             # To prevent an error when there is no base name
             if zip_info.filename[-1] == '/':
                 continue
             # So we don't extract the whole folder structure we change the path in the zip info object
-            zip_info.filename = os.path.basename(zip_info.filename)
-            zipfile.extract(zip_info, "./data/html/rsc/")
+            zip_info.filename = zip_info.filename.split("/data/html/")[1]
+            zipfile.extract(zip_info, "./data/html/")
 
     # Same as above but for individual files
-    print("Deleting old items.json")
-    os.remove("./data/html/items.json")
-    print("Copying new items.json")
-    info = zipfile.getinfo("Graveyard-Keeper-Savefile-Editor-master/data/html/items.json")
-    info.filename = os.path.basename(info.filename)
-    zipfile.extract(info, "./data/html/")
     print("Deleting old locals.json")
     os.remove("./data/locals.json")
     print("Copying new locals.json")

@@ -530,7 +530,9 @@
             if(id.match(/^\d/)){
                 id = "_" + id
             };
-            return id.replace(/(:1|:2|:3)$/, "").replace(/:/g, "__")
+            id = id.replace(/(:1|:2|:3)$/, "").replace(/:/g, "__")
+            if (!id.startsWith("embalm")) id = id.replace(/_-?\d_-?\d/, "")
+            return id
         }
 
         // Get the URL to the item icon by id
@@ -577,17 +579,9 @@
         async function addItem(id, amount, durability, element) {
 
             //Check for a quality of the item
-            let spl = id.split(":");
             let quality = "";
-            if (spl.length > 1) {
-                let q = spl.slice(-1)[0];
-                if (q == "1") {
-                    quality = " copper";
-                } else if (q == "2") {
-                    quality = " silver";
-                } else if (q == "3") {
-                    quality = " gold";
-                }
+            if(["1","2","3"].includes(id.split(":").pop())){
+                quality = [" copper", " silver", " gold"][parseInt(id.split(":").pop())-1]
             }
 
             //If the item can be repaired, add a button to do that
@@ -804,6 +798,13 @@
                     item.find(".itemid").text("(" + newid + ")");
                 }
 
+                if ( !settings["expert"]){
+                    if(!gamedata.items.includes(newid)){
+                        item.addClass("unknown_item");
+                    } else {
+                        item.removeClass("unknown_item");
+                    }
+                }
 
 
             });
@@ -842,6 +843,20 @@
                             $(e).find(".itemname").html(getLocalisation(id) + ' <div class="itemid">(' + id +
                                 ')</div>');
                             $(e).find(".itemname").removeClass("curactive");
+
+                            let iconholder = $(e).parent()
+                            iconholder.removeClass("gold silver copper")
+                            if(["1","2","3"].includes(id.split(":").pop())){
+                                iconholder.addClass(["copper", "silver", "gold"][parseInt(id.split(":").pop())-1])
+                            }
+
+                            if ( !settings["expert"]){
+                                if(!gamedata.items.includes(id)){
+                                    iconholder.addClass("unknown_item");
+                                } else {
+                                    iconholder.removeClass("unknown_item");
+                                }
+                            }
                         }
                     }
                     catch(e) {
@@ -993,7 +1008,7 @@
 
             // Check if the user filled all fields and isn't currently editing an item name
             let t = canContinue();
-            if (t === true) {
+            if (t.length == 0) {
                 // Update the data from the form which wasn't updated yet
                 collectData();
                 let hashdata = window.location.hash.split("#")[1].split("|");
@@ -1018,10 +1033,14 @@
                     });
                 }
             } else {
-                // Show message why the user can't continue
-                M.toast({
-                    html: t
-                });
+                for(message in t){
+                    // Show message why the user can't continue
+                    M.toast({
+                        html: t,
+                        displayLength: 10000,
+                        classes: "red darken-3"
+                    });
+                }
             }
 
         }
@@ -1138,22 +1157,21 @@
             if (val.split("(").length > 1) {
                 let id = val.split("(").pop().split(")")[0];
 
-                // Check if the quality changed
-                let spl = id.split(":");
-                if (spl.length > 1) {
-                    let q = spl.slice(-1)[0];
-                    if (q == "1") {
-                        $(this.el).parents(".item").attr("class", "item add copper");
-                    } else if (q == "2") {
-                        $(this.el).parents(".item").attr("class", "item add silver");
-                    } else if (q == "3") {
-                        $(this.el).parents(".item").attr("class", "item add gold");
-                    }
+                if(["1","2","3"].includes(id.split(":").pop())){
+                    $(this.el).parents(".item").attr("class", "item add " + ["copper", "silver", "gold"][parseInt(id.split(":").pop())-1]);
                 } else {
                     $(this.el).parents(".item").attr("class", "item add");
                 }
 
                 $(this.el).parents(".item").find(".item_icon").attr("class", "item_icon " + sanitzize_item_id(id));;
+
+                if ( !settings["expert"]){
+                    if(!gamedata.items.includes(newid)){
+                        $(this.el).parents(".item").addClass("unknown_item");
+                    } else {
+                        $(this.el).parents(".item").removeClass("unknown_item");
+                    }
+                }
             }
         }
 
@@ -1218,9 +1236,11 @@
 
         // Check if a item didn't autocomplete, so that the user doesn't save old ID's
         function canContinue() {
-            if ($(".currentlyediting").length > 0) return "Please auto complete all Items before saving";
+            let errors = []
+            if ($(".currentlyediting").length > 0) errors.push("Please auto complete all Items before saving");
+            if ($(".unknown_item").length > 0) errors.push("You currently have non existant items added (they have a red outline when expanded). Please change them. If you actually want to add an item the editor does not support, please enable expert mode in settings. (and reload this page)");
 
-            return true;
+            return errors;
         }
 
         // Load the settings file

@@ -1,3 +1,12 @@
+0.1.19
+=====
+
+Improved:
+* In non expert mode you are now warned (red border) about non existant items and you will be unable to save if any exist
+* Items which did not show correctly before (like organs) are now shown again
+* In the big view of an item you can see the entire item again, instead of only a part of it (for non square items)
+* When using the update function for the GUI now the entire GUI is replaced instead of only parts meaning bigger updates can be done using that
+  
 0.1.18
 =====
 
