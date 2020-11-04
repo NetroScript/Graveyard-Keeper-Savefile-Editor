@@ -14,16 +14,17 @@
 # before was the bug that we encoded Unicode Characters as Ascii (as single Byte) leading to errors when the game was
 # loading the file.
 def prefix(buffer, stream, beginning, num):
-
     length = len(buffer)
+
+    buffer_str = str(buffer)
+
     # print(buffer)
-    if str(buffer) == "[-48, -95, 2, 109, 11, 2, 31, 25, 77, 2, 11, 77, 11, 12, 4, 25]":
+    if buffer_str == "[-48, -95, 2, 109, 11, 2, 31, 25, 77, 2, 11, 77, 11, 12, 4, 25]":
         buffer.append(stream.read("int8"))
         return {"length": length, "buffer": buffer[:]}
-    if str(buffer).endswith("-47]"):
+    if buffer_str.endswith("-47]"):
         return {"length": length, "buffer": buffer[:] + [stream.read("int8")]}
-
-    if str(buffer).startswith("[45, -47, -127,") or str(buffer).startswith("[-47, -127, 1") or str(buffer).startswith("[0, -47, -127,"):
+    if "-47, -127" in buffer_str:
         buffer.append(stream.read("int8"))
         return {"length": length, "buffer": buffer[:]}
 

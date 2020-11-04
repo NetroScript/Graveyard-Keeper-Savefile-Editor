@@ -215,18 +215,15 @@ class Decoder:
             # buffer.append(int.from_bytes(stream.read("char"), byteorder="little"))
             buffer.append(stream.read("int8"))
 
-        # Get the length of the read bytes - sadly because I don't know how to let Python read and detect both 1 Byte
-        # Characters and 2 Byte Characters this will be equal to n
-        l = stream.file.tell() - beginning
 
         # We now add buffers and the length of the read to a special object should specific unicode values be detected,
         # so we can save the original buffer when encoding again
-        specialread = prefix(buffer, stream, beginning, l)
+        specialread = prefix(buffer, stream, beginning, len(buffer))
 
         # print(num4)
         # in the case of the string being encrypted (which is the case in the string array at the end of the save file)
         if encrypt:
-            for i in range(l):
+            for i in range(len(buffer)):
                 num5 = buffer[i]
                 # Replace the numerical buffer value with the character
                 if num5 <= 255 and num5 is not 0 and num5 is not 109:
@@ -234,13 +231,12 @@ class Decoder:
                 else:
                     buffer[i] = chr(abs(num5))
         else:
-            for i in range(l):
+            for i in range(len(buffer)):
                 # Replace the numerical buffer value with the character
                 buffer[i] = chr(abs(buffer[i]))
 
         # We combine every char we extracted to our output string
-        for char in buffer:
-            out += str(char)
+        out = ''.join(buffer)
 
         # Fixing our output string
         out = postfix(out, stream, buffer)
