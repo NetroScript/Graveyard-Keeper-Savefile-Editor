@@ -2,4 +2,3 @@
 2 - Changed wrong internal name for the item flyer, the first version of the prayer for imagination; Added icon for building_permission
 3 - Added endless notebook
 4 - This is a note that starting with version 0.1.16 the way changed how items are displayed, so for future item updates you need atleast 0.1.16 version. Additionally I want to mention 0.1.18 fixes the application not checking correctly if there is an update available (sorry for that) | DO NOT DO AN AUTOMATIC UPDATE HERE (THEN YOUR ITEM DISPLAY WILL BREAK)
-5 - Added Game Of Crone DLC Items
