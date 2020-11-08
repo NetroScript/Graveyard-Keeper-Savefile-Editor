@@ -125,9 +125,9 @@
 
         // Allow context menu when ALT was clicked once
         $("body").keydown(function(e){
-            if(e.altKey == true){
+            if(e.altKey === true){
                 disable_context_menu = false;
-            };
+            }
         })
 
         // Source: https://github.com/darkskyapp/string-hash/blob/master/index.js

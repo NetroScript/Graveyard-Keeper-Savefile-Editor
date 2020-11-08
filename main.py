@@ -296,7 +296,7 @@ def savejsonsavefile(data, shash):
 
     # tkinter file dialogue
     tkinter_gain_focus()
-    file = filedialog.asksaveasfilename(title="Export .json file", defaultextension=".json", filetypes=(("Graveyard Keeper JSON File Save", "*.json"), ("All Files", "*.*")))
+    file = filedialog.asksaveasfilename(title="Export .json file", defaultextension=".json", filetypes=(("Graveyard Keeper JSON File Save", "*.json"), ("Graveyard Keeper HTML File Save for easy loading in JavaScript", "*.html"), ("All Files", "*.*")))
     root.withdraw()
 
     # Load the save object, we have to check if it is directly saved in the savefiles object or if it is linked to a
@@ -312,11 +312,26 @@ def savejsonsavefile(data, shash):
     # try saving the save file - simply dumping the data we have as JSON
     try:
         with open(file, "w") as f:
-            print("Dumping JSON to " + file)
 
             # For more compatibility we replace pythons NaN with null because NaN is not valid JSON
             jsonstring = json.dumps(savefiles[s]).replace(" NaN", " null")
-            f.write(jsonstring)
+
+            # If we want to dump it as html file we do so here
+            if file.endswith(".html"):
+
+                placeholder = ""
+
+                with open('./data/html/dumpskeleton.html', 'r') as placeholderfile:
+                    placeholder = placeholderfile.read()
+
+                print("Creating HTML file at " + file)
+                # Replace \" with \\" so JS doesn't just remove the \
+                f.write(placeholder.replace("[[[[PLACEHOLDER]]]]", jsonstring.replace('\\"', '\\\\"')))
+
+            # By default dump it as only json
+            else:
+                print("Dumping JSON to " + file)
+                f.write(jsonstring)
         return {}
     except Exception:
         print("Error:")

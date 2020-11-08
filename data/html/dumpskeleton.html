@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graveyard Keeper Save File</title>
+    <style>
+        body {
+            background-color: #212121;
+            color: #e4e4e4;
+            text-align: center;
+        }
+
+        #download {
+            background-color: #3e3e3e;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px black;
+        }
+
+        .download-button {
+            margin-top: 40px;
+        }
+
+        code {
+            padding: 3px;
+            background-color: rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<script>
+        function download(){
+        const a = document.createElement("a");
+        const file = new Blob([JSON.stringify(gameSave)], {type: "text/plain"});
+        a.href = URL.createObjectURL(file);
+        a.download = "Graveyard Keeper Save.json";
+        a.click();
+    }
+</script>
+
+<div>
+    <h1>The save data is already dumped in the console in the variable <code>gameSave</code>.</h1>
+
+    <p>For convenience WGO's are also already stored in <code>wgo</code>.</p>
+
+    <p>After you finished the editing you can export it to a JSON file again using the following Button.</p>
+
+    <p class="download-button">
+      <a id="download" onclick="window.download()">Export</a>
+    </p>
+</div>
+
+<script>
+
+    const start = Date.now();
+    console.log(`Started Parsing JSON of Gamesave`);
+    const gameSave = JSON.parse('[[[[PLACEHOLDER]]]]');
+    const wgo = gameSave.savedata.map.v._wgos.v;
+    console.log(`Parsed JSON (after ${((Date.now()-start)/1000).toFixed(2)} seconds`)
+
+    console.log(`To get for example the list of objects in the save (which is written in saved.md on the GitHub page) you can do the following:`)
+    console.log(`%cconst wgo_count = {};
+wgo.forEach((entry) => {
+    const name = entry.v.obj_id.v;
+    if(!wgo_count.hasOwnProperty(name))
+        wgo_count[name] = 0;
+    wgo_count[name]++
+})
+console.log(wgo_count);                `, "color: gray; font-family:monospace;")
+
+</script>
+
+
+</body>
+</html>

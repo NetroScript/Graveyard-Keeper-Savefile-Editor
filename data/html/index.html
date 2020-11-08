@@ -116,11 +116,11 @@
 
         // Load the data depending on the save file type
         async function getSaveFile(info) {
-            if (info[0] == "slot") {
+            if (info[0] === "slot") {
                 data = await eel.getsavefile(info[2], info[1])();
-            } else if (info[0] == "importjson") {
+            } else if (info[0] === "importjson") {
                 data = await eel.getjsonsavefile(info[1])();
-            } else if (info[0] == "importdat") {
+            } else if (info[0] === "importdat") {
                 data = await eel.getcustomsavefile(info[1])();
             }
 
@@ -868,7 +868,7 @@
                 if ( settings["expert"]){
                     $(this).find(".autocomplete.itemn").val(prevtxt);
                     $(this).find(".autocomplete.itemn").keyup( e => {
-                        if(e.which == 13)
+                        if(e.which === 13)
                             d();
                     })
                 }

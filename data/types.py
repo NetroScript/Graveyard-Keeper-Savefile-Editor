@@ -43,10 +43,10 @@ with open("./data/locals.json", encoding="utf8") as f:
     id_to_name = load(f)
 
 # Generic game information
-with open("./data/html/items.json") as f:
+with open("./data/html/items.json", encoding="utf8") as f:
     gamedata = load(f)
 
-with open("./data/data.json") as f:
+with open("./data/data.json", encoding="utf8") as f:
     jsongamedata = load(f)
 
 # A example item in the case of the inventory being empty and people wanting to add items to it
