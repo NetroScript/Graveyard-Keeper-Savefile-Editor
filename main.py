@@ -460,10 +460,15 @@ def modifysave(data, shash):
                 savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"].append({"type": 10, "v": entry})
                 savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"].append({"type": 19, "v": 1})
 
+
     # In the following block World Game Objects are iterated
     # For us specifically interesting are all storage units + workers and bodies to modify the items in them
     i2 = 0  # Index of the storage unit in our storage unit array
     i = 0  # Index of the WGO
+
+    # Indexes of WGO's we want to remove,  we can't do that during iteration, so we do it after iteration
+    delete_indexes = []
+
     for _ in savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"]:
 
         convertemptygrave = False
@@ -556,7 +561,19 @@ def modifysave(data, shash):
             it["-1126421579"]["v"]["_params"]["v"]["_res_type"] = jsongamedata["_res_type"]
             it["-1126421579"]["v"]["_params"]["v"]["_res_v"] = jsongamedata["_res_v"]
 
+        # If NPC got stuck in the church, we can just remove their entity entirely from the save
+        if data["switches"]["removechurchvisitors"] and it["obj_id"]["v"] == "npc_church_visitor":
+            delete_indexes.append(i)
+
         i += 1
+
+    offset = 0
+    for delete in delete_indexes:
+        # Delete the queued WGO
+        del savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][delete-offset]
+
+        # We deleted one in front, so we need to decrease the index which is  because an element is missing
+        offset += 1
 
     # Clear the drop data when requested
     if len(data["drops"]) < len(savefiles[shash]["savedata"]["drops"]["v"]):
@@ -764,7 +781,8 @@ def editablevalues(shash):
         "emptygrave": False,
         "techtree": False,
         "donkey": False,
-        "resetmorgue": False
+        "resetmorgue": False,
+        "removechurchvisitors": False
     }
 
     return obj

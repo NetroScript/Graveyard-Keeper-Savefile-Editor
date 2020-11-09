@@ -268,7 +268,8 @@
             <div class="note hover col s12"><b>WARNING:</b><br>This replaces your current donkey object with the a working one from my savefile. It will then be in front of your morgue. <b>Don't be surprised if it doesn't drop the body even if you have enough carrots. Through replacing the donkey this check gets skipped.</b> Just put 10 more in and the donkey should work - I tried it on a save in the bug report channel of the discord (from Lazy Bear Games). ONLY USE THIS IF THE BUG FIX OF THE DEVELOPERS DIDN'T WORK AND YOU ALREADY HAVE THE BOX WITH CARROTS. <b>Also only use this if your donkey is actually stuck!</b></div>
             <div class="btn resetmorgue col s12">Reset Morgue Counter</div>
             <div class="note hover col s12"><b>Note:</b><br>This will set your current morgue spaces used to 0, meaning if it got bugged at some point you will have at least 1 delivery. (Although I do not know how this value gets set again, like if it is only increased by one or the entire morgue is checked for bodies)</div>
-        </div>
+            <div class="btn removechurchvisitors col s12">Delete Church Visitor NPCs</div>
+            <div class="note hover col s12"><b>Note:</b><br>Sometimes the church visitors just stay in your church as if it is their home. Use this button to evict them. (This deletes all npc_church_visitor entities.)</div>
     </form>
 </div>
 <div class="intro lesspadding">Inventory:
@@ -994,7 +995,14 @@
                 $(".resetmorgue").addClass("disabled");
                 $(".resetmorgue").unbind("click");
             })
-            
+            // Handle clicking the remove church visitors button
+            $(".removechurchvisitors").click(function () {
+                data.switches.removechurchvisitors = true;
+                $(".removechurchvisitors").addClass("disabled");
+                $(".removechurchvisitors").unbind("click");
+            })
+
+
             
 
             // Remove the loading circle so the user now knows he can use all the features.

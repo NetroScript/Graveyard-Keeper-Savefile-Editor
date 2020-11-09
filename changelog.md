@@ -1,3 +1,12 @@
+0.1.20
+=====
+
+Added:
+* Support for the Game of Crone DLC (meaning items, localisation and npcs)
+* When exporting as JSON you can now also select `.html` which generates a HTML file where you can relatively easily edit the JSON in your browser
+* Utilities
+  * Remove church visitors stuck in the church
+  
 0.1.19
 =====
 

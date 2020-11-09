@@ -17,6 +17,8 @@ A list of a 10 Minute save with all the possible world game object ids and their
 
 With this data (because all of them contain a location) it should be possible to recreate your current world map if you extract the base map (the underground) + the sprites of the id's.
 
+You can also generate this list by yourself, if you export as JSON and then select the .html export. If you open that in the browser, the code to generate that list is shown in the console.
+
 Achievements
 ------------
 
