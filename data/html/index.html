@@ -93,6 +93,14 @@
 
         let disable_context_menu = true;
 
+        const strangersins_item_range = [726, 794]
+        const gameofcrone_item_range = [795, 908]
+
+        const displayed_infos_dlc = {
+            "gameofcrone": false,
+            "strangersins": false
+        }
+
         // Contextmenu is not needed, for that reason it is disabled
         $(document).contextmenu(function(e){
             if (disable_context_menu) {
@@ -142,16 +150,26 @@
                     .then(function (response) {
                         return response.json();
                     })
-                    .then(function (json) {
+                    .then(async function (json) {
                         gamedata = json;
                         // Generate the dictionaries used for the autocomplete
-                        gamedata.items.forEach(i => {
-                            autocompletenames[(data["locals"][i] || data["locals"][i.replace(/:\d$/g, "")]) + " (" + i + ")"] = null
+                        gamedata.items.forEach((item, i) => {
+                            // Don't include stranger sins items
+                            if (i >= strangersins_item_range[0] && i <= strangersins_item_range[1] && !settings["strangersins"]){
+                                return
+                            }
+                            // Don't include game of crone items
+                            if (i >= gameofcrone_item_range[0] && i <= gameofcrone_item_range[1] && !settings["gameofcrone"]){
+                                return
+                            }
+                            autocompletenames[(data["locals"][item] || data["locals"][item.replace(/:\d$/g, "")]) + " (" + item + ")"] = null
                         })
-                    });
 
-                await applyData()
-                generateEvents()
+
+                        await applyData()
+                        generateEvents()
+                    })
+
             }
 
 
@@ -506,6 +524,52 @@
         // Turn a specific ID into a name
         // Here we have additional checks for item qualities
         function getLocalisation(id) {
+
+            // Check the index of the id where we fetch the localisation within the item array to do a DLC check
+            let index = gamedata.items.indexOf(id);
+
+            // If the save contains items of a disabled DLC show a notification
+            if(index >= gameofcrone_item_range[0] && index <= gameofcrone_item_range[1] && !settings["gameofcrone"]){
+                if(!displayed_infos_dlc["gameofcrone"]){
+                    displayed_infos_dlc["gameofcrone"] = true;
+
+                    // Display an info considering the DLC
+                    let m = M.toast({html: `<div><p>It seems like the save contains items from the Game of Crone DLC but you didn't enable it in the settings.</div><div class="confirm">Click here to enable Game of Crone support</div>`, displayLength: 60000})
+                    $(m.el).find(".confirm").click(async function() {
+                        m.dismiss();
+
+                        // Save the settings
+                        settings["gameofcrone"] = true;
+                        await eel.set_settings(settings)();
+
+                        // Add the autocomplete names
+                        for(let i = gameofcrone_item_range[0]; i < gameofcrone_item_range[1]; i++) {
+                            autocompletenames[(data["locals"][gamedata.items[i]] || data["locals"][gamedata.items[i].replace(/:\d$/g, "")]) + " (" + gamedata.items[i] + ")"] = null
+                        }
+                    })
+                }
+            }
+            if(index >= strangersins_item_range[0] && index <= strangersins_item_range[1] && !settings["strangersins"]){
+                if(!displayed_infos_dlc["strangersins"]){
+                    displayed_infos_dlc["strangersins"] = true;
+
+                    // Display an info considering the DLC
+                    let m = M.toast({html: `<div><p>It seems like the save contains items from the Stranger Sins DLC but you didn't enable it in the settings.</div><div class="confirm">Click here to enable Stranger Sins support</div>`, displayLength: 60000})
+                    $(m.el).find(".confirm").click(async function() {
+                        m.dismiss();
+
+                        // Save the settings
+                        settings["strangersins"] = true;
+                        await eel.set_settings(settings)();
+
+                        // Add the autocomplete names
+                        for(let i = strangersins_item_range[0]; i < strangersins_item_range[1]; i++) {
+                            autocompletenames[(data["locals"][gamedata.items[i]] || data["locals"][gamedata.items[i].replace(/:\d$/g, "")]) + " (" + gamedata.items[i] + ")"] = null
+                        }
+                    })
+                }
+            }
+
             if (data["locals"].hasOwnProperty(id)) {
                 return data["locals"][id];
             } else if (/:\d$/.test(id)) {

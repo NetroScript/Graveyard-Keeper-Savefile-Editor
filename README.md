@@ -8,8 +8,9 @@ The python version works on Windows, Linux and macOS.
 For Windows there is a .exe version available too.
 
 It can load and save *.dat files.
-Additionally you can export the loaded save to a .json file, which has a similar structure to the original .json save files.
+Additionally you can export the loaded save to JSON, which has a similar structure to the original .json save files.
 (The difference is, that information about types of variables is saved in the file, meaning every value is wrapped in an object).
+When exporting to JSON you can also choose .html to have a website where you can relatively easily edit the save in the Browser console and then export it again. 
 
 **The Application uses a webbrowser as a GUI** (by default Chrome in App Mode, but during development FireFox was tried too - f.e. Opera should work too, but watch out for your Opera version - see [Issue #54](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/issues/54)).
 
@@ -18,7 +19,7 @@ That is why you always should backup your save files. (In the settings of the ed
 
 But I want to mention the last time someone asked for help due to a save broken by the save editor was in september 2018 and since then I also took additional measures.
 
-**This Editor supports both the DLC version and non DLC (because the DLC doesn't change how files are saved)**
+**This Editor supports the DLCs (Stranger Sins + Game Of Crone) - in the editor you have toggles to enable or disable DLC Support**
 
 ## Currently Editable
 
@@ -38,6 +39,7 @@ But I want to mention the last time someone asked for help due to a save broken 
   * Complete the entire tech tree (state is pre DLC)
   * Fix if the donkey is stuck
   * Reset the morgue body counter should it be broken
+  * Remove stuck church goes
 
 ## Screenshot
 

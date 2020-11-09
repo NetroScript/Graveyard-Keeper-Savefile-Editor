@@ -57,6 +57,11 @@ def loadsettings():
             options["port"] = 0
         if "backupamount" not in options:
             options["backupamount"] = 3
+        if "strangersins" not in options:
+            options["strangersins"] = False
+        if "gameofcrone" not in options:
+            options["gameofcrone"] = False
+
         web_app_options["port"] = options["port"]
 
 
@@ -552,6 +557,18 @@ def modifysave(data, shash):
 
         # If the graves should get perfect decorations we replace the current ones
         if (data["switches"]["decorations"] or convertemptygrave) and it["obj_id"]["v"] == "grave_ground":
+
+            # If the game of crone DLC is enabled you can have a higher level grave, we set it there
+            if options["gameofcrone"]:
+                jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_5"
+                jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_highangel_mrb_1"
+                jsongamedata["_res_type"]["v"][2]["v"] = "grave_top_highangel_mrb_1"
+                jsongamedata["_res_type"]["v"][2]["v"] = "grave_bot_mrb_5"
+            else:
+                jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_2"
+                jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_sculpt_mrb_1"
+                jsongamedata["_res_type"]["v"][2]["v"] = "grave_top_sculpt_mrb_1"
+                jsongamedata["_res_type"]["v"][2]["v"] = "grave_bot_mrb_2"
 
             # We iterate the items to delete all but the body so we can add the new ones
             it["-1126421579"]["v"]["inventory"]["v"][:] = [x for x in it["-1126421579"]["v"]["inventory"]["v"]

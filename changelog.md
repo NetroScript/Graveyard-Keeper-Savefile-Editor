@@ -1,3 +1,12 @@
+0.1.21
+=====
+
+Added:
+* Camp storage as editable Inventory
+
+Improved:
+* In the settings you can now disable and enable your owned DLC's. If a DLC is disabled their item names will not show up in the autocomplete. Additionally based on DLC or non DLC some functionality differs (like perfect decoration for graves)
+  
 0.1.20
 =====
 

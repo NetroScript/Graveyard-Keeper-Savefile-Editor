@@ -63,10 +63,34 @@
                                     Enabled
                                 </label>
                             </div>
-                            <div class="note">This disables all the applications checks for invalid data, meaning the likelihood of you breaking
-                                your safe with a non existent item f.e. is increased. But if you know the internal id of an item and it doesn't
-                                exist, you can add it with this option. This option does not require an application restart, but it requires to
-                                reload the page (so that the settings are loaded again).
+                            <div class="note">This disables all the checks the application does for invalid data, meaning the likelihood of you breaking
+                                your save with a non existent item f.e. is increased. But if you know the internal id of an item and it doesn't
+                                exist, you can add it with this option. This option does not require an application restart, but it requires a
+                                page reload (so that the settings are loaded again).
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="preswitch">Stranger Sins Support</div>
+                            <div class="switch">
+                                <label>
+                                    Disabled
+                                    <input type="checkbox" id="strangersins">
+                                    <span class="lever"></span>
+                                    Enabled
+                                </label>
+                            </div>
+                            <div class="preswitch">Game Of Crone Support</div>
+                            <div class="switch">
+                                <label>
+                                    Disabled
+                                    <input type="checkbox" id="gameofcrone">
+                                    <span class="lever"></span>
+                                    Enabled
+                                </label>
+                            </div>
+                            <div class="note">This allows you to select which DLC you own.
+                                <br/> Depending on owned DLC different autocomplete names are shown.
+                                Additionally some buttons have different functionality depending on the DLCs.
                             </div>
                         </div>
                         <div class="row">
@@ -140,6 +164,8 @@
                 "checkforupdate": $("#updatesc").prop("checked") || true,
                 "port": parseInt($("#port").val()) || 0,
                 "expert": $("#expert").prop("checked") || false,
+                "strangersins": $("#strangersins").prop("checked") || false,
+                "gameofcrone": $("#gameofcrone").prop("checked") || false,
                 "backupamount": parseInt($("#backupnum").val()) || 2
             }
             await eel.set_settings(settings)();
@@ -159,6 +185,8 @@
             $("#path").removeClass("invalid");
             $("#updatesc").prop("checked", b["checkforupdate"]);
             $("#expert").prop("checked", b["expert"]);
+            $("#strangersins").prop("checked", b["strangersins"]);
+            $("#gameofcrone").prop("checked", b["gameofcrone"]);
             $("#port").val(b["port"]);
             $("#backupnum").val(b["backupamount"]);
         }
