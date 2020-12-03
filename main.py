@@ -18,6 +18,8 @@ from io import BytesIO
 from zipfile import ZipFile, ZIP_DEFLATED
 import shutil
 import psutil
+import pkg_resources
+from packaging import version
 
 
 # Set up global variables and the used classes
@@ -961,13 +963,21 @@ def tkinter_gain_focus():
 def run():
     global web_app_options
 
+    eel_version = pkg_resources.get_distribution("eel").version
+
     # Check if the application is run the first time - if so show the settings dialogue, if not start the normal
     # application
     if os.path.isfile("./data/settings"):
         loadsettings()
-        eel.start("loadsavefile.html", options=web_app_options)
+        if version.parse(eel_version) >= version.parse("0.11.0"):
+            eel.start("loadsavefile.html", mode="chrome", port=web_app_options["port"], cmdline_args=web_app_options["chromeFlags"])
+        else:
+            eel.start("loadsavefile.html", options=web_app_options)
     else:
-        eel.start("no settings.html", options=web_app_options)
+        if version.parse(eel_version) >= version.parse("0.11.0"):
+            eel.start("no settings.html", mode="chrome", port=web_app_options["port"], cmdline_args=web_app_options["chromeFlags"])
+        else:
+            eel.start("no settings.html", options=web_app_options)
 
 
 # A try except statement, so that the console window doesn't close on error so that it is easier for users to report
