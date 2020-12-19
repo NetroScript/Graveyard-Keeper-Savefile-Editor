@@ -288,6 +288,8 @@
             <div class="note hover col s12"><b>Note:</b><br>This will set your current morgue spaces used to 0, meaning if it got bugged at some point you will have at least 1 delivery. (Although I do not know how this value gets set again, like if it is only increased by one or the entire morgue is checked for bodies)</div>
             <div class="btn removechurchvisitors col s12">Delete Church Visitor NPCs</div>
             <div class="note hover col s12"><b>Note:</b><br>Sometimes the church visitors just stay in your church as if it is their home. Use this button to evict them. (This deletes all npc_church_visitor entities.)</div>
+            <div class="btn resetdungeon col s12">Reset the dungeon</div>
+        </div>
     </form>
 </div>
 <div class="intro lesspadding">Inventory:
@@ -1065,6 +1067,30 @@
                 $(".removechurchvisitors").addClass("disabled");
                 $(".removechurchvisitors").unbind("click");
             })
+            
+            // Handle clicking the remove church visitors button
+            $(".resetdungeon").click(function () {
+                $(".resetdungeon").addClass("disabled");
+                $(".resetdungeon").unbind("click");
+
+                let m = M.toast({html: `<div><p>Do you also want to randomise the dungeon?</p></div><div class="confirm yes">Yes</div><div class="confirm no">No</div>`, displayLength: 6000000})
+
+                $(m.el).find(".confirm.yes").click(function() {
+                    m.dismiss();
+
+                    data.switches.resetdungeon = 2;
+
+                    M.toast({html: "Reset dungeon"});
+                })
+                $(m.el).find(".confirm.no").click(function() {
+                    m.dismiss();
+
+                    data.switches.resetdungeon = 1;
+
+                    M.toast({html: "Reset dungeon"});
+                })
+            })
+
 
 
             

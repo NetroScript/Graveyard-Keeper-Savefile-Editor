@@ -685,3 +685,7 @@ p.timeoutput {
 .unknown_item {
     border: dotted 2px red;
 }
+
+.confirm.yes, .confirm.no {
+    margin: 0px 10px;
+}

@@ -8,6 +8,7 @@ import eel
 import os
 import sys
 import json
+import random
 from data.hashes import Hashlist
 from data.decode import Decoder
 from data.encode import Encoder
@@ -622,6 +623,16 @@ def modifysave(data, shash):
     if data["switches"]["resetmorgue"]:
         set_parameter_value(shash, savefiles[shash]["savedata"]["_inventory"] ,"cur_bodies_count", {"v": 0.0, "type": 5})
 
+    if data["switches"]["resetdungeon"] > 0:
+        savefiles[shash]["savedata"]["dungeons"]["v"]["_saved_dungeons"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["dungeons"]["v"]["_saved_dungeons"], [])
+
+        if data["switches"]["resetdungeon"] > 1:
+
+            seed = random.randint(0, 2000000)
+
+            savefiles[shash]["savedata"]["dungeon_seed"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["dungeon_seed"], seed)
+            savefiles[shash]["savedata"]["dungeons"]["v"]["_global_seed"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["dungeons"]["v"]["_global_seed"], seed)
+
 
 # Made for the basic types, not made for Vector2, Vector3, ...
 # For those just process the original value (The encoder itself checks if Vector2_00 changed to f.e. Vector2_11
@@ -801,7 +812,8 @@ def editablevalues(shash):
         "techtree": False,
         "donkey": False,
         "resetmorgue": False,
-        "removechurchvisitors": False
+        "removechurchvisitors": False,
+        "resetdungeon": 0
     }
 
     return obj
