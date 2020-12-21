@@ -125,13 +125,22 @@ For those interested, here is the command I use to generate the folder which I t
 (I have this saved as build.bat in the same folder)
 
 ```batch
-python -m eel main.py "./data/html" -n "Graveyard Keeper Savefile Editor" -i "./data/html/favicon.ico" --exclude PyQt5 --exclude win32com --exclude pydoc --exclude lib2to3 -y
+py -3.8  -m eel main.py "./data/html" -n "Graveyard Keeper Savefile Editor" -i "./data/html/favicon.ico" --exclude PyQt5 --exclude win32com --exclude pydoc --exclude lib2to3 -y --additional-hooks-dir=hooks
 
 copy "%cd%\data\hashes" "%cd%\dist\Graveyard Keeper Savefile Editor\data\hashes" /Y
 copy "%cd%\data\locals.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\locals.json" /Y
 copy "%cd%\data\data.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\data.json" /Y
 copy "%cd%\data\version" "%cd%\dist\Graveyard Keeper Savefile Editor\data\version" /Y
 copy "%cd%\data\itemversion" "%cd%\dist\Graveyard Keeper Savefile Editor\data\itemversion" /Y
+copy "%cd%\data\new_item_data.json" "%cd%\dist\Graveyard Keeper Savefile Editor\data\new_item_data.json" /Y
 
 pause
+```
+
+In the hooks directory there is a file called `hook-eel.py` with the content:
+
+```py
+from PyInstaller.utils.hooks import collect_all
+
+datas, binaries, hiddenimports = collect_all('eel')
 ```

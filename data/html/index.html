@@ -1264,7 +1264,7 @@
                 $(this.el).parents(".item").find(".item_icon").attr("class", "item_icon " + sanitzize_item_id(id));;
 
                 if ( !settings["expert"]){
-                    if(!gamedata.items.includes(newid)){
+                    if(!gamedata.items.includes(id)){
                         $(this.el).parents(".item").addClass("unknown_item");
                     } else {
                         $(this.el).parents(".item").removeClass("unknown_item");

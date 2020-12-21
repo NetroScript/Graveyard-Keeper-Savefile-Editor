@@ -2338,5 +2338,7 @@
 	"recipe_bag_universal": "Recipe: Universal bag",
 	"recipe_bag_universal_big": "Recipe: Big universal bag",
 	"npc_marquis_teodoro_jr": "Marquis Teodoro Jr.",
-	"npc_refugee_cook": "Cook"
+	"npc_refugee_cook": "Cook",
+	"npc_refugee_tanner": "Tanner",
+	"npc_refugee_coffin_maker": "Undertaker"
 }

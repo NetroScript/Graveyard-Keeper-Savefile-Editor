@@ -414,7 +414,7 @@ def modify_save(data, shash):
                               savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]],
                               rel["cur"])
 
-    edit_inventory(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"], data["subinventory"], shash)
+    edit_inventory(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"], data["inventory"], shash)
 
     # Here we check if the save is from an older version which doesn't have this variable yet
     # If there is a second inventory (for tools) we update it
@@ -469,8 +469,7 @@ def modify_save(data, shash):
 
         # Check if the object id is the id of a storage unit, if so modify the values
         if it["obj_id"]["v"] in gamedata["storage"]:
-            edit_inventory(it["-1126421579"]["v"]["inventory"]["v"], data["subinventory"],
-                           data["additionalstorage"][i2]["items"])
+            edit_inventory(it["-1126421579"]["v"]["inventory"]["v"], data["additionalstorage"][i2]["items"], shash)
 
             # Set the inventory size to the new value - the modification of this was removed in the ui because it seems
             # that most if not all storage units have a fixed size which can not be changed in the save file
