@@ -49,6 +49,11 @@ with open("./data/html/items.json", encoding="utf8") as f:
 with open("./data/data.json", encoding="utf8") as f:
     jsongamedata = load(f)
 
+# Load a list with default items, if those items have special attributes which would otherwise not work
+# (using the default item)
+with open("./data/new_item_data.json", encoding="utf8") as f:
+    item_fallback_data = load(f)
+
 # A example item in the case of the inventory being empty and people wanting to add items to it
 fallback_item = {
     "type": 250,

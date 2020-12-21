@@ -225,6 +225,7 @@ form.s10.col.offset-s1.editsavedata {
     display: flex;
     font-size: 70%;
     margin: 10px 0px;
+    flex-wrap: wrap;
     background-color: #131313;
     max-height: 500px;
     transition: all 0.5s;
@@ -688,4 +689,9 @@ p.timeoutput {
 
 .confirm.yes, .confirm.no {
     margin: 0px 10px;
+}
+
+.item .inventoryminipreview {
+    flex: 0 0 100%;
+    background: rgba(0, 0, 0, 0.14);
 }

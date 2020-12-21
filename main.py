@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from data.types import id_to_name, gamedata, Types, fallback_item, jsongamedata
+from data.types import id_to_name, gamedata, Types, fallback_item, jsongamedata, item_fallback_data
 from tkinter import Tk
 from tkinter import filedialog
 from tkinter import PhotoImage
@@ -31,6 +31,8 @@ encoder = Encoder()
 savefiles = {}
 saveslots = {}
 
+# Store an instance of each known loaded item, so we can use that data for new items, if needed
+loaded_items = {}
 
 # Load the version number of this application and already create a newversion variable for a later check for updates
 with open("./data/version") as f:
@@ -38,14 +40,15 @@ with open("./data/version") as f:
     newversion = currentversion
 
 
-# Load the information about the item version making it possible to fix bugs without having to make a new release (when no code was changed)
+# Load the information about the item version making it possible to fix bugs without having to make a new release
+# (when no code was changed)
 with open("./data/itemversion") as f:
     currentiversion = f.read()
     newiversion = currentiversion
 
 
 # Load the settings of the settings file
-def loadsettings():
+def load_settings():
     with open("./data/settings") as f:
         global options, newversion, newiversion, web_app_options
         options = json.load(f)
@@ -71,7 +74,7 @@ def loadsettings():
 # Allow the web interface to call this function so that commonly changed files can be changed without needing releases
 # Now releases are only necessary when code is changed and at the same time users don't have a disadvantage
 @eel.expose
-def updateitemversion():
+def update_item_version():
     response = urlopen("https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/archive/master.zip")
     # Load the downloaded in memory file as a zip file
     zipfile = ZipFile(BytesIO(response.read()))
@@ -120,7 +123,7 @@ def updateitemversion():
 
 # Allow the web interface to load information about all save files in the folder the user set as save directory
 @eel.expose
-def getsavefiles():
+def get_savefiles():
     i = 1
     out = []
     print("Looking for save files in the folder: " + options["path"])
@@ -150,7 +153,7 @@ def getsavefiles():
 
 # Allow web ui to load a specific slot
 @eel.expose
-def getsavefile(slot, shash):
+def get_savefile(slot, shash):
     # We try to load and unload the files from memory using an object so that memory is saved
     if shash not in savefiles:
         try:
@@ -163,29 +166,31 @@ def getsavefile(slot, shash):
             print("Error:")
             print(format_exc())
             return {"Error": "Seems like there was a problem while loading the file, check the console for more information"}
-        return editablevalues(shash)
+        return editable_values(shash)
     else:
         return {"Error": "An instance of this save slot is already open."}
 
 
 # Allow web ui to search for a .dat save file
 @eel.expose
-def getcustomsavefile(shash):
+def get_custom_savefile(shash):
 
     # tkinter file dialog
     tkinter_gain_focus()
-    file = filedialog.askopenfilename(title="Select a savegame which is not created by Graveyard Keeper", defaultextension=".dat", filetypes=(("Graveyard Keeper File Save", "*.dat"), ("All Files", "*.*")))
+    file = filedialog.askopenfilename(title="Select a savegame which is not created by Graveyard Keeper",
+                                      defaultextension=".dat",
+                                      filetypes=(("Graveyard Keeper File Save", "*.dat"), ("All Files", "*.*")))
     root.withdraw()
     # Check if the path is already loaded into memory
     if file in savefiles:
         savefiles[shash] = file
-        return editablevalues(file)
+        return editable_values(file)
     # if not decode the given save file and print an error if the decoder can't load it
     try:
         data = decoder.decode(file)
         savefiles[shash] = file
         savefiles[file] = data
-        return editablevalues(file)
+        return editable_values(file)
     except Exception:
         print("Error:")
         print(format_exc())
@@ -194,16 +199,18 @@ def getcustomsavefile(shash):
 
 # Allow web ui to search for a .json save file
 @eel.expose
-def getjsonsavefile(shash):
+def get_json_savefile(shash):
 
     # tkinter file dialog
     tkinter_gain_focus()
-    file = filedialog.askopenfilename(title="Select a savegame which is exported by this application", defaultextension=".json", filetypes=(("Graveyard Keeper JSON File Save", "*.json"), ("All Files", "*.*")))
+    file = filedialog.askopenfilename(title="Select a savegame which is exported by this application",
+                                      defaultextension=".json",
+                                      filetypes=(("Graveyard Keeper JSON File Save", "*.json"), ("All Files", "*.*")))
     root.withdraw()
     # Check if the path is already loaded into memory
     if file in savefiles:
         savefiles[shash] = file
-        return editablevalues(file)
+        return editable_values(file)
     try:
         # load JSON
         with open(file) as f:
@@ -212,7 +219,7 @@ def getjsonsavefile(shash):
         if "savedata" and "header" and "serializer" in data:
             savefiles[shash] = file
             savefiles[file] = data
-            return editablevalues(file)
+            return editable_values(file)
         else:
             return {"Error": "The chosen .json file doesn't seem to be an exported .json file."}
     except Exception:
@@ -223,10 +230,10 @@ def getjsonsavefile(shash):
 
 # If the user loaded a save file from a slot, save again to the slot
 @eel.expose
-def saveslot(data, shash, slot):
+def save_slot(data, shash, slot):
 
     # apply the data to the save file
-    modifysave(data, shash)
+    modify_save(data, shash)
     curpath = os.path.join(options["path"], str(saveslots[int(slot)])+".dat")
 
     makebackups = options["backupamount"]
@@ -271,11 +278,13 @@ def saveslot(data, shash, slot):
 
 # Export the save file to a .dat file
 @eel.expose
-def savecustomsavefile(data, shash):
+def save_custom_savefile(data, shash):
 
     # tkinter file dialogue
     tkinter_gain_focus()
-    file = filedialog.asksaveasfilename(title="Export .dat file", defaultextension=".dat", filetypes=(("Graveyard Keeper File Save", "*.dat"), ("All Files", "*.*")))
+    file = filedialog.asksaveasfilename(title="Export .dat file",
+                                        defaultextension=".dat",
+                                        filetypes=(("Graveyard Keeper File Save", "*.dat"), ("All Files", "*.*")))
     root.withdraw()
 
     # Load the save object, we have to check if it is directly saved in the savefiles object or if it is linked to a
@@ -286,7 +295,7 @@ def savecustomsavefile(data, shash):
         s = savefiles[shash]
 
     # apply the data to the save file
-    modifysave(data, s)
+    modify_save(data, s)
 
     # try saving the save file
     try:
@@ -300,11 +309,15 @@ def savecustomsavefile(data, shash):
 
 # Export the save file to a .json file
 @eel.expose
-def savejsonsavefile(data, shash):
+def save_json_savefile(data, shash):
 
     # tkinter file dialogue
     tkinter_gain_focus()
-    file = filedialog.asksaveasfilename(title="Export .json file", defaultextension=".json", filetypes=(("Graveyard Keeper JSON File Save", "*.json"), ("Graveyard Keeper HTML File Save for easy loading in JavaScript", "*.html"), ("All Files", "*.*")))
+    file = filedialog.asksaveasfilename(title="Export .json file",
+                                        defaultextension=".json",
+                                        filetypes=(("Graveyard Keeper JSON File Save", "*.json"),
+                                                   ("Graveyard Keeper HTML File Save for easy loading in JavaScript",
+                                                    "*.html"), ("All Files", "*.*")))
     root.withdraw()
 
     # Load the save object, we have to check if it is directly saved in the savefiles object or if it is linked to a
@@ -315,31 +328,29 @@ def savejsonsavefile(data, shash):
         s = savefiles[shash]
 
     # apply the data to the save file
-    modifysave(data, s)
+    modify_save(data, s)
 
     # try saving the save file - simply dumping the data we have as JSON
     try:
         with open(file, "w") as f:
 
             # For more compatibility we replace pythons NaN with null because NaN is not valid JSON
-            jsonstring = json.dumps(savefiles[s]).replace(" NaN", " null")
+            json_string = json.dumps(savefiles[s]).replace(" NaN", " null")
 
             # If we want to dump it as html file we do so here
             if file.endswith(".html"):
-
-                placeholder = ""
 
                 with open('./data/html/dumpskeleton.html', 'r') as placeholderfile:
                     placeholder = placeholderfile.read()
 
                 print("Creating HTML file at " + file)
                 # Replace \" with \\" so JS doesn't just remove the \
-                f.write(placeholder.replace("[[[[PLACEHOLDER]]]]", jsonstring.replace('\\"', '\\\\"')))
+                f.write(placeholder.replace("[[[[PLACEHOLDER]]]]", json_string.replace('\\"', '\\\\"')))
 
             # By default dump it as only json
             else:
                 print("Dumping JSON to " + file)
-                f.write(jsonstring)
+                f.write(json_string)
         return {}
     except Exception:
         print("Error:")
@@ -348,7 +359,7 @@ def savejsonsavefile(data, shash):
 
 
 # Apply the changed data to our save we have in memory
-def modifysave(data, shash):
+def modify_save(data, shash):
 
     # Simple values we can iterate in the inventory object of the save
     mods = ["r", "g", "b", "energy", "inventory_size"]
@@ -363,111 +374,83 @@ def modifysave(data, shash):
             if key not in savefiles[shash]["serializer"]:
                 savefiles[shash]["serializer"].append(key)
 
-        # apply the new value to the original object, we use modifyvaluetype which has some additional checks
-        savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][data[key]["s"]] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][data[key]["s"]], data[key]["cur"])
+        # apply the new value to the original object, we use modify_value_type which has some additional checks
+        savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][data[key]["s"]] \
+            = modify_value_type(shash,
+                                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][data[key]["s"]],
+                                data[key]["cur"])
 
-    # apply the new money value to the original object, we use modifyvaluetype which has some additional checks
-    savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_money"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_money"], data["money"])
+    # apply the new money value to the original object, we use modify_value_type which has some additional checks
+    savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_money"] =\
+        modify_value_type(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_money"], data["money"])
 
-    # apply the new HP value to the original object, we use modifyvaluetype which has some additional checks
-    savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_hp"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_hp"], data["hp"])
+    # apply the new HP value to the original object, we use modify_value_type which has some additional checks
+    savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_hp"] =\
+        modify_value_type(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_hp"], data["hp"])
 
     # if the value of the HP is over 100 (or equal to 100 to reset it) we increase the maximal possible HP to the set
     # value
     if data["hp"] >= 100:
-        savefiles[shash]["savedata"]["max_hp"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["max_hp"], data["hp"])
+        savefiles[shash]["savedata"]["max_hp"] =\
+            modify_value_type(shash, savefiles[shash]["savedata"]["max_hp"], data["hp"])
 
     # if the value of the energy is over 100 (or equal to 100 to reset it) we increase the maximal possible energy to
     # the set value
     if data["energy"]["cur"] >= 100:
-        savefiles[shash]["savedata"]["max_energy"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["max_energy"], data["energy"]["cur"])
+        savefiles[shash]["savedata"]["max_energy"] = \
+            modify_value_type(shash, savefiles[shash]["savedata"]["max_energy"], data["energy"]["cur"])
 
     # Change the day / time value
-    savefiles[shash]["savedata"]["day"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["day"], data["time"]["day"])
-    savefiles[shash]["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"], data["time"]["timeofday"])
+    savefiles[shash]["savedata"]["day"] = modify_value_type(shash, savefiles[shash]["savedata"]["day"], data["time"]["day"])
+    savefiles[shash]["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"] =\
+        modify_value_type(shash,
+                          savefiles[shash]["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"],
+                          data["time"]["timeofday"])
 
     # for every relationship set the value of the "friendliness" with the NPC
     for rel in data["relationships"]:
-        savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]] = modifyvaluetype(shash, savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]], rel["cur"])
+        savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]] =\
+            modify_value_type(shash,
+                              savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][rel["s"]],
+                              rel["cur"])
 
-    # Check the difference in size of the old inventory and the modified inventory
-    difference = len(data["inventory"]) - len(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"])
-
-    # if more items were added in the editor we copy the last item in the inventory until the amount of items in the
-    # old inventory and in the new is the same
-    # In the case of an empty inventory we load a fallback item which was copied before as a random item in the
-    # inventory
-    if difference > 0:
-        while difference != 0:
-            if len(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"]) > 0:
-                savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"].append(deepcopy(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"][-1]))
-            else:
-                savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"].append(deepcopy(fallback_item))
-            difference -= 1
-    # If the new inventory has less items, we just delete the last n items
-    if difference < 0:
-        while difference != 0:
-            del savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"][-1]
-            difference += 1
-
-    # Here the items in the inventory are modified, we set the new ID, durability (to "repair" an item) and the amount
-    # of the item for each item in our Array
-    i = 0
-    for _ in savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"]:
-        d = savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"][i]["v"]
-        d["id"] = modifyvaluetype(shash, d["id"], data["inventory"][i]["id"])
-        d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["inventory"][i]["durability"])
-        d["value"] = modifyvaluetype(shash, d["value"], data["inventory"][i]["amount"])
-        i += 1
+    edit_inventory(savefiles[shash]["savedata"]["_inventory"]["v"]["inventory"]["v"], data["subinventory"], shash)
 
     # Here we check if the save is from an older version which doesn't have this variable yet
     # If there is a second inventory (for tools) we update it
     if "secondary_inventory" in savefiles[shash]["savedata"]["_inventory"]["v"]:
+        edit_inventory(savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"],
+                       data["subinventory"], shash)
 
-        # Check the difference in size of the old inventory and the modified inventory
-        difference = len(data["subinventory"]) - len(savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"])
-
-        # if more items were added in the editor we ignore it because we don't allow adding to the secondary inventory
-        # If the new inventory has less items, we just delete the last n items
-        if difference < 0:
-            while difference != 0:
-                del savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"][-1]
-                difference += 1
-
-        # Here the items in the inventory are modified, we set the new ID, durability (to "repair" an item) and the amount
-        # of the item for each item in our Array
-        i = 0
-        for _ in savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"]:
-            d = savefiles[shash]["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"][i]["v"]
-            d["id"] = modifyvaluetype(shash, d["id"], data["subinventory"][i]["id"])
-            d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["subinventory"][i]["durability"])
-            i += 1
-
-    # If the user wants to complete the techtree, we replace all objects related to it with our previously extracted objects
+    # If the user wants to complete the techtree, we replace all objects related to it with our previously
+    # extracted objects
     if data["switches"]["techtree"]:
 
         # Iterate the lists which we change for quicker access
         lists = ["unlocked_works", "unlocked_techs", "unlocked_perks", "unlocked_crafts", "revealed_techs"]
-        for l in lists:
-            savefiles[shash]["savedata"][l] = jsongamedata[l]
+        for current_list in lists:
+            savefiles[shash]["savedata"][current_list] = jsongamedata[current_list]
 
             # Many of those technologies are indexed strings, meaning we have to add the ones which aren't included yet
             # into the serializer
-            for string in savefiles[shash]["savedata"][l]["v"]:
+            for string in savefiles[shash]["savedata"][current_list]["v"]:
                 if string["type"] == Types.String_Indexed.value:
 
                     if string["v"] not in savefiles[shash]["serializer"]:
                         savefiles[shash]["serializer"].append(string["v"])
 
-        currentinlist = list(map(lambda x: x["v"],savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"]))
+        current_in_list = list(
+            map(lambda x: x["v"], savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"]))
 
         for entry in jsongamedata["attributelist"]:
-            if entry in currentinlist:
-                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][currentinlist.index(entry)] = {"type": 19, "v": 1}
+            if entry in current_in_list:
+                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][
+                    current_in_list.index(entry)] = {"type": 19, "v": 1}
             else:
-                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"].append({"type": 10, "v": entry})
-                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"].append({"type": 19, "v": 1})
-
+                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_type"]["v"].append(
+                    {"type": 10, "v": entry})
+                savefiles[shash]["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"].append(
+                    {"type": 19, "v": 1})
 
     # In the following block World Game Objects are iterated
     # For us specifically interesting are all storage units + workers and bodies to modify the items in them
@@ -479,48 +462,21 @@ def modifysave(data, shash):
 
     for _ in savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"]:
 
-        convertemptygrave = False
+        convert_empty_grave = False
 
         # To have shorter variable names
         it = savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]
 
         # Check if the object id is the id of a storage unit, if so modify the values
         if it["obj_id"]["v"] in gamedata["storage"]:
-
-            # Like in the player inventory we have to create / remove items depending on the amount of items in the
-            # inventory
-            difference = len(data["additionalstorage"][i2]["items"]) - len(it["-1126421579"]["v"]["inventory"]["v"])
-
-            # if more items were added in the editor we copy the last item in the inventory until the amount of items
-            # in the old inventory and in the new is the same
-            # In the case of an empty inventory we load a fallback item which was copied before as a random item in the
-            # inventory
-            if difference > 0:
-                while difference != 0:
-                    if len(it["-1126421579"]["v"]["inventory"]["v"]) > 0:
-                        it["-1126421579"]["v"]["inventory"]["v"].append(deepcopy(it["-1126421579"]["v"]["inventory"]["v"][-1]))
-                    else:
-                        it["-1126421579"]["v"]["inventory"]["v"].append(deepcopy(fallback_item))
-                    difference -= 1
-
-            # If the new inventory has less items, we just delete the last n items
-            if difference < 0:
-                while difference != 0:
-                    del it["-1126421579"]["v"]["inventory"]["v"][-1]
-                    difference += 1
+            edit_inventory(it["-1126421579"]["v"]["inventory"]["v"], data["subinventory"],
+                           data["additionalstorage"][i2]["items"])
 
             # Set the inventory size to the new value - the modification of this was removed in the ui because it seems
             # that most if not all storage units have a fixed size which can not be changed in the save file
-            it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0] = modifyvaluetype(shash, it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0], data["additionalstorage"][i2]["size"])
+            it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0] = modify_value_type(shash, it["-1126421579"]["v"][
+                "_params"]["v"]["_res_v"]["v"][0], data["additionalstorage"][i2]["size"])
 
-            # Iterate and modify the items in the specific storage unit
-            i3 = 0  # Item index in Storage unit
-            for _ in it["-1126421579"]["v"]["inventory"]["v"]:
-                d = it["-1126421579"]["v"]["inventory"]["v"][i3]["v"]
-                d["id"] = modifyvaluetype(shash, d["id"], data["additionalstorage"][i2]["items"][i3]["id"])
-                d["_params"]["v"]["_durability"] = modifyvaluetype(shash, d["_params"]["v"]["_durability"], data["additionalstorage"][i2]["items"][i3]["durability"])
-                d["value"] = modifyvaluetype(shash, d["value"], data["additionalstorage"][i2]["items"][i3]["amount"])
-                i3 += 1
             i2 += 1
 
         # If workers should be turned into perfect workers we replace their inventory (which is used to calculate the
@@ -533,19 +489,19 @@ def modifysave(data, shash):
         # If the donkey should be replaced with a working one we just replace it but store and restore the unique id the
         # donkey had
         if data["switches"]["donkey"] and it["obj_id"]["v"] == "donkey":
-            previousuniqueid = it["unique_id"]["v"]
+            previous_unique_id = it["unique_id"]["v"]
             savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i] = jsongamedata["working_donkey"]
-            savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]["unique_id"]["v"] = previousuniqueid
+            savefiles[shash]["savedata"]["map"]["v"]["_wgos"]["v"][i]["v"]["unique_id"]["v"] = previous_unique_id
 
         # If empty graves should be turned into perfect graves we first change the id to a normal grave and then
         # use the code for perfect body and perfect decoration to also transform this grave into a perfect grave
         if data["switches"]["emptygrave"] and it["obj_id"]["v"] == "grave_empty_place":
-            convertemptygrave = True
+            convert_empty_grave = True
             it["obj_id"]["v"] = "grave_ground"
             it["-1126421579"]["v"]["id"]["v"] = "grave_ground"
 
         # If bodies in graves should be turned into perfect bodies we replace their inventory
-        if (data["switches"]["gravebodies"] or convertemptygrave) and it["obj_id"]["v"] == "grave_ground":
+        if (data["switches"]["gravebodies"] or convert_empty_grave) and it["obj_id"]["v"] == "grave_ground":
 
             # If the grave is empty we add a body to it
             if len(it["-1126421579"]["v"]["inventory"]["v"]) == 0:
@@ -559,7 +515,7 @@ def modifysave(data, shash):
                     break
 
         # If the graves should get perfect decorations we replace the current ones
-        if (data["switches"]["decorations"] or convertemptygrave) and it["obj_id"]["v"] == "grave_ground":
+        if (data["switches"]["decorations"] or convert_empty_grave) and it["obj_id"]["v"] == "grave_ground":
 
             # If the game of crone DLC is enabled you can have a higher level grave, we set it there
             if options["gameofcrone"]:
@@ -602,48 +558,53 @@ def modifysave(data, shash):
         reduce = 0.0
         for drop in savefiles[shash]["savedata"]["drops"]["v"]:
             if drop["v"]["res"]["v"]["id"]["v"] == "body":
-                reduce+=1
+                reduce += 1
 
         # If the morgue counter needs to be reduced do so
         if reduce > 0:
             # Get the previous value
-            change_value = get_parameter_value(savefiles[shash]["savedata"]["_inventory"] ,"cur_bodies_count")
+            change_value = get_parameter_value(savefiles[shash]["savedata"]["_inventory"], "cur_bodies_count")
 
             # Only save changes when there was a value before
-            if change_value != None:
-                change_value["v"] = max(0 , change_value["v"]-reduce)
+            if change_value is not None:
+                change_value["v"] = max(0, change_value["v"] - reduce)
                 # Set the new value
-                set_parameter_value(shash, savefiles[shash]["savedata"]["_inventory"] ,"cur_bodies_count", change_value)
+                set_parameter_value(shash, savefiles[shash]["savedata"]["_inventory"], "cur_bodies_count", change_value)
 
-        savefiles[shash]["savedata"]["drops"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["drops"], [])
+        savefiles[shash]["savedata"]["drops"] = modify_value_type(shash, savefiles[shash]["savedata"]["drops"], [])
         # Check first if they exist
         if "1968591194" in savefiles[shash]["savedata"]["map"]["v"]:
-            savefiles[shash]["savedata"]["map"]["v"]["1968591194"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["map"]["v"]["1968591194"], [])
+            savefiles[shash]["savedata"]["map"]["v"]["1968591194"] = \
+                modify_value_type(shash, savefiles[shash]["savedata"]["map"]["v"]["1968591194"], [])
 
     if data["switches"]["resetmorgue"]:
-        set_parameter_value(shash, savefiles[shash]["savedata"]["_inventory"] ,"cur_bodies_count", {"v": 0.0, "type": 5})
+        set_parameter_value(shash, savefiles[shash]["savedata"]["_inventory"], "cur_bodies_count",
+                            {"v": 0.0, "type": 5})
 
     if data["switches"]["resetdungeon"] > 0:
-        savefiles[shash]["savedata"]["dungeons"]["v"]["_saved_dungeons"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["dungeons"]["v"]["_saved_dungeons"], [])
+        savefiles[shash]["savedata"]["dungeons"]["v"]["_saved_dungeons"] = modify_value_type(shash, savefiles[shash][
+            "savedata"]["dungeons"]["v"]["_saved_dungeons"], [])
 
         if data["switches"]["resetdungeon"] > 1:
 
             seed = random.randint(0, 2000000)
 
-            savefiles[shash]["savedata"]["dungeon_seed"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["dungeon_seed"], seed)
-            savefiles[shash]["savedata"]["dungeons"]["v"]["_global_seed"] = modifyvaluetype(shash, savefiles[shash]["savedata"]["dungeons"]["v"]["_global_seed"], seed)
+            savefiles[shash]["savedata"]["dungeon_seed"] = modify_value_type(shash, savefiles[shash]["savedata"][
+                "dungeon_seed"], seed)
+            savefiles[shash]["savedata"]["dungeons"]["v"]["_global_seed"] = modify_value_type(shash, savefiles[shash][
+                "savedata"]["dungeons"]["v"]["_global_seed"], seed)
 
 
 # Made for the basic types, not made for Vector2, Vector3, ...
 # For those just process the original value (The encoder itself checks if Vector2_00 changed to f.e. Vector2_11
-def modifyvaluetype(shash, value, newvalue):
+def modify_value_type(shash, value, new_value):
     t = value["type"]
 
     # Extract the new value depending on the supplied type (simple value or a dictionary containing the value) to v
-    if type(newvalue) == dict and "v" in newvalue:
-        v = newvalue["v"]
+    if type(new_value) == dict and "v" in new_value:
+        v = new_value["v"]
     else:
-        v = newvalue
+        v = new_value
 
     # Depending on the type change the type to the correct type. F.e. if the value was 0.0 before and now is 23.8 the
     # type changes from 0 value Float to normal Float
@@ -659,7 +620,7 @@ def modifyvaluetype(shash, value, newvalue):
             t = Types.Int32_1.value
         else:
             t = Types.Int32.value
-    elif t == Types.Single or t == Types.Single_0 or t==Types.Single_1:
+    elif t == Types.Single or t == Types.Single_0 or t == Types.Single_1:
         if v == 0:
             t = Types.Single_0.value
         elif v == 1:
@@ -678,20 +639,20 @@ def modifyvaluetype(shash, value, newvalue):
                 savefiles[shash]["serializer"].append(v)
 
     # return the new value in the same way it was supplied (either a simple value or a dict)
-    if type(newvalue) == dict and "v" in newvalue:
-        newvalue["type"] = t
-        return newvalue
-    elif type(newvalue) != dict:
+    if type(new_value) == dict and "v" in new_value:
+        new_value["type"] = t
+        return new_value
+    elif type(new_value) != dict:
         value["type"] = t
-        value["v"] = newvalue
+        value["v"] = new_value
         return value
     else:
-        return newvalue
+        return new_value
 
 
 # When closing the window of a specific save slot editor, unload this save file
 @eel.expose
-def unloadsave(shash):
+def unload_save(shash):
     shash = str(shash)
     if type(savefiles[shash]) == dict:
         del savefiles[shash]
@@ -714,7 +675,7 @@ def unloadsave(shash):
 
 
 # Extract the values we can edit from the save file
-def editablevalues(shash):
+def editable_values(shash):
     # Load the data from our shash
     data = savefiles[shash]
     obj = dict()
@@ -728,7 +689,6 @@ def editablevalues(shash):
         "timeofday": data["savedata"]["_serialized_time_of_day"]["v"]["time_of_day"]["v"]
     }
 
-
     # Additionally add the localisation info to the save file, so the ui can easily access it
     obj["locals"] = id_to_name
     obj["perks"] = []
@@ -739,7 +699,6 @@ def editablevalues(shash):
     obj["bugs"] = {}
     obj["additionalstorage"] = []
     obj["subinventory"] = []
-
 
     # The values which are in the player inventory and can be iterated for easier extraction
     mod = ["r", "g", "b", "inventory_size", "energy"]
@@ -752,13 +711,15 @@ def editablevalues(shash):
             obj["perks"].append({"v": key, "s": i})
         # If the value is for a relationship with a NPC we append it to our relationships list
         elif key.startswith("_rel_npc_"):
-            obj["relationships"].append({"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]})
+            obj["relationships"].append(
+                {"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]})
         # If the value is in our list of exisiting technologies we append it to our technologieslist
         elif key in gamedata["technologies1"]:
             obj["technologies1"].append({"v": key, "s": i})
         # If the value is one of the mod values we simply change the top level property to the value of the save file
         elif key in mod and key not in obj:
-            obj[key] = {"v": key, "s": i, "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]}
+            obj[key] = {"v": key, "s": i,
+                        "cur": data["savedata"]["_inventory"]["v"]["_params"]["v"]["_res_v"]["v"][i]["v"]}
         i += 1
 
     # If our mod value was not in our save, we create a placeholder with a s value -1 to indicate it had no position in
@@ -768,7 +729,6 @@ def editablevalues(shash):
             obj[k] = {"v": k, "s": -1, "cur": 0}
 
     i = 0
-    # in the world game object with the id "storage_builddesk" your fame is stored - do we want to add an option to modify it?
 
     # We iterate all World Game Objects
     for _ in data["savedata"]["map"]["v"]["_wgos"]["v"]:
@@ -780,17 +740,17 @@ def editablevalues(shash):
         if it["obj_id"]["v"] in gamedata["storage"]:
             inv = dict()
             inv["type"] = it["obj_id"]["v"]
-            inv["items"] = getinventory(it["-1126421579"]["v"]["inventory"]["v"])
+            inv["items"] = get_inventory(it["-1126421579"]["v"]["inventory"]["v"])
             inv["size"] = it["-1126421579"]["v"]["_params"]["v"]["_res_v"]["v"][0]["v"]
             obj["additionalstorage"].append(inv)
         i += 1
 
     # We load the items in the inventory of the player
-    obj["inventory"] = getinventory(data["savedata"]["_inventory"]["v"]["inventory"]["v"])
+    obj["inventory"] = get_inventory(data["savedata"]["_inventory"]["v"]["inventory"]["v"])
     # Since the update were you can put tools in the tool slot, we have an additional secondary inventory
     # We also add a check if the object even exists so that we don't cause errors in older save files / game versions
     if "secondary_inventory" in data["savedata"]["_inventory"]["v"]:
-        obj["subinventory"] = getinventory(data["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"])
+        obj["subinventory"] = get_inventory(data["savedata"]["_inventory"]["v"]["secondary_inventory"]["v"])
 
     obj["drops"] = list()
     # To display the objects which will get deleted when you clear the drops we extract them
@@ -820,7 +780,7 @@ def editablevalues(shash):
 
 
 # Function to simplify loading the items in an inventory of a game object
-def getinventory(inv):
+def get_inventory(inv):
     i = 0
     out = []
     # For every item we extract the id, amount and durability (to be able to repair it)
@@ -829,9 +789,60 @@ def getinventory(inv):
         item["id"] = inv[i]["v"]["id"]["v"]
         item["durability"] = inv[i]["v"]["_params"]["v"]["_durability"]["v"]
         item["amount"] = inv[i]["v"]["value"]["v"]
+        item["position"] = i
+
+        item["subinventory"] = []
+
+        if "inventory" in inv[i]["v"] and inv[i]["v"]["inventory"]["type"] == Types.GenericList \
+                and len(inv[i]["v"]["inventory"]["v"]) > 0:
+            item["subinventory"] = get_inventory(inv[i]["v"]["inventory"]["v"])
+
+        if not item["id"] in loaded_items:
+            loaded_items[item["id"]] = inv[i]
+
         out.append(item)
         i += 1
     return out
+
+
+# Edit a single inventory, apply the new list of items to the old inventory
+def edit_inventory(inventory, new_items, shash):
+
+    # Get an empty array
+    temporary_inventory = []
+
+    # Iterate all the items the user wants to have in the array
+    for item in new_items:
+        # If we have previous data about the item, we just use exactly that item
+        if "position" in item and item["position"] >= 0:
+            temp_item = inventory[item["position"]]
+        # Otherwise create a new item
+        else:
+            # For some special cases we have item data saved, because those items need special meta data
+            if item["id"] in item_fallback_data:
+                temp_item = deepcopy(item_fallback_data[item["id"]])
+            # If we don't have an instance of the item stored in the saved items, we check if we previously loaded the
+            # same item to be able to copy over the correct data
+            elif item["id"] in loaded_items:
+                temp_item = deepcopy(loaded_items[item["id"]])
+            # For the default case we have a default item
+            else:
+                temp_item = deepcopy(fallback_item)
+
+            # For the case the id is not in the serialized strings we just reapply it
+            temp_item["v"]["id"] = modify_value_type(shash, temp_item["v"]["id"], item["id"])
+
+        # Set additional parameters which might have been changed like the amount of the item
+        temp_item["v"]["_params"]["v"]["_durability"] = modify_value_type(shash, temp_item["v"]["_params"]["v"]["_durability"], item["durability"])
+        temp_item["v"]["value"] = modify_value_type(shash, temp_item["v"]["value"], item["amount"])
+        temporary_inventory.append(temp_item)
+
+    # Empty the array to keep the reference to the array the same (we can't just assign [])
+    while len(inventory) > 0:
+        inventory.pop()
+
+    # Add the temporary inventory to the original reference
+    inventory.extend(temporary_inventory)
 
 
 # Function to return a parameter from an inventory, exists to simplify it
@@ -842,16 +853,16 @@ def get_parameter_value(inventory, parameter):
     index = -1
     i = 0
     # Get it in the list
-    for type in params["_res_type"]["v"]:
+    for current_type in params["_res_type"]["v"]:
         
         # Break when found
-        if type["v"] == parameter:
+        if current_type["v"] == parameter:
             index = i
             break
 
-        i+=1
+        i += 1
 
-    # Return empty value if non existant
+    # Return empty value if non existent
     if index == -1:
         return None
     
@@ -868,27 +879,27 @@ def set_parameter_value(shash, inventory, parameter, value):
     index = -1
     i = 0
     # Get it in the list
-    for type in params["_res_type"]["v"]:
+    for current_type in params["_res_type"]["v"]:
         
         # Break when found
-        if type["v"] == parameter:
+        if current_type["v"] == parameter:
             index = i
             break
 
-        i+=1
+        i += 1
 
     # The value doesn't exist, so we add it to the list
     if index == -1:
-        params["_res_type"]["v"].append(modifyvaluetype(shash, {"v": "Old Parameter Name", "type":10}, parameter))
+        params["_res_type"]["v"].append(modify_value_type(shash, {"v": "Old Parameter Name", "type": 10}, parameter))
         params["_res_v"]["v"].append(value)
     # Otherwise set the value
     else:
-        params["_res_v"]["v"][index] = modifyvaluetype(shash, params["_res_v"]["v"][index], value)
+        params["_res_v"]["v"][index] = modify_value_type(shash, params["_res_v"]["v"][index], value)
 
 
 # Call on page load of the main page (with the save slots)
 @eel.expose
-def siteloaded():
+def site_loaded():
 
     # If there is an update we call the JavaScript Function to display information about the new update
     if newversion != currentversion:
@@ -919,6 +930,7 @@ def get_default_path():
     elif sys.platform == 'darwin':
         return os.path.expandvars("/Users/$USER/Library/Application Support/unity.LazyBearGames.GraveyardKeeper/")
     return ""
+
 
 # Function exposed to the ui to save changed settings
 @eel.expose
@@ -972,6 +984,7 @@ def tkinter_gain_focus():
     root.lift()
     root.focus_force() 
 
+
 def run():
     global web_app_options
 
@@ -980,14 +993,16 @@ def run():
     # Check if the application is run the first time - if so show the settings dialogue, if not start the normal
     # application
     if os.path.isfile("./data/settings"):
-        loadsettings()
+        load_settings()
         if version.parse(eel_version) >= version.parse("0.11.0"):
-            eel.start("loadsavefile.html", mode="chrome", port=web_app_options["port"], cmdline_args=web_app_options["chromeFlags"])
+            eel.start("loadsavefile.html", mode="chrome", port=web_app_options["port"],
+                      cmdline_args=web_app_options["chromeFlags"])
         else:
             eel.start("loadsavefile.html", options=web_app_options)
     else:
         if version.parse(eel_version) >= version.parse("0.11.0"):
-            eel.start("no settings.html", mode="chrome", port=web_app_options["port"], cmdline_args=web_app_options["chromeFlags"])
+            eel.start("no settings.html", mode="chrome", port=web_app_options["port"],
+                      cmdline_args=web_app_options["chromeFlags"])
         else:
             eel.start("no settings.html", options=web_app_options)
 
@@ -1011,7 +1026,7 @@ try:
 
 
 except Exception as e:
-    print("Following exception occured: ")
+    print("Following exception occurred: ")
     print(format_exc())
     # Pause on exception before closing
     input("Press Enter to close the application")

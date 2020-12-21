@@ -1,16 +1,32 @@
+0.1.22
+=====
+
+Added:
+
+* Preview for items in bags
+* Utilities
+  * Reset dungeon button
+
+Improved:
+
+* Greatly improved item deleting and adding, by default it should work much better now, the only problem which might remain is when items are added which have special meta data (like bags), these items need special cases, but for those a working save with the item is needed. Currently supported with special meta data are `bag_universal` and `bag_universal_big`
+  
 0.1.21
 =====
 
 Added:
+
 * Camp storage as editable Inventory
 
 Improved:
+
 * In the settings you can now disable and enable your owned DLC's. If a DLC is disabled their item names will not show up in the autocomplete. Additionally based on DLC or non DLC some functionality differs (like perfect decoration for graves)
   
 0.1.20
 =====
 
 Added:
+
 * Support for the Game of Crone DLC (meaning items, localisation and npcs)
 * When exporting as JSON you can now also select `.html` which generates a HTML file where you can relatively easily edit the JSON in your browser
 * Utilities
@@ -20,6 +36,7 @@ Added:
 =====
 
 Improved:
+
 * In non expert mode you are now warned (red border) about non existant items and you will be unable to save if any exist
 * Items which did not show correctly before (like organs) are now shown again
 * In the big view of an item you can see the entire item again, instead of only a part of it (for non square items)
@@ -29,10 +46,12 @@ Improved:
 =====
 
 Added:
+
 * Utilities
   * Reset morgue body count to 0
 
 Improved:
+
 * Now the remove drops button doesn't bug your morgue (when removing bodies from the floor it will decrease the morgue counter)
 * Replaced some NPC images with better ones and added some
 * Hints / Warnings are now hidden by default and you can hover to display them so they don't clutter the UI as much with text
@@ -42,6 +61,7 @@ Improved:
 =====
 
 Improved:
+
 * The editor now tries to automatically get the save file location on the first start of the application
 * The save file location field now allows path variables
 * The Open button in the settings menu will now start in the directory which is currently in the field
@@ -51,15 +71,18 @@ Improved:
 =====
 
 Added:
+
 * New items (of version 1.200 / DLC)
 
 Improved:
+
 * Instead of having an image for every item a spritesheet is used now which speeds up interface loading times
   
 0.1.15
 =====
 
 Improved:
+
 * Utilities
   * Remove drops button now also removes red, green and blue points
   
@@ -67,6 +90,7 @@ Improved:
 =====
 
 Added:
+
 * Utilities
   * Fix for a stuck donkey
   
@@ -74,10 +98,12 @@ Added:
 =====
 
 Added:
+
 * Utilities
   * Complete tech tree
   
 Improved:
+
 * You can now set in settings how many backups are kept, additionally those are zipped now to safe space
 * Added hint considering usage of Perfect Body / Grave / ...
 * Greatly decreased the time until the GUI is interactable when loading a save
@@ -86,6 +112,7 @@ Improved:
 =====
 
 Added:
+
 * Utilities
   * Set the efficiency of all workers to 40%
   * Turn all bodies in your graveyard (in graves) into perfect bodies
@@ -96,16 +123,19 @@ Added:
 =====
 
 Improved:
+
 * BIG Item update - I now took the time to extract all possible item ids, their localisation in english and the item sprite (That doesn't mean you should use all new items, because now the editor also includes f.e. placeholder items which work in the inventory but you should only use items you really want)
 * You can now click on the icon of a day to switch to the day (instead of only being able to enter a number)
 
 Added:
+
 * Expert Mode, you can now disable all checks and warnings (although because of the item update at the same time, I doubt that you will need it anymore)
 
 0.1.10
 =====
 
 Improved:
+
 * Browser automatically closes now when the application updated the items
 * If over 99 gold coins are set no red underline is shown anymore (and it now also loads higher amounts correclty)
 * Should there be no chrome installation or an error happens while opening chrome the default browser will be used now
@@ -119,9 +149,11 @@ Fixed:
 * Items / Images (removed / renamed / added items, images) (tool related items)
 
 Added:
+
 * The application can now notify you (and update itself) about item changes (previously you only had item changes on the windows version if a complete new version was releases - now track of a itemversion is kept and it will notify you about changes and you can update manually or automatically. Those changes include: wrong item names, missing / wrong item icon, missing / wrong item which you can add to inventories)
- 
+
 Improved:
+
 * Some CSS
 * Items which were previously undefined in the editor (now not a single item is shown as undefined)
 
@@ -133,10 +165,12 @@ Fixed:
 * Items / Images (removed / renamed / added items, images)
 
 Added:
+
 * You can now edit the ingame time
 * You can now edit the "tool" inventory which was added
- 
+
 Improved:
+
 * Added some hashes so looking at the generated .json is easier
 * Changed the displayed ingame days in the slot loader because for some strange reason the game subtracts 1.5 from the saved value (this editor now does that too)
 
@@ -151,10 +185,12 @@ Fixed:
 * Wrong usage of JQuery leading to the state of the checkbox being read incorrectly
 
 Added:
+
 * In the settings menu you can now choose your own port. Additionally you are now able to edit the settings again without deleting the settings file.
 * You can now remove item drops from the map. (Intended to reduce lag if you have tons of them somewhere)
- 
+
 Improved:
+
 * Wait for input on exception so it is easier to report errors
 * Save NaN as null in the JSON so it can be parsed by strict parsers
 * More comments for the source code
@@ -187,6 +223,7 @@ Fixed:
 =====
 
 Added:
+
  * Support for modifying NPC Relationship values
 
 
@@ -194,32 +231,34 @@ Added:
 =====
 
 Fixed:
- * Bug causing some strings to be saved again in the wrong way. It is strongly advised to update because otherwise you will lose f.e. Comfort of Faith technology after every modification
+
+* Bug causing some strings to be saved again in the wrong way. It is strongly advised to update because otherwise you will lose f.e. Comfort of Faith technology after every modification
 
 
 0.1.2
 =====
 
 Added:
- * You can now edit and view every storage unit (like trunks, chests, ...)
- * The information about a new update available now also displays the changes
- 
+
+* You can now edit and view every storage unit (like trunks, chests, ...)
+* The information about a new update available now also displays the changes
 
 Fixed:
- * Some HTML formatting
- * Some items names / icons, including but not limited to restoration tools, coal, clay, jointing, water, simple iron parts, complex iron parts, ...
 
+* Some HTML formatting
+* Some items names / icons, including but not limited to restoration tools, coal, clay, jointing, water, simple iron parts, complex iron parts, ...
 
 0.1.1
 =====
 
 Added:
- * Support for item qualities
- * Rightful Citizen Papers so you can add them to your save if they were missing
- 
+
+* Support for item qualities
+* Rightful Citizen Papers so you can add them to your save if they were missing
 
 Fixed:
- * Added some item id's
- * Fixed a typo in the Github URL leading to 404
- * The church quality and graveyard quality being swapped
- * Error which happens when using the application on an early savegame
+
+* Added some item id's
+* Fixed a typo in the Github URL leading to 404
+* The church quality and graveyard quality being swapped
+* Error which happens when using the application on an early savegame

@@ -125,11 +125,11 @@
         // Load the data depending on the save file type
         async function getSaveFile(info) {
             if (info[0] === "slot") {
-                data = await eel.getsavefile(info[2], info[1])();
+                data = await eel.get_savefile(info[2], info[1])();
             } else if (info[0] === "importjson") {
-                data = await eel.getjsonsavefile(info[1])();
+                data = await eel.get_json_savefile(info[1])();
             } else if (info[0] === "importdat") {
-                data = await eel.getcustomsavefile(info[1])();
+                data = await eel.get_custom_savefile(info[1])();
             }
 
             // Display an error, should there be one
@@ -142,7 +142,7 @@
 
                 // When closing the save file editor, free memory
                 window.addEventListener("beforeunload", function (e) {
-                    eel.unloadsave(window.location.hash.split("#")[1].split("|")[1]);
+                    eel.unload_save(window.location.hash.split("#")[1].split("|")[1]);
                 });
 
                 // Load the data about items, so we know which ids are items, which are perks and so on
@@ -294,7 +294,7 @@
 </div>
 <div class="intro lesspadding">Inventory:
 <br>
-<div class="note">[Note: Only use qualities on items which have them and don't set no quality on items which have qualities, otherwise that will cause issues within the game.]</div>
+<div class="note hover"><b>Note:</b><br> Only use qualities on items which have them and don't set no quality on items which have qualities, otherwise that will cause issues within the game. <br><b>Adding items works for normal items, but some items require special meta data and the editor needs edge cases for them, this includes for example bags, bag_universal and bag_univeral_big work, but other bags probably won't, this source data needs to be manually added to the editor and requires a save which contains a working version of the item if you want me to add it to the editor.</b></div>
 </div>
 <div class="row">
     <form class="s10 col offset-s1 editsavedata">
@@ -415,14 +415,12 @@
 
             // Add the items in the inventory to the form
             for (let i = 0; i < data["inventory"].length; i++) {
-                let it = data["inventory"][i];
-                addItem(it["id"], it["amount"], it["durability"], $(".items"));
+                addItem(data["inventory"][i], $(".items"));
             }
 
             // Add the items in tool section to the equipped inventory list (only allow repairs)
             for (let i = 0; i < data["subinventory"].length; i++) {
-                let it = data["subinventory"][i];
-                addItem(it["id"], it["amount"], it["durability"], $(".equipped-items"));
+                addItem(data["subinventory"][i], $(".equipped-items"));
             }
 
             // Add additional inventories
@@ -447,9 +445,9 @@
 
         // For a specific inventory generate the preview images by copying every item icon and putting it as small version in a different container
         function createInventoryMiniPreview(index) {
-            $("#inv" + index).parent().find(".inventoryminipreview").html("");
-            $("#inv" + index).parent().find(".items .item_icon").clone().appendTo($("#inv" + index).parent().find(
-                ".inventoryminipreview"));
+            let element = $($("#inv" + index).parent().find(".inventoryminipreview")[0])
+            element.html("");
+            $("#inv" + index).parent().find(".items .item_icon").clone().appendTo(element);
         }
 
         // Add an additional storage to the list
@@ -515,8 +513,7 @@
 
             // Add every item to the inventory
             for (let i = 0; i < inventory["items"].length; i++) {
-                addItem(inventory["items"][i]["id"], inventory[
-                    "items"][i]["amount"], inventory["items"][i]["durability"], $("#inv" + index).parent().find(".items"));
+                addItem(inventory["items"][i], $("#inv" + index).parent().find(".items"));
             }
             
             // Create a preview for that inventory (so it uses less page space)
@@ -643,7 +640,7 @@
         }
 
         //Function to add a single item
-        async function addItem(id, amount, durability, element) {
+        async function addItem({id, amount, durability, subinventory = [], position = -1}, element) {
 
             //Check for a quality of the item
             let quality = "";
@@ -653,13 +650,13 @@
 
             //If the item can be repaired, add a button to do that
             let button = ""
-            if (durability != 1) {
+            if (durability !== 1) {
                 button = '<div class="btn repairbtn">Repair (' + Math.round(durability * 100) + '% left)</div>'
             }
             //HTML of a single item
             let item =
                 `
-<div class="item justadded${quality}">
+<div class="item justadded${quality}" data-position="${position}">
     <div class="itemimage">
         <div class="itemquality"></div>
         <div class="item_icon ${sanitzize_item_id(id)}"></div>
@@ -679,6 +676,7 @@
     <div class="valign-wrapper">
         <div class="itemremove">x</div>
     </div>
+    <div class="inventoryminipreview">${subinventory.map(item => `<div class="item_icon ${sanitzize_item_id(item["id"])}"></div>`).join("")}</div>
 </div>`
             
             //Get the Element which we create
@@ -913,6 +911,8 @@
 
                             let iconholder = $(e).parent()
                             iconholder.removeClass("gold silver copper")
+                            iconholder.attr("data-position", -1)
+                            iconholder.find(".inventoryminipreview").empty()
                             if(["1","2","3"].includes(id.split(":").pop())){
                                 iconholder.addClass(["copper", "silver", "gold"][parseInt(id.split(":").pop())-1])
                             }
@@ -1113,11 +1113,11 @@
                 let b;
                 // Call the different python save functions with the save hash
                 if (type == "slot") {
-                    b = await eel.saveslot(data, hashdata[1], hashdata[2])();
+                    b = await eel.save_slot(data, hashdata[1], hashdata[2])();
                 } else if (type == "dat") {
-                    b = await eel.savecustomsavefile(data, hashdata[1])();
+                    b = await eel.save_custom_savefile(data, hashdata[1])();
                 } else if (type == "json") {
-                    b = await eel.savejsonsavefile(data, hashdata[1])();
+                    b = await eel.save_json_savefile(data, hashdata[1])();
                 }
                 
                 // On error show error, else show success
@@ -1160,7 +1160,7 @@
                         // Check if the items don't exceed the inventory size
                         if (data["additionalstorage"][invindex]["items"].length < parseInt(container.parent().find(
                                 ".invsize").val())) {
-                            addItem(id, amount, 1, $("#inv" + invindex).parent().find(".items"));
+                            addItem({id, amount, durability: 1}, $("#inv" + invindex).parent().find(".items"));
                         } else {
                             M.toast({
                                 html: "This storage unit only has " + container.parent().find(".invsize").val() +
@@ -1181,7 +1181,7 @@
                     } else {
                         // Check if the items don't exceed the inventory size
                         if (data["inventory"].length < parseInt(container.parent().find(".invsize").val())) {
-                            addItem(id, amount, 1, $("form>.items"));
+                            addItem({id, amount, durability: 1}, $("form>.items"));
                         } else {
                             M.toast({
                                 html: "Your inventory only has " + container.parent().find(".invsize").val() +
@@ -1304,12 +1304,14 @@
             for (let i = 0; i < items.length; i++) {
                 data["inventory"][i]["amount"] = parseInt($(items[i]).find("input").val());
                 data["inventory"][i]["id"] = $(items[i]).find(".itemid").text().replace(/\(|\)/g, "");
+                data["inventory"][i]["position"] = parseInt($(items[i]).attr("data-position"))
             }
 
             // Iterate the items of the subinventory
             items = $("form>.equipped-items .item");
             for (let i = 0; i < items.length; i++) {
                 data["subinventory"][i]["id"] = $(items[i]).find(".itemid").text().replace(/\(|\)/g, "");
+                data["subinventory"][i]["position"] = parseInt($(items[i]).attr("data-position"))
             }
 
 
@@ -1328,6 +1330,7 @@
                     data["additionalstorage"][i]["items"][i2]["amount"] = parseInt($(items[i2]).find("input").val());
                     data["additionalstorage"][i]["items"][i2]["id"] = $(items[i2]).find(".itemid").text().replace(
                         /\(|\)/g, "");
+                    data["additionalstorage"][i]["items"][i2]["position"] = parseInt($(items[i2]).attr("data-position"))
                 }
             }
         }
