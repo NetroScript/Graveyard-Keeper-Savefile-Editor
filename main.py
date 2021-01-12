@@ -786,6 +786,12 @@ def get_inventory(inv):
     for _ in inv:
         item = dict()
         item["id"] = inv[i]["v"]["id"]["v"]
+
+        # The item ID can also be not a string but an object when during loading a error was encountered and it was
+        # "fixed" and the original buffer saved, then the id is of course the item name which was fixed up
+        if isinstance(item["id"], dict):
+            item["id"] = item["id"]["string"]
+
         item["durability"] = inv[i]["v"]["_params"]["v"]["_durability"]["v"]
         item["amount"] = inv[i]["v"]["value"]["v"]
         item["position"] = i
@@ -829,7 +835,10 @@ def edit_inventory(inventory, new_items, shash):
                 temp_item = deepcopy(fallback_item)
 
             # For the case the id is not in the serialized strings we just reapply it
-            temp_item["v"]["id"] = modify_value_type(shash, temp_item["v"]["id"], item["id"])
+            # We do some extra checks, hopefully not breaking an item id which would need a custom buffer due to the
+            # D control character which capital C seems to contain in the item ids
+            if "C" not in item["id"] or len(item["id"]) < 30 and item["id"] not in savefiles[shash]["serializer"]:
+                temp_item["v"]["id"] = modify_value_type(shash, temp_item["v"]["id"], item["id"])
 
         # Set additional parameters which might have been changed like the amount of the item
         temp_item["v"]["_params"]["v"]["_durability"] = modify_value_type(shash, temp_item["v"]["_params"]["v"]["_durability"], item["durability"])
