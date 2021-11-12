@@ -88,6 +88,15 @@
                                     Enabled
                                 </label>
                             </div>
+                            <div class="preswitch">Better Save Soul Support</div>
+                            <div class="switch">
+                                <label>
+                                    Disabled
+                                    <input type="checkbox" id="bettersavesoul">
+                                    <span class="lever"></span>
+                                    Enabled
+                                </label>
+                            </div>
                             <div class="note">This allows you to select which DLC you own.
                                 <br/> Depending on owned DLC different autocomplete names are shown.
                                 Additionally some buttons have different functionality depending on the DLCs.
@@ -166,6 +175,7 @@
                 "expert": $("#expert").prop("checked") || false,
                 "strangersins": $("#strangersins").prop("checked") || false,
                 "gameofcrone": $("#gameofcrone").prop("checked") || false,
+                "bettersavesoul":  $("#bettersavesoul").prop("checked") || false,
                 "backupamount": parseInt($("#backupnum").val()) || 2
             }
             await eel.set_settings(settings)();
@@ -187,6 +197,7 @@
             $("#expert").prop("checked", b["expert"]);
             $("#strangersins").prop("checked", b["strangersins"]);
             $("#gameofcrone").prop("checked", b["gameofcrone"]);
+            $("#bettersavesoul").prop("checked", b["bettersavesoul"]);
             $("#port").val(b["port"]);
             $("#backupnum").val(b["backupamount"]);
         }

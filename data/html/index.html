@@ -93,12 +93,14 @@
 
         let disable_context_menu = true;
 
-        const strangersins_item_range = [726, 794]
-        const gameofcrone_item_range = [795, 908]
+        const strangersins_item_range = [820, 888]
+        const gameofcrone_item_range = [889, 1002]
+        const bettersavesoul_item_range = [1003, 1052]
 
         const displayed_infos_dlc = {
             "gameofcrone": false,
-            "strangersins": false
+            "strangersins": false,
+            "bettersavesoul": false,
         }
 
         // Contextmenu is not needed, for that reason it is disabled
@@ -160,6 +162,10 @@
                             }
                             // Don't include game of crone items
                             if (i >= gameofcrone_item_range[0] && i <= gameofcrone_item_range[1] && !settings["gameofcrone"]){
+                                return
+                            }
+                            // Don't include better save soul items
+                            if (i >= bettersavesoul_item_range[0] && i <= bettersavesoul_item_range[1] && !settings["bettersavesoul"]){
                                 return
                             }
                             autocompletenames[(data["locals"][item] || data["locals"][item.replace(/:\d$/g, "")]) + " (" + item + ")"] = null
@@ -281,7 +287,7 @@
             <div class="btn perdeco col s12">Set all grave decorations to the highest</div>
             <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
             <div class="btn pertech col s12">Unlock the entire tech tree</div>
-            <div class="note hover col s12"><b>Note:</b><br>This is pre version 1.200</div>
+            <div class="note col s12"><b>Note:</b><br>This is pre version 1.200</div>
             <div class="btn repairdonkey col s12">Replace your current donkey NPC</div>
             <div class="note hover col s12"><b>WARNING:</b><br>This replaces your current donkey object with the a working one from my savefile. It will then be in front of your morgue. <b>Don't be surprised if it doesn't drop the body even if you have enough carrots. Through replacing the donkey this check gets skipped.</b> Just put 10 more in and the donkey should work - I tried it on a save in the bug report channel of the discord (from Lazy Bear Games). ONLY USE THIS IF THE BUG FIX OF THE DEVELOPERS DIDN'T WORK AND YOU ALREADY HAVE THE BOX WITH CARROTS. <b>Also only use this if your donkey is actually stuck!</b></div>
             <div class="btn resetmorgue col s12">Reset Morgue Counter</div>
@@ -563,6 +569,27 @@
 
                         // Add the autocomplete names
                         for(let i = strangersins_item_range[0]; i < strangersins_item_range[1]; i++) {
+                            autocompletenames[(data["locals"][gamedata.items[i]] || data["locals"][gamedata.items[i].replace(/:\d$/g, "")]) + " (" + gamedata.items[i] + ")"] = null
+                        }
+                    })
+                }
+            }
+
+            if(index >= bettersavesoul_item_range[0] && index <= bettersavesoul_item_range[1] && !settings["bettersavesoul"]){
+                if(!displayed_infos_dlc["bettersavesoul"]){
+                    displayed_infos_dlc["bettersavesoul"] = true;
+
+                    // Display an info considering the DLC
+                    let m = M.toast({html: `<div><p>It seems like the save contains items from the Better Save Soul DLC but you didn't enable it in the settings.</div><div class="confirm">Click here to enable Better Save Soul support</div>`, displayLength: 60000})
+                    $(m.el).find(".confirm").click(async function() {
+                        m.dismiss();
+
+                        // Save the settings
+                        settings["bettersavesoul"] = true;
+                        await eel.set_settings(settings)();
+
+                        // Add the autocomplete names
+                        for(let i = bettersavesoul_item_range[0]; i < bettersavesoul_item_range[1]; i++) {
                             autocompletenames[(data["locals"][gamedata.items[i]] || data["locals"][gamedata.items[i].replace(/:\d$/g, "")]) + " (" + gamedata.items[i] + ")"] = null
                         }
                     })

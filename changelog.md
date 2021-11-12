@@ -1,3 +1,10 @@
+0.1.23
+=====
+
+Added:
+
+* Support for items in the new Better Save Soul DLC (considering Autocomplete and icons)
+
 0.1.22
 =====
 

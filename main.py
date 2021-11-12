@@ -67,6 +67,8 @@ def load_settings():
             options["strangersins"] = False
         if "gameofcrone" not in options:
             options["gameofcrone"] = False
+        if "bettersavesoul" not in options:
+            options["bettersavesoul"] = False
 
         web_app_options["port"] = options["port"]
 
@@ -516,12 +518,19 @@ def modify_save(data, shash):
         # If the graves should get perfect decorations we replace the current ones
         if (data["switches"]["decorations"] or convert_empty_grave) and it["obj_id"]["v"] == "grave_ground":
 
-            # If the game of crone DLC is enabled you can have a higher level grave, we set it there
-            if options["gameofcrone"]:
+            # If the better save soul DLC is enabled you can have a higher level grave, we set it here
+            if options["bettersavesoul"]:
+                jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_8"
+                jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_sculpt_mrb_5"
+                jsongamedata["_res_type"]["v"][2]["v"] = "grave_top_sculpt_mrb_5"
+                jsongamedata["_res_type"]["v"][2]["v"] = "grave_bot_mrb_8"
+            # Else If the game of crone DLC is enabled use its decorations
+            elif options["gameofcrone"]:
                 jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_5"
                 jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_highangel_mrb_1"
                 jsongamedata["_res_type"]["v"][2]["v"] = "grave_top_highangel_mrb_1"
                 jsongamedata["_res_type"]["v"][2]["v"] = "grave_bot_mrb_5"
+            # Otherwise use base game decoration
             else:
                 jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_2"
                 jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_sculpt_mrb_1"
