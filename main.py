@@ -499,7 +499,7 @@ def modify_save(data, shash):
                 reference_inventory = jsongamedata["inventory"]
 
             # Otherwise if the user wants 65% and has the Better Save Soul DLC we use the prepared Worker of that DLC
-            if data["workerskullamount"] == 26 and options["gameofcrone"]:
+            if data["workerskullamount"] == 26 and options["bettersavesoul"]:
                 adjust_skull_value = False
                 reference_inventory = jsongamedata["worker_inventory_65%_1400+"]
 
@@ -543,7 +543,34 @@ def modify_save(data, shash):
             # We iterate the items until we found the body and then change the inventory of the body
             for item in it["-1126421579"]["v"]["inventory"]["v"]:
                 if item["v"]["id"]["v"] == "body":
-                    item["v"]["inventory"]["v"] = jsongamedata["inventory"]
+
+                    # By default we use the custom rating inventory
+                    reference_inventory = jsongamedata["worker_inventory_custom_rating"]
+
+                    # Whether we are using the an inventory with just one manipulated item
+                    adjust_skull_value = True
+
+                    # If the user wants 16 skulls and has the Game Of Crone DLC
+                    if data["gravebodyskullamount"] == 16 and options["gameofcrone"]:
+                        adjust_skull_value = False
+                        reference_inventory = jsongamedata["inventory"]
+
+                    # Otherwise if the user wants 26 skulls and has the Better Save Soul DLC
+                    if data["gravebodyskullamount"] == 26 and options["bettersavesoul"]:
+                        adjust_skull_value = False
+                        reference_inventory = jsongamedata["worker_inventory_65%_1400+"]
+
+                    # If we have the inventory with the single modified item
+                    if adjust_skull_value:
+                        # We create a copy of the object just to not modify the in memory version which is used
+                        reference_inventory = deepcopy(reference_inventory)
+
+                        # The inventory only contains 1 item, so we can directly access that item and its parameter
+                        # to set the correct skull amount
+                        # The -1 is caused because the brain already has one white skull
+                        reference_inventory[0]["v"]["_params"]["v"]["_res_v"]["v"][0]["v"] = data["workerskullamount"] - 1
+
+                    item["v"]["inventory"]["v"] = reference_inventory
                     item["v"]["_params"]["v"]["_durability"]["v"] = 1
                     break
 
@@ -554,19 +581,19 @@ def modify_save(data, shash):
             if options["bettersavesoul"]:
                 jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_8"
                 jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_sculpt_mrb_5"
-                jsongamedata["_res_type"]["v"][2]["v"] = "grave_top_sculpt_mrb_5"
+                jsongamedata["_res_type"]["v"][1]["v"] = "grave_top_sculpt_mrb_5"
                 jsongamedata["_res_type"]["v"][2]["v"] = "grave_bot_mrb_8"
             # Else If the game of crone DLC is enabled use its decorations
             elif options["gameofcrone"]:
                 jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_5"
                 jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_highangel_mrb_1"
-                jsongamedata["_res_type"]["v"][2]["v"] = "grave_top_highangel_mrb_1"
+                jsongamedata["_res_type"]["v"][1]["v"] = "grave_top_highangel_mrb_1"
                 jsongamedata["_res_type"]["v"][2]["v"] = "grave_bot_mrb_5"
             # Otherwise use base game decoration
             else:
                 jsongamedata["fence"]["v"]["id"]["v"] = "grave_bot_mrb_2"
                 jsongamedata["decoration"]["v"]["id"]["v"] = "grave_top_sculpt_mrb_1"
-                jsongamedata["_res_type"]["v"][2]["v"] = "grave_top_sculpt_mrb_1"
+                jsongamedata["_res_type"]["v"][1]["v"] = "grave_top_sculpt_mrb_1"
                 jsongamedata["_res_type"]["v"][2]["v"] = "grave_bot_mrb_2"
 
             # We iterate the items to delete all but the body so we can add the new ones
@@ -817,6 +844,7 @@ def editable_values(shash):
     }
 
     obj["workerskullamount"] = 26
+    obj["gravebodyskullamount"] = 26
 
     return obj
 

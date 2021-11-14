@@ -302,7 +302,13 @@
                     <div class="note hover col s12"><b>WARNING:</b><br>
                     You can ignore the following warning if the worker you are using is a "big brain" worker (meaning custom efficiency) <br/><br/>
                     For the perfect bodies/workers/graves to work it is necessary to have the technologies / crafting recipes like embalming because otherwise the game "resets" those bodies / decorations to a state which you could have done with your current tech tree / advancement (exception for this is the big brain worker). For this reason a "Unlock the entire tech tree" button was added. <b>BUT</b> the game save is rather complex, meaning even if you have all technologies and theoretically you couldn't have advanced this far the bodies will be bugged, f.e. broken in the morgue table. I assume (without having looked at the game code) that you need a certain progress in the game. F.e. when I used all technologies + perfect bodies on a completely new save, the bodies had 7 skulls, but actually (when taking a look at the exported save) the bodies where the correct bodies. So progress normally and use the unlock tech tree button or perfect worker button on a late game save (or where you already manually could produce the perfect bodies, but are lacking the resources)</div>
-                    <div class="btn perbody col s12">Replace all the bodies in graves with perfect bodies</div>
+                    <div class="btn perbody col s12">Replace bodies in graves with a body with
+                      <div class="input-field inline worker-efficiency-container">
+                        <input id="gravebody-skulls" type="number" step="1" min="0" value="26">
+                      </div>
+                      <div class="gameicon i-white-skull">
+                        <img src="/rsc/White_Skull_Symbol.png">
+                      </div></div>
                     <div class="note col s12"><b>Note:</b><br>This is pre version 1.200</div>
                     <div class="btn perdeco col s12">Set all grave decorations to the highest</div>
                     <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
@@ -841,8 +847,20 @@
                 $("#skull-amount").text(data.workerskullamount);
             })
 
+            // When setting skulls for the graves change the internal value
+            $("#gravebody-skulls").change((e) => {
+
+                // Round to steps of 2.5
+                data.gravebodyskullamount = Math.round(Math.max(0, Number($("#gravebody-skulls").val())));
+
+                // Force the value to be steps of 2.5
+                $("#worker-efficiency").val(data.gravebodyskullamount)
+            })
+
+
+
             // Prevent the button from firing if we just change the text value
-            $("#worker-efficiency").click((e) => {
+            $("#worker-efficiency, #gravebody-skulls").click((e) => {
                 e.preventDefault();
                 e.stopPropagation();
             })

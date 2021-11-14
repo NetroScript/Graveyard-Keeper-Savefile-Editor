@@ -4,10 +4,12 @@
 Improved:
 
 * It is now possible to have a worker zombie of any efficiency
+* At the same time you can now decide how many skulls the bodies in the graves should have
 * Utility functions can now be collapsed and expanded
 
 Fixed:
 
+* Before when upgrading to the highest grave decoration, you still had to manually "repair" the top part, this is now fixed and it directly display correctly
 * When saving new indexed strings now, they get added correctly to the save file (Unless you used the application to export your save to JSON and then edit yourself and then reimported it, this problem doesn't matter for you)
 
 0.1.23

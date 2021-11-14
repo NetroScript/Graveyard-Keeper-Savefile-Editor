@@ -768,7 +768,7 @@ ul.collapsible {
     pointer-events: initial;
 }
 
-input#worker-efficiency {
+input#worker-efficiency, input#gravebody-skulls {
     margin: 0!important;
     height: 20px;
     width: 50px;
