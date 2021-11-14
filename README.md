@@ -7,10 +7,10 @@ This is a save editor for [Graveyard Keeper](https://store.steampowered.com/app/
 The python version works on Windows, Linux and macOS.
 For Windows a .exe version available too.
 
-It can load and save *.dat files.
-Additionally you can export the loaded save to JSON, which has a similar structure to the original .json save files.
+It can load and save `*.dat` files.
+Additionally you can export the loaded save to JSON, which has a similar structure to the original `.json` save files.
 (The difference is, that information about types of variables is saved in the file, meaning every value is wrapped in an object).
-When exporting to JSON you can also choose .html to have a website where you can relatively easily edit the save in the browser console and then export it again.
+When exporting to JSON you can also choose `.html` to have a website where you can relatively easily edit the save in the browser console and then export it again.
 
 **The Application uses a webbrowser as a GUI** (by default Chrome in App Mode, but during development FireFox was tried too - f.e. Opera should work too, but watch out for your Opera version - see [Issue #54](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/issues/54)).
 
@@ -20,7 +20,7 @@ That is why you always should **backup your save files**. (In the settings of th
 
 But I want to mention the last time someone asked for help due to a save broken by the save editor was in september 2018 and since then I also took additional measures.
 
-**This Editor supports the DLCs (Stranger Sins + Game Of Crone) - in the editor you have toggles to enable or disable DLC Support**
+**This Editor supports the DLCs (Stranger Sins + Game Of Crone + Better Save Soul) - in the editor you have toggles to enable or disable DLC Support**
 
 ## Currently Editable
 
@@ -35,7 +35,7 @@ But I want to mention the last time someone asked for help due to a save broken 
 * Your relationships with NPC's (only if you interacted with them before and have more than 0)
 * Additionally utilities like:
   * Removing all drops
-  * Setting the worker efficiency 40%
+  * Setting the worker efficiency to any value you want
   * Turning the graves into perfect graves
   * Complete the entire tech tree (state is pre DLC)
   * Fix if the donkey is stuck
@@ -85,7 +85,7 @@ If a red border appears around an item, it means the save editor doesn't have th
 Same if an item doesn't have a preview image.
 
 If you want to manually edit save files, when you change values, watch out if you change the type of the variable. F.e. if you would change a value from 0 to 1, the type would change and you would need to manually change the type to the correct one.
-For information about the possible types, check types.py in the data folder.
+For information about the possible types, check `types.py` in the `data` folder.
 
 
 ## Changelog
@@ -93,14 +93,15 @@ For information about the possible types, check types.py in the data folder.
 Check it [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/changelog.md).
 
 
-## Thanks to
+## Additional Thanks go to 
 
-* Reddit user [aMannus](https://www.reddit.com/user/aMannus) for supplying me a save to implement worker efficiency
+* Reddit user [aMannus](https://www.reddit.com/user/aMannus) for supplying me a save to implement worker efficiency (40%)
+* GitHub user [DeadElle](https://github.com/DeadElle) for supplying me a save with 65% worker efficiency
 * All contributers to this repository
 
-## Misc
+## Manually editing saves
 
-If you want to know about some stuff which you could do if you export the savefile to json check this file [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/saves.md).
+If you want to know how to manually edit saves or see some additional infos about the saves you can check out the following document [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/blob/master/saves.md).
 
 
 ## The application is not working?
@@ -108,12 +109,12 @@ If you want to know about some stuff which you could do if you export the savefi
 Supply me a screenshot with the console output (or the copied text).
 If you are using the compiled windows version and a black window appears and then disappears it means the application crashes because of some error.
 To view the error code to be able to send it to me:
-In the folder where you have the .exe file, Shift + Rightclick in a free space and in the context menu there should be an option like "Open Command Prompt here" or "Open Powershell here", click that, begin writing "Graveyard" and then press tab to autocomplete and enter to execute - now you should start the application using that console window. This time the window won't close after execution, meaning you have time to make a screenshot of the error.
+In the folder where you have the .exe file, `Shift + Rightclick` in a free space and in the context menu there should be an option like `Open Command Prompt here` or `Open Powershell here`, click that, begin writing `Graveyard` and then press tab to autocomplete and enter to execute - now you should start the application using that console window. This time the window won't close after execution, meaning you have time to make a screenshot of the error.
 
 ## Notice
 
 This repository contains content which I do not own.
-Notably all the image files in the /data/html/rsc folder. These are by [Lazy Bear Games](http://lazybeargames.com/).
+Notably all the image files in the `/data/html/rsc` folder. These are by [Lazy Bear Games](http://lazybeargames.com/).
 Additionally [jQuery](https://jquery.com/) and [Materialize](https://materializecss.com/) are also used. Their original licenses are still included.
 This application uses extracted strings like f.e. localisation files. These are also by [Lazy Bear Games](http://lazybeargames.com/).
 If you find any bugs / mistakes, feel free to open issues, or if you know how to fix it yourself, feel free to create a pull request.

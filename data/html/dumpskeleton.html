@@ -42,6 +42,8 @@
     <h1>The save data is already dumped in the console in the variable <code>gameSave</code>.</h1>
 
     <p>For convenience WGO's are also already stored in <code>wgo</code>.</p>
+    
+    <p>Additionally some methods are provided for convenience - you can find them in the second <code>script</code> tag.</p>
 
     <p>After you finished the editing you can export it to a JSON file again using the following Button.</p>
 
@@ -67,7 +69,37 @@ wgo.forEach((entry) => {
     wgo_count[name]++
 })
 console.log(wgo_count);                `, "color: gray; font-family:monospace;")
+    
 
+</script>
+
+<script>
+    
+    // Directly takes a _params object
+    // An example of the usage for this function is on the GitHub Page on the saves section.
+    function getValueForParamKey(paramObject, key) {
+        // Define a default index so we know if nothing was found
+        let index = -1;
+
+        // Iterate all parameter key names
+        for (let i = 0; i < paramObject.v._res_type.v.length; i++){
+            // If one of them matches our wanted key, we set our index variable to that key
+           if (paramObject.v._res_type.v[i].v === key) {
+               index = i;
+               // Additionally we can break to perhaps save some processing time
+               break;
+           }
+
+        }
+
+        // If we found an index, return the corresponding value to that key
+        if(index !== -1){
+            return paramObject.v._res_v.v[index].v
+        }
+
+        // Otherwise return undefined
+        return undefined
+    }
 </script>
 
 

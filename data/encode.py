@@ -107,14 +107,21 @@ class Encoder:
             try:
                 indx = serializer.index(data)
             except ValueError:
-                indx = 0
+                indx = -1
+
+                # Check if the string is encoded as a special object
                 for i in range(len(serializer)):
                     if type(serializer[i]) == dict:
                         if data == serializer[i]["string"]:
                             indx = i
                             break
 
-            # Here the index inside the string array is just saved
+                # If it is not encoded as a special object, add it at the end of the string list
+                if indx == -1:
+                    indx = len(serializer)
+                    serializer.append(data)
+
+            # Save the index of the string within the string array
             stream.write("int32", indx)
         elif curtype == Types.Int32_0:
             pass

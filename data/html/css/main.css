@@ -695,3 +695,88 @@ p.timeoutput {
     flex: 0 0 100%;
     background: rgba(0, 0, 0, 0.14);
 }
+
+
+ul.collapsible {
+    border: none;
+    box-shadow: none;
+    margin: 0;
+}
+
+.con .collapsible-header {
+    border: initial;
+    line-height: initial;
+    background-color: #1c1c1c;
+    text-align: center;
+    width: 100%;
+    display: block;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0, 0.5);
+}
+
+.keyboard-focused .con .collapsible-header {
+    border: initial;
+    line-height: initial;
+    background-color: #1f1f1f;
+    text-align: center;
+    width: 100%;
+    display: block;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0, 0.5);
+}
+
+
+
+.collapsible li {
+    margin: 20px 0px;
+}
+
+.con .collapsible-body {
+    border: initial;
+}
+
+.open-close-indicator {
+    width: 100%;
+    text-align: center;
+    color: rgba(255,255,255, 0.1);
+    font-weight: 900;
+    height: 0px;
+}
+
+.arrow {
+    transform: translateY(-15px) rotate(90deg) scaleX(0.5);
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.active .arrow {
+    transform: translateY(-15px) rotate(-90deg) scaleX(0.5);
+}
+
+.open-close-indicator .helper {
+    font-weight: 200;
+    position: absolute;
+    width: 100%;
+    font-size: 13px;
+    pointer-events: none;
+    margin-top: -19px;
+}
+
+.worker-efficiency-container {
+    margin: 0;
+    padding: 0;
+    height: 36px;
+    line-height: 32px;
+    pointer-events: initial;
+}
+
+input#worker-efficiency {
+    margin: 0!important;
+    height: 20px;
+    width: 50px;
+    color: white;
+    font-size: 14px;
+    background-color: rgba(255,255,255,0.1);
+    font-family: inherit;
+    text-align: center;
+}
+
+.gameicon.i-white-skull {height: 10px;transform: translateY(6px);zoom: initial;}

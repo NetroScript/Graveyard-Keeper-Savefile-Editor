@@ -188,115 +188,138 @@
                 `
 <div class="intro lesspadding">Generic:</div>
 <div class="row">
-    <form class="s10 col offset-s1 editsavedata">
-        <div class="row colorpoints">
-            <div class="input-field col s4">
-                <div class="gameicon i-red pre">
-                    <img src="/rsc/Red_Tech_Symbol.png">
+    <div style="display: flex; flex-direction: column;">
+        <form class="s10 col offset-s1 editsavedata">
+            <div class="row colorpoints">
+                <div class="input-field col s4">
+                    <div class="gameicon i-red pre">
+                        <img src="/rsc/Red_Tech_Symbol.png">
+                    </div>
+                    <input id="red" value="${data["r"]["cur"]}">
                 </div>
-                <input id="red" value="${data["r"]["cur"]}">
-            </div>
-            <div class="input-field col s4">
-                <div class="gameicon i-green pre">
-                    <img src="/rsc/Green_Tech_Symbol.png">
+                <div class="input-field col s4">
+                    <div class="gameicon i-green pre">
+                        <img src="/rsc/Green_Tech_Symbol.png">
+                    </div>
+                    <input id="green" value="${data["g"]["cur"]}">
                 </div>
-                <input id="green" value="${data["g"]["cur"]}">
-            </div>
-            <div class="input-field col s4">
-                <div class="gameicon i-blue pre">
-                    <img src="/rsc/Blue_Tech_Symbol.png">
+                <div class="input-field col s4">
+                    <div class="gameicon i-blue pre">
+                        <img src="/rsc/Blue_Tech_Symbol.png">
+                    </div>
+                    <input id="blue" value="${data["b"]["cur"]}">
                 </div>
-                <input id="blue" value="${data["b"]["cur"]}">
             </div>
-        </div>
-        <div class="row money">
-            <div class="input-field col s4">
-                <div class="gameicon i-gold pre">
-                    <img src="/rsc/Gold_Coin_Symbol.png">
+            <div class="row money">
+                <div class="input-field col s4">
+                    <div class="gameicon i-gold pre">
+                        <img src="/rsc/Gold_Coin_Symbol.png">
+                    </div>
+                    <input id="gold" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] / 100 << 0)}">
+                    <span class="helper-text" data-error="Please input a number greater than 0" data-success="">Please input a number greater than 0</span>
                 </div>
-                <input id="gold" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] / 100 << 0)}">
-                <span class="helper-text" data-error="Please input a number greater than 0" data-success="">Please input a number greater than 0</span>
-            </div>
-            <div class="input-field col s4">
-                <div class="gameicon i-silver pre">
-                    <img src="/rsc/Silver_Coin_Symbol.png">
+                <div class="input-field col s4">
+                    <div class="gameicon i-silver pre">
+                        <img src="/rsc/Silver_Coin_Symbol.png">
+                    </div>
+                    <input id="silver" max="99" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] % 100)}">
+                    <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
                 </div>
-                <input id="silver" max="99" min="0" type="number" class="validate valid" value="${Math.floor(data["money"] % 100)}">
-                <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
-            </div>
-            <div class="input-field col s4">
-                <div class="gameicon i-copper pre">
-                    <img src="/rsc/Copper_Coin_Symbol.png">
+                <div class="input-field col s4">
+                    <div class="gameicon i-copper pre">
+                        <img src="/rsc/Copper_Coin_Symbol.png">
+                    </div>
+                    <input id="copper" max="99" min="0" type="number" class="validate valid" value="${Math.round(data["money"]%1*100)}">
+                    <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
                 </div>
-                <input id="copper" max="99" min="0" type="number" class="validate valid" value="${Math.round(data["money"]%1*100)}">
-                <span class="helper-text" data-error="Please input a number between 0 and 99" data-success="">Please input a number between 0 and 99</span>
             </div>
-        </div>
-        <div class="row hpenergy">
-            <div class="col s12">
-                HP:
-                <div class="input-field inline s8">
-                    <input id="hp" type="number" class="validate valid" min="0" value="${data["hp"]}">
-                    <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+            <div class="row hpenergy">
+                <div class="col s12">
+                    HP:
+                    <div class="input-field inline s8">
+                        <input id="hp" type="number" class="validate valid" min="0" value="${data["hp"]}">
+                        <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+                    </div>
+                </div>
+
+
+                <div class="col s12 energy">Energy:
+                    <div class="input-field inline s8">
+                        <input id="energy" type="number" class="validate valid" min="0" value="${data["energy"]["cur"]}">
+                        <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+                    </div>
                 </div>
             </div>
 
-
-            <div class="col s12 energy">Energy:
-                <div class="input-field inline s8">
-                    <input id="energy" type="number" class="validate valid" min="0" value="${data["energy"]["cur"]}">
-                    <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+            <div class="timecontainer">
+                <div class="note hover"><b>WARNING:</b><br>Modify the time at your own risk. Don't forget NPC's walk to all events
+                and they get triggered at certain positions at certain times - meaning if you change the time you can mess up their
+                AI.<br>If you want to meet the merchant f.e. - set the day to Gluttony (the 3rd one) and change the Time to f.e.
+                3:00 - this is because the change from morning to day leaves the merchant enough time to walk to the barn and also
+                triggers his change of location in the morning. - if you would set it f.e. to 12:00 he wouldn't appear</div>
+                <div class="col s12 energy">Current Day:
+                    <div class="input-field inline s8">
+                        <input id="day" type="number" class="validate valid" min="0" value="${data["time"]["day"]}">
+                        <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+                    </div>
                 </div>
+            <div class="dayindicator col s12">
+                <div class="day active"><img src="/rsc/pride.png"></div>
+                <div class="day"><img src="/rsc/lust.png"></div>
+                <div class="day"><img src="/rsc/gluttony.png"></div>
+                <div class="day"><img src="/rsc/envy.png"></div>
+                <div class="day"><img src="/rsc/wrath.png"></div>
+                <div class="day"><img src="/rsc/sloth.png"></div>
             </div>
-        </div>
+            <div class="timeofdayslider col s12">
+                <p class="range-field">
+                    <input type="range" id="timeofday" min="0" max="24" step="0.25" />
+                </p>
+                <p class="timeoutput">24:00</p>
+            </div>
 
-        <div class="timecontainer">
-            <div class="note hover"><b>WARNING:</b><br>Modify the time at your own risk. Don't forget NPC's walk to all events
-            and they get triggered at certain positions at certain times - meaning if you change the time you can mess up their
-            AI.<br>If you want to meet the merchant f.e. - set the day to Gluttony (the 3rd one) and change the Time to f.e.
-            3:00 - this is because the change from morning to day leaves the merchant enough time to walk to the barn and also
-            triggers his change of location in the morning. - if you would set it f.e. to 12:00 he wouldn't appear</div>
-            <div class="col s12 energy">Current Day:
-                <div class="input-field inline s8">
-                    <input id="day" type="number" class="validate valid" min="0" value="${data["time"]["day"]}">
-                    <span class="helper-text" data-error="Please input a number" data-success="">Please input a number</span>
+            </div>
+        </form>
+        <ul class="collapsible">
+
+            <li>
+                <div class="collapsible-header">Utility Functions</div>
+                <div class="open-close-indicator">
+                    <div class="helper">Click to toggle open/close</div>
+                    <div class="arrow">ᐅ</div>
                 </div>
-            </div>
-        <div class="dayindicator col s12">
-            <div class="day active"><img src="/rsc/pride.png"></div>
-            <div class="day"><img src="/rsc/lust.png"></div>
-            <div class="day"><img src="/rsc/gluttony.png"></div>
-            <div class="day"><img src="/rsc/envy.png"></div>
-            <div class="day"><img src="/rsc/wrath.png"></div>
-            <div class="day"><img src="/rsc/sloth.png"></div>
-        </div>
-        <div class="timeofdayslider col s12">
-            <p class="range-field">
-                <input type="range" id="timeofday" min="0" max="24" step="0.25" />
-            </p>
-            <p class="timeoutput">24:00</p>
-        </div>
+                <div class="row miscbuttons collapsible-body" style="">
+                    <div class="btn deldrops col s6 offset-s3">Remove all Drops</div>
+                    <div class="btn workereff col s12">Set all workers to
+                      <div class="input-field inline worker-efficiency-container">
+                        <input id="worker-efficiency" type="number" step="2.5" min="0" value="65">
+                      </div>%  Efficiency (<span id="skull-amount">26</span>
+                      <div class="gameicon i-white-skull">
+                        <img src="/rsc/White_Skull_Symbol.png">
+                      </div>)
+                    </div>
+                    <div class="note hover col s12"><b>Note:</b><br>If you set it to 40% a worker from the old DLC will be used, if you set it to 65% a worker from the Better Save Soul DLC will be used. If you use any other value, or you use 65% without having Better Save Soul my custom method will be used which will create a big brain worker as I would call him with love. If you want you can extract the brain of the worker to use it elsewhere</div>
+                    <div class="note hover col s12"><b>WARNING:</b><br>
+                    You can ignore the following warning if the worker you are using is a "big brain" worker (meaning custom efficiency) <br/><br/>
+                    For the perfect bodies/workers/graves to work it is necessary to have the technologies / crafting recipes like embalming because otherwise the game "resets" those bodies / decorations to a state which you could have done with your current tech tree / advancement (exception for this is the big brain worker). For this reason a "Unlock the entire tech tree" button was added. <b>BUT</b> the game save is rather complex, meaning even if you have all technologies and theoretically you couldn't have advanced this far the bodies will be bugged, f.e. broken in the morgue table. I assume (without having looked at the game code) that you need a certain progress in the game. F.e. when I used all technologies + perfect bodies on a completely new save, the bodies had 7 skulls, but actually (when taking a look at the exported save) the bodies where the correct bodies. So progress normally and use the unlock tech tree button or perfect worker button on a late game save (or where you already manually could produce the perfect bodies, but are lacking the resources)</div>
+                    <div class="btn perbody col s12">Replace all the bodies in graves with perfect bodies</div>
+                    <div class="note col s12"><b>Note:</b><br>This is pre version 1.200</div>
+                    <div class="btn perdeco col s12">Set all grave decorations to the highest</div>
+                    <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
+                    <div class="btn pertech col s12">Unlock the entire tech tree</div>
+                    <div class="note col s12"><b>Note:</b><br>This is pre version 1.200</div>
+                    <div class="btn repairdonkey col s12">Replace your current donkey NPC</div>
+                    <div class="note hover col s12"><b>WARNING:</b><br>This replaces your current donkey object with the a working one from my save file. It will then be in front of your morgue. <b>Don't be surprised if it doesn't drop the body even if you have enough carrots. Through replacing the donkey this check gets skipped.</b> Just put 10 more in and the donkey should work - I tried it on a save in the bug report channel of the discord (from Lazy Bear Games). ONLY USE THIS IF THE BUG FIX OF THE DEVELOPERS DIDN'T WORK AND YOU ALREADY HAVE THE BOX WITH CARROTS. <b>Also only use this if your donkey is actually stuck!</b></div>
+                    <div class="btn resetmorgue col s12">Reset Morgue Counter</div>
+                    <div class="note hover col s12"><b>Note:</b><br>This will set your current morgue spaces used to 0, meaning if it got bugged at some point you will have at least 1 delivery. (Although I do not know how this value gets set again, like if it is only increased by one or the entire morgue is checked for bodies)</div>
+                    <div class="btn removechurchvisitors col s12">Delete Church Visitor NPCs</div>
+                    <div class="note hover col s12"><b>Note:</b><br>Sometimes the church visitors just stay in your church as if it is their home. Use this button to evict them. (This deletes all npc_church_visitor entities.)</div>
+                    <div class="btn resetdungeon col s12">Reset the dungeon</div>
+                </div>
+            </li>
+        </ul>
+    </div>
 
-        </div>
-
-        <div class="row miscbuttons">
-            <div class="btn deldrops col s6 offset-s3">Remove all Drops</div>
-            <div class="btn workereff col s12">Set all workers to 40% Efficiency</div>
-            <div class="note hover col s12"><b>WARNING:</b><br>For the perfect bodies/workers/graves to work it is necessary to have the technologies / crafting recipes like embalming because otherwise the game "resets" those bodies / decorations to a state which you could have done with your current tech tree / advancement. For this reason a "Unlock the entire tech tree" button was added. <b>BUT</b> the game save is rather complex, meaning even if you have all technologies and theoretically you couldn't have advanced this far the bodies will be bugged, f.e. broken in the morgue table. I assume (without having looked at the game code) that you need a certain progress in the game. F.e. when I used all technologies + perfect bodies on a completely new save, the bodies had 7 skulls, but actually (when taking a look at the exported save) the bodies where the correct bodies. So progress normally and use the unlock tech tree button or perfect worker button on a late game save (or where you already manually could produce the perfect bodies, but are lacking the resources)</div>
-            <div class="btn perbody col s12">Replace all the bodies in graves with perfect bodies</div>
-            <div class="btn perdeco col s12">Set all grave decorations to the highest</div>
-            <div class="btn perempty col s12">Replace all empty graves with perfect graves</div>
-            <div class="btn pertech col s12">Unlock the entire tech tree</div>
-            <div class="note col s12"><b>Note:</b><br>This is pre version 1.200</div>
-            <div class="btn repairdonkey col s12">Replace your current donkey NPC</div>
-            <div class="note hover col s12"><b>WARNING:</b><br>This replaces your current donkey object with the a working one from my savefile. It will then be in front of your morgue. <b>Don't be surprised if it doesn't drop the body even if you have enough carrots. Through replacing the donkey this check gets skipped.</b> Just put 10 more in and the donkey should work - I tried it on a save in the bug report channel of the discord (from Lazy Bear Games). ONLY USE THIS IF THE BUG FIX OF THE DEVELOPERS DIDN'T WORK AND YOU ALREADY HAVE THE BOX WITH CARROTS. <b>Also only use this if your donkey is actually stuck!</b></div>
-            <div class="btn resetmorgue col s12">Reset Morgue Counter</div>
-            <div class="note hover col s12"><b>Note:</b><br>This will set your current morgue spaces used to 0, meaning if it got bugged at some point you will have at least 1 delivery. (Although I do not know how this value gets set again, like if it is only increased by one or the entire morgue is checked for bodies)</div>
-            <div class="btn removechurchvisitors col s12">Delete Church Visitor NPCs</div>
-            <div class="note hover col s12"><b>Note:</b><br>Sometimes the church visitors just stay in your church as if it is their home. Use this button to evict them. (This deletes all npc_church_visitor entities.)</div>
-            <div class="btn resetdungeon col s12">Reset the dungeon</div>
-        </div>
-    </form>
 </div>
 <div class="intro lesspadding">Inventory:
 <br>
@@ -478,7 +501,7 @@
 <div class="invtinfo" id="inv${index}">Storage ${index+1} <div class="itemid">${type}</div></div>
 <div class="inventoryminipreview"></div>
 <div class="invt">
-<!--After trying it seems inventory size for the storage units is hard coded, thats why we hide it--!>
+<!--After trying it seems inventory size for the storage units is hard coded, thats why we hide it -->
 <div class="row hide">
     <div class="col s12">Inventory size:
         <div class="input-field inline s8">
@@ -797,6 +820,32 @@
                 minLength: 0,
                 onAutocomplete: updateAddItemPreview
             });
+
+            // Enable ability to extend and collapse groups
+            $('.collapsible').collapsible();
+
+
+            // When setting the worker efficiency, change the value which is used internally and display how many skulls it would be
+            $("#worker-efficiency").change((e) => {
+
+                // Round to steps of 2.5
+                let tmp = Math.round(Math.max(0, Number($("#worker-efficiency").val()))/2.5)*2.5;
+
+                // Force the value to be steps of 2.5
+                $("#worker-efficiency").val(tmp)
+
+                // Store the skull amount we want to have
+                data.workerskullamount = Math.round(tmp / 2.5);
+
+                // Display the skull amount
+                $("#skull-amount").text(data.workerskullamount);
+            })
+
+            // Prevent the button from firing if we just change the text value
+            $("#worker-efficiency").click((e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            })
 
             // Toggle the additional storage to either have the full view with the capability to edit or to just see the items as small icons
             $(".invtinfo").click(function () {

@@ -359,6 +359,9 @@ def save_json_savefile(data, shash):
         print(format_exc())
         return {"Error": "There was an error while generating the saved file."}
 
+# Get the game version as an Int (for example version 1.403 is 1403)
+def get_game_version_of_save(shash):
+    return round(savefiles[shash]["savedata"]["622785853"]["v"] * 1000)
 
 # Apply the changed data to our save we have in memory
 def modify_save(data, shash):
@@ -483,9 +486,38 @@ def modify_save(data, shash):
         # If workers should be turned into perfect workers we replace their inventory (which is used to calculate the
         # efficiency with a perfect inventory
         if data["switches"]["workers"] and it["obj_id"]["v"] == "worker_zombie_1":
+
+            # By default we use the custom rating inventory
+            reference_inventory = jsongamedata["worker_inventory_custom_rating"]
+
+            # Whether we are using the "big brain" worker version, which just has a brain with adjustable white skull value
+            adjust_skull_value = True
+
+            # If the user wants 40% and has the Game Of Crone DLC, we use the prepared Worker of that DLC
+            if data["workerskullamount"] == 16 and options["gameofcrone"]:
+                adjust_skull_value = False
+                reference_inventory = jsongamedata["inventory"]
+
+            # Otherwise if the user wants 65% and has the Better Save Soul DLC we use the prepared Worker of that DLC
+            if data["workerskullamount"] == 26 and options["gameofcrone"]:
+                adjust_skull_value = False
+                reference_inventory = jsongamedata["worker_inventory_65%_1400+"]
+
+            # If we have the big brain worker
+            if adjust_skull_value:
+                # We create a copy of the object just to not modify the in memory version which is used
+                reference_inventory = deepcopy(reference_inventory)
+
+                # The inventory only contains 1 item, so we can directly access that item and its parameter to set the correct skull amount
+                # The -1 is caused because the brain already has one white skull
+                reference_inventory[0]["v"]["_params"]["v"]["_res_v"]["v"][0]["v"] = data["workerskullamount"] - 1
+
+
             # We keep the last item of the old inventory, because that is the used backpack which still might contain
             # items
-            it["-1126421579"]["v"]["inventory"]["v"] = jsongamedata["inventory"]+[it["-1126421579"]["v"]["inventory"]["v"][-1]]
+            it["-1126421579"]["v"]["inventory"]["v"] = reference_inventory+[it["-1126421579"]["v"]["inventory"]["v"][-1]]
+
+
 
         # If the donkey should be replaced with a working one we just replace it but store and restore the unique id the
         # donkey had
@@ -783,6 +815,8 @@ def editable_values(shash):
         "removechurchvisitors": False,
         "resetdungeon": 0
     }
+
+    obj["workerskullamount"] = 26
 
     return obj
 

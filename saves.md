@@ -17,21 +17,43 @@ A list of a 10 Minute save with all the possible world game object ids and their
 
 With this data (because all of them contain a location) it should be possible to recreate your current world map if you extract the base map (the underground) + the sprites of the id's.
 
-You can also generate this list by yourself, if you export as JSON and then select the .html export. If you open that in the browser, the code to generate that list is shown in the console.
+You can also generate this list by yourself, if you export as JSON and then select the `.html` export. If you open that in the browser, the code to generate that list is shown in the console.
 
 Achievements
 ------------
 
 The number progress of achievements is stored in `savedata->achievements->v`
-If you f.e. started to catch 200 fish, you could find the entry with "fish_200" in _completed->v and at the same index in _completed_n->v you can set it f.e. to 199 and then fish 1 more fish to get the achievement.  
+If you f.e. started to catch 200 fish, you could find the entry with "fish_200" in `_completed->v` and at the same index in `_completed_n->v` you can set it f.e. to 199 and then fish 1 more fish to get the achievement.  
 Same is possible with other achievements.  
 
 Workers
 -------
 
-Your worker zombies are stored in `savedata->workers`.  
-References to a WGO object in the map data.
-They have inventories and sub inventories. F.e. they have an inventory which contains portable_backpack - this backpack can contain other items. (Which Porter Workers are currently transporting)
+References to your worker zombies are stored in `savedata->workers`. They are still saved within the wgo object.
+
+
+They have inventories and sub inventories. F.e. they have an inventory which contains `portable_backpack` - this backpack can contain other items. (Which Porter Workers are currently transporting)
+
+
+It is also possible to get information about the workers you have within a save. If you want to know for example what the efficiencies of your workers are, you can use the following code. (In the provided HTML export, because that contains the utility function used and the correct variables):
+
+```JavaScript
+// Iterate all the objects in the world
+wgo.forEach((entry) => {   
+    // Save the ID of our object to a name for easier access
+    const name = entry.v.obj_id.v; 
+    
+    // If the ID is a worker zombie, we print out the object and the efficiency, and all used items of the worker
+    if(name === "worker_zombie_1")
+    {
+        console.log(entry)
+        // getValueForParamKey is one of the provided utility functions in a HTML exported save
+        console.log(getValueForParamKey(entry.v["-1126421579"].v._params, "working_k"))
+        // For every inventory item object, we map the object to the actual item ID
+        console.log(entry.v["-1126421579"].v.inventory.v.map(item => item.v.id.v))
+    }  
+});
+```
 
 Unlocked Technologies
 ---------------------

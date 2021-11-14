@@ -1,3 +1,15 @@
+0.1.24
+=====
+
+Improved:
+
+* It is now possible to have a worker zombie of any efficiency
+* Utility functions can now be collapsed and expanded
+
+Fixed:
+
+* When saving new indexed strings now, they get added correctly to the save file (Unless you used the application to export your save to JSON and then edit yourself and then reimported it, this problem doesn't matter for you)
+
 0.1.23
 =====
 
