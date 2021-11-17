@@ -2,10 +2,27 @@ Graveyard-Keeper-Savefile-Editor
 ================================
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+* [Introduction](#introduction)
+* [Currently Editable](#currently-editable)
+* [Screenshots](#screenshots)
+* [Installation](#installation)
+    + [General](#general)
+    + [Installing the Python version](#installing-the-python-version)
+* [Save File Locations](#save-file-locations)
+* [Usage](#usage)
+* [Changelog](#changelog)
+* [Additional Thanks](#additional-thanks-go-to)
+* [Manually editing saves](#manually-editing-saves)
+* [The application is not working?](#the-application-is-not-working-)
+* [Notice](#notice)
+* [Building](#building)
+
+## Introduction
+
 This is a save editor for [Graveyard Keeper](https://store.steampowered.com/app/599140/Graveyard_Keeper/).
 
-The python version works on Windows, Linux and macOS.
-For Windows a .exe version available too.
+The Python version works on Windows, Linux and macOS.
+For Windows a `.exe` version available too.
 
 It can load and save `*.dat` files.
 Additionally you can export the loaded save to JSON, which has a similar structure to the original `.json` save files.
@@ -43,22 +60,27 @@ But I want to mention the last time someone asked for help due to a save broken 
   * Remove stuck church goes
   * Reset your dungeon
 
-## Screenshot
+## Screenshots
 
 ![Preview](https://i.imgur.com/XZdmo3Z.png)
 
 ## Installation
 
-* Download this as zip and extract it to the folder where you want it to be
+### General
+If you have Python installed, you can directly use the master branch (download [here](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/archive/refs/heads/master.zip)) and go over to [Installing the Python version](#installing-the-python-version).
+This method of installation works on any platform (Windows, Linux, macOS). 
+
+**If you are on Windows and do not have Python installed**, you can download a `.zip` file containing a `.exe` instead. You can find this `.zip` file on the [releases page](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/releases). The downloaded archive has a bundled version of Python with all necessary modules.
+
+### Installing the Python version
+
+* Download this as zip and extract it any folder
 * Get Python (>=3.4)
-* If you are using a macOS/Linux system where `python` is by default python 2.x, replace `python` with `python3`. Also instead of creating a .bat file, create a .sh file. Additionally according to users you might also need to install `python-tk` if it is not yet included in your distribution.
+* If you are using a macOS/Linux system where `python` is by default Python 2.x, replace `python` with `python3`. Additionally according to users you might also need to install `python-tk` if it is not yet included in your distribution.
 * Install dependencies using `python -m pip install -r requirements.txt`.
-* Execute the file with `python main.py` (in the console with the folder where main.py resides as working directory - to simplify this just create a `run.bat` in the directory with the same content)
+* Execute the file with `python main.py` (in the console with the folder where main.py resides as working directory - to simplify this just create a `run.bat` (Windows) or `run.sh` (Linux) in the directory with the same content)
 * Enjoy
 
-**OR**
-
-Download a [frozen release](https://github.com/NetroScript/Graveyard-Keeper-Savefile-Editor/releases) for windows (so you don't need to install python).
 
 ## Save File Locations
 

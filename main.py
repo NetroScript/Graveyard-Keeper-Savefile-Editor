@@ -161,7 +161,7 @@ def get_savefiles():
                     saveslots[i] = file.split(".info")[0]
                     i += 1
 
-                    print("Found and loaded informatin for save: " + file)
+                    print("Found and loaded information for save: " + file)
             except:
                 print("Failed to load information for save: " + file)
 
