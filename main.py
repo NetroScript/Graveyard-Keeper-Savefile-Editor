@@ -132,23 +132,38 @@ def get_savefiles():
     for file in os.listdir(options["path"]):
         # .info contains the information about the save, although it's content doesn't matter considering the save file
         if file.endswith(".info"):
-            with open(os.path.join(options["path"], file)) as f:
-                data = json.load(f)
+            try:
+                with open(os.path.join(options["path"], file)) as f:
+                    data = json.load(f)
 
-                # The save file has an id which is from the file name, but also an iterator which is displayed in the
-                # application as the number of the save file, this number also represents the position in the array of
-                # save file info
-                out.append({
-                    "version": round(data["version"], 3),
-                    "savetime": data["real_time"],
-                    "days": int(data["game_time"]-1.5),
-                    "church": data["stats"].split("ss)")[1].strip(),
-                    "graveyard": data["stats"].split("ll)")[1].split("(cr")[0].strip(),
-                    "id": file.split(".info")[0],
-                    "num": i
-                })
-                saveslots[i] = file.split(".info")[0]
-                i += 1
+                    # Sometimes saves don't contain a rating, so we have ??? as placeholder and explicitly avoid errors
+                    church_rating = "???"
+                    graveyard_rating = "???"
+
+                    try:
+                        church_rating = data["stats"].split("ss)")[1].strip()
+                        graveyard_rating = data["stats"].split("ll)")[1].split("(cr")[0].strip()
+                    except IndexError:
+                        pass
+
+                    # The save file has an id which is from the file name, but also an iterator which is displayed in
+                    # the application as the number of the save file, this number also represents the position in the
+                    # array of save file info
+                    out.append({
+                        "version": round(data["version"], 3),
+                        "savetime": data["real_time"],
+                        "days": int(data["game_time"]-1.5),
+                        "church": church_rating,
+                        "graveyard": graveyard_rating,
+                        "id": file.split(".info")[0],
+                        "num": i
+                    })
+                    saveslots[i] = file.split(".info")[0]
+                    i += 1
+
+                    print("Found and loaded informatin for save: " + file)
+            except:
+                print("Failed to load information for save: " + file)
 
     return out
 
@@ -933,7 +948,7 @@ def get_parameter_value(inventory, parameter):
     i = 0
     # Get it in the list
     for current_type in params["_res_type"]["v"]:
-        
+
         # Break when found
         if current_type["v"] == parameter:
             index = i
@@ -944,14 +959,14 @@ def get_parameter_value(inventory, parameter):
     # Return empty value if non existent
     if index == -1:
         return None
-    
+
     # Otherwise return result
     return params["_res_v"]["v"][index]
 
 
 # Set a specific parameter of an inventory
 def set_parameter_value(shash, inventory, parameter, value):
-    
+
     params = inventory["v"]["_params"]["v"]
 
     # The position of our value
@@ -959,7 +974,7 @@ def set_parameter_value(shash, inventory, parameter, value):
     i = 0
     # Get it in the list
     for current_type in params["_res_type"]["v"]:
-        
+
         # Break when found
         if current_type["v"] == parameter:
             index = i
@@ -1016,10 +1031,10 @@ def get_default_path():
 def set_settings(settings):
     global options
     options = settings
-    
+
     if "path" in options:
         options["path"] = os.path.expandvars(options["path"])
-    
+
     with open("./data/settings", "w") as f:
         json.dump(settings, f)
     return True
@@ -1061,7 +1076,7 @@ root.geometry('0x0+0+0')
 def tkinter_gain_focus():
     root.deiconify()
     root.lift()
-    root.focus_force() 
+    root.focus_force()
 
 
 def run():

@@ -6,6 +6,7 @@ Improved:
 * It is now possible to have a worker zombie of any efficiency
 * At the same time you can now decide how many skulls the bodies in the graves should have
 * Utility functions can now be collapsed and expanded
+* Loading of .info files (more robust display of the save files, should an error with a single file happen, only that save is missing instead of all)
 
 Fixed:
 
