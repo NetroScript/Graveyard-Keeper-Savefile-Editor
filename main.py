@@ -21,11 +21,12 @@ import shutil
 import psutil
 import pkg_resources
 from packaging import version
+import paths
 
 
 # Set up global variables and the used classes
 options = {}
-hashes = Hashlist("./data/hashes")
+hashes = Hashlist(paths.hashes)
 decoder = Decoder(hashes)
 encoder = Encoder()
 savefiles = {}
@@ -35,21 +36,21 @@ saveslots = {}
 loaded_items = {}
 
 # Load the version number of this application and already create a newversion variable for a later check for updates
-with open("./data/version") as f:
+with open(paths.version) as f:
     currentversion = f.read()
     newversion = currentversion
 
 
 # Load the information about the item version making it possible to fix bugs without having to make a new release
 # (when no code was changed)
-with open("./data/itemversion") as f:
+with open(paths.item_version) as f:
     currentiversion = f.read()
     newiversion = currentiversion
 
 
 # Load the settings of the settings file
 def load_settings():
-    with open("./data/settings") as f:
+    with open(paths.settings) as f:
         global options, newversion, newiversion, web_app_options
         options = json.load(f)
 
@@ -357,7 +358,7 @@ def save_json_savefile(data, shash):
             # If we want to dump it as html file we do so here
             if file.endswith(".html"):
 
-                with open('./data/html/dumpskeleton.html', 'r') as placeholderfile:
+                with open(paths.dump_skeleton_html) as placeholderfile:
                     placeholder = placeholderfile.read()
 
                 print("Creating HTML file at " + file)
@@ -1035,7 +1036,7 @@ def set_settings(settings):
     if "path" in options:
         options["path"] = os.path.expandvars(options["path"])
 
-    with open("./data/settings", "w") as f:
+    with open(paths.settings, "w") as f:
         json.dump(settings, f)
     return True
 
