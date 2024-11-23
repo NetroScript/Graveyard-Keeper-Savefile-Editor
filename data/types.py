@@ -1,6 +1,8 @@
 from enum import IntEnum
 from json import load
 
+import paths
+
 
 # The possible serialisation types the game uses and their binary value (as int)
 class Types(IntEnum):
@@ -39,19 +41,19 @@ class Types(IntEnum):
 # they are not complete, considering I mostly was in it for the items and perks and so on
 # But still they may contain spoilers considering quite a few dialogues and so on are in
 # them so read it at your own risk
-with open("./data/locals.json", encoding="utf8") as f:
+with open(paths.locals_json, encoding="utf8") as f:
     id_to_name = load(f)
 
 # Generic game information
-with open("./data/html/items.json", encoding="utf8") as f:
+with open(paths.items_json, encoding="utf8") as f:
     gamedata = load(f)
 
-with open("./data/data.json", encoding="utf8") as f:
+with open(paths.data_json, encoding="utf8") as f:
     jsongamedata = load(f)
 
 # Load a list with default items, if those items have special attributes which would otherwise not work
 # (using the default item)
-with open("./data/new_item_data.json", encoding="utf8") as f:
+with open(paths.new_item_data_json, encoding="utf8") as f:
     item_fallback_data = load(f)
 
 # A example item in the case of the inventory being empty and people wanting to add items to it
