@@ -780,3 +780,10 @@ input#worker-efficiency, input#gravebody-skulls {
 }
 
 .gameicon.i-white-skull {height: 10px;transform: translateY(6px);zoom: initial;}
+
+/* Prevent autocomplete from extending outside of the screen, this is a hacky fix making assumption about the size of the surrounding elements */
+.input-field .autocomplete-content {
+    left: -88px !important;
+    right: -46px !important;
+    width: initial !important;
+}
