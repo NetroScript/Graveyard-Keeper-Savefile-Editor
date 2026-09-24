@@ -13,9 +13,12 @@ Graveyard-Keeper-Savefile-Editor
 * [Changelog](#changelog)
 * [Additional Thanks](#additional-thanks-go-to)
 * [Manually editing saves](#manually-editing-saves)
-* [The application is not working?](#the-application-is-not-working-)
+* [The application is not working?](#the-application-is-not-working)
 * [Notice](#notice)
 * [Building](#building)
+
+> [!NOTE]  
+> Should you be looking for a save editor for **Graveyard Keeper 2**, I have released a new editor [here](https://github.com/NetroScript/graveyard-keeper-2-savegame-editor). It is also available on the web without download [here](https://netroscript.github.io/graveyard-keeper-2-savegame-editor/). 
 
 ## Introduction
 
