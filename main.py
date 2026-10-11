@@ -19,7 +19,13 @@ from io import BytesIO
 from zipfile import ZipFile, ZIP_DEFLATED
 import shutil
 import psutil
-import pkg_resources
+try:
+    from importlib.metadata import version as package_version
+except ImportError:  # Python < 3.8
+    from pkg_resources import get_distribution
+
+    def package_version(name):
+        return get_distribution(name).version
 from packaging import version
 
 
@@ -1082,7 +1088,7 @@ def tkinter_gain_focus():
 def run():
     global web_app_options
 
-    eel_version = pkg_resources.get_distribution("eel").version
+    eel_version = package_version("eel")
 
     # Check if the application is run the first time - if so show the settings dialogue, if not start the normal
     # application
