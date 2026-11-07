@@ -112,6 +112,16 @@ Same if an item doesn't have a preview image.
 If you want to manually edit save files, when you change values, watch out if you change the type of the variable. F.e. if you would change a value from 0 to 1, the type would change and you would need to manually change the type to the correct one.
 For information about the possible types, check `types.py` in the `data` folder.
 
+## Translations
+
+Item and object names can be displayed in a different language, which can be selected in the settings. English is the default and any name which is missing in a translation file is shown in English.
+
+Currently available translations:
+
+* Brazilian Portuguese (pt-BR)
+
+To contribute a translation, add a `locals_<language code>.json` file to the `data` folder, containing the ids from `locals.json` with translated names (untranslated ids can simply be left out), and add the display name of the language to the `language_names` object in `data/html/no settings.html`.
+
 
 ## Changelog
 
