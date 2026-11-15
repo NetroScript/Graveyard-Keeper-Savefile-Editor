@@ -104,6 +104,14 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <select id="language"></select>
+                                <label>Language for item and object names</label>
+                            </div>
+                            <div class="note">Names without a translation are shown in English. Already opened windows need to be reloaded for this option to apply.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <input  id="backupnum" min="0" type="number" value="2" step="1" class="validate valid">
                                 <label for="backupnum" class="white-text">Up to how many backups should be kept by the editor when saving? (Each save)</label>
                                 <span class="helper-text" data-error="Please enter a number" data-success=""></span>
@@ -155,9 +163,27 @@
                     $("#path").val(path);
                     $("#path").removeClass("invalid");
                 });
-                
+                loadLanguages("en");
             }
         });
+
+        // Display names for the known translation files, the language code itself is used as fallback
+        const language_names = {
+            "en": "English",
+            "pt-BR": "Português (Brasil)"
+        };
+
+        // Fill the language dropdown with the languages which are available in the data folder
+        async function loadLanguages(selected) {
+            let languages = await eel.get_available_languages()();
+            let select = $("#language");
+            select.empty();
+            for (const code of languages) {
+                select.append($("<option>").attr("value", code).text(language_names[code] || code));
+            }
+            select.val(selected || "en");
+            M.FormSelect.init(select.get(0));
+        }
         
         // Function to call the python function to select a folder for the save file.
         async function getFolder() {
@@ -176,7 +202,8 @@
                 "strangersins": $("#strangersins").prop("checked") || false,
                 "gameofcrone": $("#gameofcrone").prop("checked") || false,
                 "bettersavesoul":  $("#bettersavesoul").prop("checked") || false,
-                "backupamount": parseInt($("#backupnum").val()) || 2
+                "backupamount": parseInt($("#backupnum").val()) || 2,
+                "language": $("#language").val() || "en"
             }
             await eel.set_settings(settings)();
 
@@ -200,6 +227,7 @@
             $("#bettersavesoul").prop("checked", b["bettersavesoul"]);
             $("#port").val(b["port"]);
             $("#backupnum").val(b["backupamount"]);
+            await loadLanguages(b["language"]);
         }
         
         // Bind the click of the button to the getFolder function

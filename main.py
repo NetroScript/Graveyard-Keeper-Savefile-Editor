@@ -40,6 +40,23 @@ saveslots = {}
 # Store an instance of each known loaded item, so we can use that data for new items, if needed
 loaded_items = {}
 
+# Keep an untouched copy of the English localisation so it can be used as fallback for untranslated entries
+english_locals = dict(id_to_name)
+
+
+# Load the localisation for the language selected in the settings
+# Entries which are missing in the translation file keep their English name
+def load_localization():
+    language = options.get("language", "en")
+    id_to_name.clear()
+    id_to_name.update(english_locals)
+    if language != "en":
+        try:
+            with open("./data/locals_" + language + ".json", encoding="utf8") as f:
+                id_to_name.update(json.load(f))
+        except (OSError, ValueError):
+            print("Could not load the translation file for '" + language + "', falling back to English")
+
 # Load the version number of this application and already create a newversion variable for a later check for updates
 with open("./data/version") as f:
     currentversion = f.read()
@@ -75,8 +92,12 @@ def load_settings():
             options["gameofcrone"] = False
         if "bettersavesoul" not in options:
             options["bettersavesoul"] = False
+        if "language" not in options:
+            options["language"] = "en"
 
         web_app_options["port"] = options["port"]
+
+        load_localization()
 
 
 # Allow the web interface to call this function so that commonly changed files can be changed without needing releases
@@ -108,6 +129,13 @@ def update_item_version():
     info = zipfile.getinfo("Graveyard-Keeper-Savefile-Editor-master/data/locals.json")
     info.filename = os.path.basename(info.filename)
     zipfile.extract(info, "./data/")
+    # Same for the translation files (locals_*.json) which exist in the repository
+    for zip_info in zipfile.infolist():
+        filename = os.path.basename(zip_info.filename)
+        if zip_info.filename.startswith("Graveyard-Keeper-Savefile-Editor-master/data/locals_") and filename.endswith(".json"):
+            print("Copying new " + filename)
+            zip_info.filename = filename
+            zipfile.extract(zip_info, "./data/")
     print("Deleting old itemversion")
     os.remove("./data/itemversion")
     print("Copying new itemversion")
@@ -1040,10 +1068,25 @@ def set_settings(settings):
 
     if "path" in options:
         options["path"] = os.path.expandvars(options["path"])
+    if "language" not in options:
+        options["language"] = "en"
 
     with open("./data/settings", "w") as f:
         json.dump(settings, f)
+
+    load_localization()
     return True
+
+
+# Function exposed to the ui to list the available languages
+# (the default English plus one entry for every locals_*.json translation file)
+@eel.expose
+def get_available_languages():
+    languages = ["en"]
+    for file in sorted(os.listdir("./data")):
+        if file.startswith("locals_") and file.endswith(".json"):
+            languages.append(file[len("locals_"):-len(".json")])
+    return languages
 
 
 # Function exposed to the ui to get the current settings
